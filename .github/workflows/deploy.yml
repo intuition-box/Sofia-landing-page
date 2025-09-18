@@ -27,7 +27,7 @@ jobs:
         if: ${{ matrix.node-version == '20.x' }}
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          path: './build'
 
   deploy:
     if: github.ref == 'refs/heads/docuBranch'
