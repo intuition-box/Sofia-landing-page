@@ -1,0 +1,321 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* Import custom fonts */
+@import url('https://fonts.googleapis.com/css2?family=Overpass+Mono:ital,wght@0,300..700;1,300..700&display=swap');
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #02000B;
+  --ifm-color-primary-dark: #02000B;
+  --ifm-color-primary-darker: rgb(24, 24, 24);
+  --ifm-color-primary-darkest: #02000B;
+  --ifm-color-primary-light: rgb(107, 107, 107);
+  --ifm-color-primary-lighter: #4d4d4d;
+  --ifm-color-primary-lightest: #666666;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-background-color: transparent;
+  --ifm-background-surface-color: transparent;
+  --ifm-navbar-background-color: transparent;
+  --ifm-color-content: #02000B;
+  --ifm-color-content-secondary: #02000B;
+  --ifm-link-color: #02000B;
+  --ifm-link-hover-color: #02000B;
+  --ifm-font-color-base: #02000B;
+  --ifm-font-family-base: 'Overpass Mono', monospace;
+  --ifm-heading-font-family: 'Overpass Mono', monospace;
+}
+
+
+/* Make navbar logo 30% larger */
+.navbar__logo img {
+  height: 6rem !important;
+}
+
+/* Remove navbar box-shadow and make transparent */
+.navbar {
+  box-shadow: none !important;
+  background-color: transparent !important;
+  height: calc(var(--ifm-navbar-height) * 1.1) !important;
+  padding: calc(var(--ifm-navbar-padding-vertical) * 1.1) var(--ifm-navbar-padding-horizontal) !important;
+}
+
+/* Make footer background transparent and text color consistent */
+.footer {
+  background-color: transparent !important;
+  color: #02000B !important;
+}
+
+.footer * {
+  color: #02000B !important;
+}
+
+.footer a {
+  color: #02000B !important;
+}
+
+.footer a:hover {
+  color: #02000B !important;
+}
+
+/* Footer full-width inline display */
+.footer__links {
+  justify-content: center !important;
+  gap: 3rem !important;
+  flex-wrap: wrap !important;
+}
+
+.footer__col {
+  margin-right: 0 !important;
+  text-align: center !important;
+}
+
+.footer__title {
+  margin-bottom: 1rem !important;
+}
+
+.footer__items {
+  display: flex !important;
+  justify-content: center !important;
+  gap: 2rem !important;
+  flex-wrap: wrap !important;
+}
+
+/* LinkedIn author icon styling - remove CSS override since we swizzled the component */
+
+/* Increase author profile image size */
+.avatar__photo {
+  width: 4rem !important;
+  height: 4rem !important;
+}
+
+.blog-post-authors .avatar__photo {
+  width: 3rem !important;
+  height: 3rem !important;
+}
+
+/* Set background image */
+body {
+  background-image: url('/img/BackgroundChronicles.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  min-height: 100vh;
+}
+
+/* Ensure background covers full viewport */
+html {
+  background-image: url('/img/BackgroundChronicles.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+/* Blog layout adjustments - only for individual blog post pages */
+[class*="blogPostPage"] .blog-wrapper,
+.theme-blog-post-page .blog-wrapper {
+  display: flex;
+  gap: 2rem;
+}
+
+[class*="blogPostPage"] .blog-sidebar,
+.theme-blog-post-page .blog-sidebar {
+  width: 250px !important;
+  min-width: 250px;
+  flex-shrink: 0;
+}
+
+[class*="blogPostPage"] .blog-content,
+.theme-blog-post-page .blog-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Adjust only blog post page layout for better spacing */
+[class*="blogPostPage"] .container.margin-vert--lg,
+.theme-blog-post-page .container.margin-vert--lg {
+  max-width: none !important;
+}
+
+/* Specific adjustments for individual blog post layout */
+[class*="blogPostPage"] article .container,
+.theme-blog-post-page article .container {
+  max-width: none !important;
+}
+
+/* Ensure sidebar stays compact on blog post pages */
+[class*="blogPostPage"] .theme-blog-sidebar,
+.theme-blog-post-page .theme-blog-sidebar {
+  width: 250px !important;
+  margin-right: 2rem;
+}
+
+/* Hide dark/light mode toggle */
+[data-theme] .navbar__item.navbar__toggle {
+  display: none !important;
+}
+
+html[data-theme] .toggle_node_modules-\@docusaurus-theme-classic-lib-theme-ColorModeToggle-styles-module {
+  display: none !important;
+}
+
+.navbar .colorModeToggle_node_modules-\@docusaurus-theme-classic-lib-theme-ColorModeToggle-styles-module {
+  display: none !important;
+}
+
+/* Alternative selector for color mode toggle */
+.navbar [class*="colorModeToggle"] {
+  display: none !important;
+}
+
+.navbar [class*="toggle"] {
+  display: none !important;
+}
+
+/* Footer social icons styling for PNG images */
+.footer__link-item img {
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  filter: none;
+}
+
+.footer__link-item:hover img {
+  transform: scale(1.2);
+  opacity: 0.8;
+}
+
+/* Footer social links layout */
+.footer .footer__items {
+  display: flex !important;
+  justify-content: center !important;
+  gap: 1.5rem !important;
+  flex-wrap: wrap !important;
+}
+
+/* Remove text decoration from footer links */
+.footer .footer__link-item {
+  text-decoration: none !important;
+  color: #02000B !important;
+}
+
+.footer .footer__link-item:hover {
+  text-decoration: none !important;
+  color: #02000B !important;
+}
+
+/* Global text color overrides */
+body, html {
+  color: #02000B !important;
+}
+
+* {
+  color: #02000B !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #02000B !important;
+}
+
+p, span, div {
+  color: #02000B !important;
+}
+
+.hero__title, .hero__subtitle {
+  color: #02000B !important;
+}
+
+/* Navbar Blog link positioning */
+.navbar__items--right .navbar__item {
+  align-self: flex-end;
+  margin-bottom: 0.5rem;
+}
+
+/* Removed all scroll and text animations */
+
+/* Smooth scrolling for better UX */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Button styling with higher specificity */
+a.button.button--primary.button--lg,
+.button.button--primary.button--lg {
+  color: white !important;
+  background-color: #02000B !important;
+  border-color: #02000B !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  pointer-events: auto !important;
+}
+
+a.button.button--primary.button--lg:hover,
+.button.button--primary.button--lg:hover,
+a.button.button--primary.button--lg:focus,
+.button.button--primary.button--lg:focus {
+  background-color: #333333 !important;
+  color: white !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 8px rgba(2, 0, 11, 0.2) !important;
+  text-decoration: none !important;
+}
+
+a.button.button--outline.button--primary.button--lg,
+.button.button--outline.button--primary.button--lg {
+  color: #02000B !important;
+  background-color: transparent !important;
+  border-color: #02000B !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  pointer-events: auto !important;
+}
+
+a.button.button--outline.button--primary.button--lg:hover,
+.button.button--outline.button--primary.button--lg:hover,
+a.button.button--outline.button--primary.button--lg:focus,
+.button.button--outline.button--primary.button--lg:focus {
+  background-color: #02000B !important;
+  color: white !important;
+  border-color: #02000B !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 8px rgba(2, 0, 11, 0.2) !important;
+  text-decoration: none !important;
+}
+
+/* Content after logo effect */
+.content-after-logo {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1s ease, transform 1s ease;
+  transition-delay: 0.5s;
+}
+
+.content-after-logo.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-section,
+  .animated-text,
+  .parallax-section {
+    transition: none !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .animated-text--split-words .split-word {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

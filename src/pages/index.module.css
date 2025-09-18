@@ -1,0 +1,170 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+/* Hero Section */
+.heroBanner {
+  padding: 6rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 4rem 2rem;
+    min-height: 80vh;
+  }
+}
+
+.hero {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.heroLogo {
+  max-width: 200px;
+  height: auto;
+  margin: 0 auto 2rem auto;
+  display: block;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+@media screen and (max-width: 768px) {
+  .buttons {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .heroLogo {
+    max-width: 150px;
+  }
+}
+
+/* Hero Content */
+.heroContent {
+  padding: 4rem 2rem;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Section Styles */
+.visionSection,
+.missionSection,
+.problemSection,
+.painSection,
+.solutionSection {
+  padding: 6rem 0;
+  background: transparent;
+  color: #02000B;
+}
+
+/* Typography */
+.sectionTitle {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #02000B !important;
+  text-align: center;
+}
+
+.sectionText {
+  font-size: 1.3rem;
+  line-height: 1.7;
+  max-width: 800px;
+  margin: 0 auto 2rem auto;
+  color: #02000B !important;
+  text-align: justify;
+}
+
+@media screen and (max-width: 768px) {
+  .sectionTitle {
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .sectionText {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    padding: 0 1rem;
+  }
+}
+
+/* Animation Classes */
+.scroll-section {
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.animated-text {
+  color: #02000B !important;
+}
+
+.animated-text--split-words .split-word {
+  display: inline-block;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Parallax and Sticky Sections */
+.parallax-section {
+  will-change: transform;
+}
+
+.sticky-reveal-container {
+  position: relative;
+}
+
+.sticky-reveal-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Performance Optimizations */
+.scroll-section,
+.animated-text,
+.parallax-section {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: auto;
+}
+
+/* Optimize animations for GPU acceleration */
+.scroll-section {
+  transform: translate3d(0, 50px, 0);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.scroll-section.animate-in {
+  transform: translate3d(0, 0, 0);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 996px) {
+  .missionSection,
+  .problemSection,
+  .solutionSection {
+    padding: 6rem 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .missionSection,
+  .problemSection,
+  .solutionSection {
+    padding: 4rem 0;
+  }
+}
