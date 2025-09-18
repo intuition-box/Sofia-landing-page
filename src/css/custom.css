@@ -48,6 +48,8 @@
 .footer {
   background-color: transparent !important;
   color: #02000B !important;
+  position: relative !important;
+  z-index: 100 !important;
 }
 
 .footer * {
@@ -174,8 +176,37 @@ html[data-theme] .toggle_node_modules-\@docusaurus-theme-classic-lib-theme-Color
   display: none !important;
 }
 
-.navbar [class*="toggle"] {
+/* Hide only color mode toggle, not mobile menu */
+.navbar [class*="colorModeToggle"],
+.navbar [data-value="light"],
+.navbar [data-value="dark"] {
   display: none !important;
+}
+
+/* Restore mobile menu burger on small screens */
+@media (max-width: 996px) {
+  .navbar__toggle {
+    display: flex !important;
+  }
+
+  /* Mobile menu background */
+  .navbar-sidebar__backdrop,
+  .theme-layout-navbar-sidebar-panel {
+    background-color: rgba(245, 245, 245, 1) !important;
+    backdrop-filter: blur(10px) !important;
+  }
+
+  .navbar-sidebar__item {
+    background-color: rgba(245, 245, 245, 0.9) !important;
+  }
+
+  /* Use different logo in mobile sidebar */
+  .navbar-sidebar .navbar__brand img {
+    content: url('/img/logoBrut.png') !important;
+    width: 2rem !important;
+    height: 2rem !important;
+    object-fit: contain !important;
+  }
 }
 
 /* Footer social icons styling for PNG images */
@@ -201,10 +232,20 @@ html[data-theme] .toggle_node_modules-\@docusaurus-theme-classic-lib-theme-Color
 .footer .footer__link-item {
   text-decoration: none !important;
   color: #02000B !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
 }
 
 .footer .footer__link-item:hover {
   text-decoration: none !important;
+  color: #02000B !important;
+  cursor: pointer !important;
+}
+
+/* Ensure footer links are clickable */
+.footer a, .footer a:hover, .footer a:visited {
+  pointer-events: auto !important;
+  cursor: pointer !important;
   color: #02000B !important;
 }
 

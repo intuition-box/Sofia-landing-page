@@ -37,7 +37,7 @@ export function LogoReveal({
           top: '50%',
           left: '50%',
           transform: `translate(-50%, -50%) scale(${logoScale})`,
-          zIndex: 10,
+          zIndex: 1,
           opacity: logoOpacity,
           transition: isTriggered ? 'none' : 'all 0.3s ease',
           transformOrigin: 'center center'

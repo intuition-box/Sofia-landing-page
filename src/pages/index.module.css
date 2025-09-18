@@ -30,8 +30,14 @@
 .heroLogo {
   max-width: 200px;
   height: auto;
-  margin: 0 auto 2rem auto;
+  margin: 0 auto 8rem auto;
   display: block;
+  position: absolute;
+  top: -5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.1;
+  z-index: -1;
 }
 
 .buttons {
@@ -70,6 +76,7 @@
   padding: 6rem 0;
   background: transparent;
   color: #02000B;
+  position: relative;
 }
 
 /* Typography */
