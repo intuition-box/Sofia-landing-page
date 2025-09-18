@@ -122,7 +122,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Sofia, Inc. Built with <3`,
+      copyright: `Copyright © ${new Date().getFullYear()} Sofia, Inc. Built with ♡`,
     },
     prism: {
       theme: prismThemes.github,
