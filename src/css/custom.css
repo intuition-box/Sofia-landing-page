@@ -33,7 +33,7 @@
 
 /* Make navbar logo 30% larger */
 .navbar__logo img {
-  height: 6rem !important;
+  height: 4.8rem !important;
 }
 
 /* Remove navbar box-shadow and make transparent */
