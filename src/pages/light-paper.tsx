@@ -59,10 +59,7 @@ export default function LightPaper(): React.ReactElement {
         <p>• API calls through GaiaNet</p>
         <p>• On-chain registration of signals</p>
         <p>• Other interactions related to your data</p>
-
-        <p>
-          You remain the owner of your funds and can adjust or withdraw at any time.
-        </p>
+        <p>• You remain the owner of your funds and can adjust or withdraw at any time.</p>
 
         {/* <p>
           On our side, Sofia takes positions on signals created (a form of staking/betting on relevance). Profits generated feed an internal investment fund, financing the service and its continuous improvement.
