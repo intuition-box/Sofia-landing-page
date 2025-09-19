@@ -15,7 +15,7 @@
 
 .scrollTrack {
   display: flex;
-  animation: scrollRightToLeft 30s linear infinite;
+  animation: scrollRightToLeft 50s linear infinite;
   gap: 2.5rem;
 }
 
