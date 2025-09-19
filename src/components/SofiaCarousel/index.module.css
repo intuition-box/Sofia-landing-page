@@ -12,6 +12,7 @@
   position: relative;
 }
 
+
 .scrollTrack {
   display: flex;
   animation: scrollRightToLeft 30s linear infinite;
@@ -20,7 +21,7 @@
 
 .imageSlide {
   flex-shrink: 0;
-  width: auto;
+  width: 400px;
   height: 700px;
   display: flex;
   align-items: center;
@@ -36,6 +37,7 @@
   height: auto;
   object-fit: contain;
   border-radius: 10px;
+  opacity: 92%;
   /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); */
 
 }
@@ -45,7 +47,7 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(calc(-9 * (400px + 2.5rem)));
   }
 }
 

@@ -41,13 +41,13 @@ const sofiaImages = [
 ];
 
 export default function SofiaCarousel(): React.ReactElement {
-  const duplicatedImages = [...sofiaImages, ...sofiaImages];
+  const infiniteImages = [...sofiaImages, ...sofiaImages, ...sofiaImages, ...sofiaImages];
 
   return (
     <div className={styles.carousel}>
       <div className={styles.scrollContainer}>
         <div className={styles.scrollTrack}>
-          {duplicatedImages.map((image, index) => (
+          {infiniteImages.map((image, index) => (
             <div key={index} className={styles.imageSlide}>
               <img
                 src={image.src}
