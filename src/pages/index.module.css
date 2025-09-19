@@ -4,19 +4,18 @@
  */
 
 /* Hero Section */
-.heroBanner {
-  padding: 6rem 0;
+.heroSection {
+  padding: 2rem 0;
   text-align: center;
   position: relative;
-  overflow: hidden;
   background: transparent;
-  min-height: 100vh;
+  min-height: 50vh;
   display: flex;
   align-items: center;
 }
 
 @media screen and (max-width: 996px) {
-  .heroBanner {
+  .heroSection {
     padding: 4rem 2rem;
     min-height: 80vh;
   }
@@ -30,14 +29,9 @@
 .heroLogo {
   max-width: 200px;
   height: auto;
-  margin: 0 auto 8rem auto;
+  margin: 0 auto 0.5rem auto;
   display: block;
-  position: absolute;
-  top: -5%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0.1;
-  z-index: -1;
+  opacity: 0.8;
 }
 
 .buttons {
@@ -62,7 +56,7 @@
 /* Hero Content */
 .heroContent {
   padding: 4rem 2rem;
-  text-align: center;
+  text-align: left;
   max-width: 800px;
   margin: 0 auto;
 }
@@ -73,7 +67,7 @@
 .problemSection,
 .painSection,
 .solutionSection {
-  padding: 6rem 0;
+  padding: 1rem 0;
   background: transparent;
   color: #02000B;
   position: relative;
@@ -81,30 +75,33 @@
 
 /* Typography */
 .sectionTitle {
-  font-size: 3rem;
+  font-size: 2.18rem;
   font-weight: 700;
   margin-bottom: 2rem;
   color: #02000B !important;
-  text-align: center;
+  text-align: left;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .sectionText {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   line-height: 1.7;
   max-width: 800px;
   margin: 0 auto 2rem auto;
   color: #02000B !important;
-  text-align: justify;
+  text-align: left;
 }
 
 @media screen and (max-width: 768px) {
   .sectionTitle {
-    font-size: 2.2rem;
+    font-size: 1.6rem;
     margin-bottom: 1.5rem;
   }
 
   .sectionText {
-    font-size: 1.1rem;
+    font-size: 1.33rem;
     line-height: 1.6;
     padding: 0 1rem;
   }

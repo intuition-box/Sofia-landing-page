@@ -331,18 +331,6 @@ a.button.button--outline.button--primary.button--lg:focus,
   text-decoration: none !important;
 }
 
-/* Content after logo effect */
-.content-after-logo {
-  opacity: 0;
-  transform: translateY(50px);
-  transition: opacity 1s ease, transform 1s ease;
-  transition-delay: 0.5s;
-}
-
-.content-after-logo.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
 
 /* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {

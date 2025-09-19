@@ -1,46 +1,59 @@
-import React from 'react';
-import { useScrollTrigger } from '../hooks/useScrollTrigger';
+import React, { useState } from 'react';
 
 interface LogoRevealProps {
   logoSrc: string;
   logoAlt: string;
   className?: string;
+  onAnimationStart?: () => void;
 }
 
 export function LogoReveal({
   logoSrc,
   logoAlt,
-  className = ''
+  className = '',
+  onAnimationStart
 }: LogoRevealProps) {
-  const { scrollProgress, isTriggered } = useScrollTrigger();
+  const [isAnimating, setIsAnimating] = useState(false);
 
-  // Dramatic scaling: from 1 to 6
-  const logoScale = 1 + scrollProgress * 5;
+  const handleClick = () => {
+    setIsAnimating(true);
+    onAnimationStart?.();
+  };
 
-  // Logo opacity: fades out completely at 80% progress
-  const logoOpacity = scrollProgress < 0.8 ? 1 : Math.max(0, 1 - (scrollProgress - 0.8) / 0.2);
+  // Dramatic scaling: from 1 to 6 when animating
+  const logoScale = isAnimating ? 6 : 1;
+
+  // Logo opacity: fades out when animating
+  const logoOpacity = isAnimating ? 0 : 1;
 
   return (
     <div
       className={`logo-dive-container ${className}`}
       style={{
-        minHeight: '200vh', // Extra height for scroll space
-        position: 'relative',
-        overflow: 'hidden'
+        height: '100vh',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        overflow: 'hidden',
+        zIndex: isAnimating ? 5 : 15,
+        pointerEvents: isAnimating ? 'none' : 'auto'
       }}
     >
-      {/* Fixed logo that scales */}
+      {/* Logo that scales on click */}
       <div
         className="logo-dive"
+        onClick={handleClick}
         style={{
-          position: 'fixed',
+          position: 'absolute',
           top: '50%',
           left: '50%',
           transform: `translate(-50%, -50%) scale(${logoScale})`,
           zIndex: 1,
           opacity: logoOpacity,
-          transition: isTriggered ? 'none' : 'all 0.3s ease',
-          transformOrigin: 'center center'
+          transition: 'all 2s ease',
+          transformOrigin: 'center center',
+          cursor: 'pointer'
         }}
       >
         <img
@@ -53,9 +66,6 @@ export function LogoReveal({
           }}
         />
       </div>
-
-      {/* Spacer to ensure scroll space */}
-      <div style={{ height: '200vh' }} />
     </div>
   );
 }

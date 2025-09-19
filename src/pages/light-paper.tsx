@@ -15,18 +15,20 @@ export default function LightPaper(): React.ReactElement {
         </p>
 
         <p>
-          Every visited page, every action, every interest becomes a signals (who/what you are – what you do – on what content) stored under your control. This creates a living, semantic graph of your online activity, which you can enrich, share and get certified.
+          Every visited page, every action, every interest becomes a signal (who/what you are – what you do – on what content) stored under your control. This creates a living, semantic graph of your online activity, which you can enrich, share and get certified.
         </p>
         <br></br>
 
 
         <h2>What Sofia Does for You</h2>
 
-        <p>• An AI that belongs to you – Thanks to Gaianet and ElizaOS, Sofia provides you with a personal and inviolable AI.</p>
-        <p>• Seamless analysis of your browsing – automatic capture of URLs, topics, behaviors</p>
-        <p>• Automatic creation of verifiable signals (triples of atoms) about your interests, skills and taste</p>
-        <p>• Personalized recommendations – events, content and people matched to your real behavior</p>
-        <p>• Trusted interactions – discover profiles aligned with yours through verifiable links</p>
+        <ul>
+          <li>An AI that belongs to you – Thanks to Gaianet and ElizaOS, Sofia provides you with a personal and inviolable AI.</li>
+          <li>Seamless analysis of your browsing – automatic capture of URLs, topics, behaviors</li>
+          <li>Automatic creation of verifiable signals (triples of atoms) about your interests, skills and taste</li>
+          <li>Personalized recommendations – content and people matched to your real behavior</li>
+          <li>Trusted interactions – discover profiles aligned with yours through verifiable links</li>
+        </ul>
         <br></br>
 
         <h2>A Network Based on Proof, Not Appearance</h2>
@@ -37,29 +39,26 @@ export default function LightPaper(): React.ReactElement {
 
         <p>Examples:</p>
 
-        <p>
-        • You listen to electronic music? Sofia certifies this taste and links it to artists, genres, events.
-        </p>
-
-        <p>
-        •  You contribute to an open source dApp? Your peers validate your development skills by voting on your signals.
-        </p>
-
-        <p>
-        •  Sofia creates missing signals automatically to connect data (e.g. from "I follow Kendrick Lamar" to "Kendrick Lamar is an artist" to "Artists are on YouTube"), enriching the global graph and making navigation and recommandation easier.
-        </p>
+        <ul>
+          <li>You listen to electronic music? Sofia certifies this taste and links it to artists, genres, events.</li>
+          <li>You contribute to an open source dApp? Your peers validate your development skills by voting on your signals.</li>
+          <li>Sofia creates missing signals automatically to connect data (e.g. from "I follow Kendrick Lamar" to "Kendrick Lamar is an artist" to "Artists are on YouTube"), enriching the global graph and making navigation and recommendation easier.</li>
+        </ul>
 <br></br>
 
-        <h2>How the System Is Funded</h2>
+        <h2>Subscription Model</h2>
 
         <p>
-          Each user delegates a small portion of their tokens to a personal UserWallet (ERC-4337). This wallet covers operational fees such as:
+          By subscribing to Sofia, you activate a UserWallet (ERC-4337) linked to your Metamask wallet.
         </p>
 
-        <p>• API calls through GaiaNet</p>
-        <p>• On-chain registration of signals</p>
-        <p>• Other interactions related to your data</p>
-        <p>• You remain the owner of your funds and can adjust or withdraw at any time.</p>
+        <p>Your subscription funds are used to automatically cover the operational costs of the service, including:</p>
+        <ul>
+          <li>On-chain creation and registration of your signals</li>
+          <li>API calls through GaiaNet</li>
+        </ul>
+
+        <p>You remain the full owner of your funds: you can top up, adjust, or cancel your subscription at any time. More details will come on the beta launch.</p>
 
         {/* <p>
           On our side, Sofia takes positions on signals created (a form of staking/betting on relevance). Profits generated feed an internal investment fund, financing the service and its continuous improvement.
@@ -68,22 +67,26 @@ export default function LightPaper(): React.ReactElement {
         <br></br>
         <h2>What You Can Do With Sofia</h2>
 
-        <p>• Build a personal, decentralized knowledge base on your choices</p>
-        <p>• Share your interests or skills in a clear and credible way with your trust circle</p>
-        <p>• Receive recommendations based on your real behaviors, not on opaque algorithms</p>
-        <p>• Interact with certified profiles according to precise and verifiable affinities</p>
-        <p>• Vote on other's knowledge or skills and strengthen their profile – like yours</p>
+        <ul>
+          <li>Build a personal, decentralized knowledge base on your choices</li>
+          <li>Share your interests or skills in a clear and credible way with your trust circle</li>
+          <li>Receive recommendations based on your real behaviors, not on opaque algorithms</li>
+          <li>Interact with certified profiles according to precise and verifiable affinities</li>
+          <li>Vote on other's knowledge or skills and strengthen their profile – like yours</li>
+        </ul>
 
         <br></br>
         <h2>You Remain in Control of Your Data</h2>
 
         <p>Sofia is built for privacy and decentralization:</p>
 
-        <p>• Sensitive data protected</p>
-        <p>• Personnal AI</p>
-        <p>• Ability to disable tracking at any time</p>
-        <p>• Your data is not held by a large platform (neither by us)</p>
-        <p>• You decide what to share, with whom and for what purpose</p>
+        <ul>
+          <li>Sensitive data protected</li>
+          <li>Personal AI</li>
+          <li>Ability to disable tracking at any time</li>
+          <li>Your data is not held by a large platform (neither by us)</li>
+          <li>You decide what to share, with whom and for what purpose</li>
+        </ul>
         
         
         <br></br>
@@ -98,10 +101,12 @@ export default function LightPaper(): React.ReactElement {
 
         <p>Sofia is for people who:</p>
 
-        <p>• Want to regain control of their digital data</p>
-        <p>• Seek useful and personalized recommendations</p>
-        <p>• Wish to showcase their skills without constant self-promotion</p>
-        <p>• Like to discover people and content truly aligned with them</p>
+        <ul>
+          <li>Want to regain control of their digital data</li>
+          <li>Seek useful and personalized recommendations</li>
+          <li>Wish to showcase their skills without constant self-promotion</li>
+          <li>Like to discover people and content truly aligned with them</li>
+        </ul>
       </main>
     </Layout>
   );
