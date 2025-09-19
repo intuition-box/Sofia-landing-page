@@ -1,6 +1,7 @@
 import React from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
+import SofiaCarousel from '@site/src/components/SofiaCarousel';
 import styles from './index.module.css';
 
 export default function Home(): React.ReactElement {
@@ -14,20 +15,9 @@ export default function Home(): React.ReactElement {
         <section className={styles.heroSection}>
           <div className="container">
           <p className={styles.sectionText}>
-            <h1>Give Meaning to Your Browsing</h1>
+            <h1>Take back your Web</h1>
             </p>
-            <div className={styles.imagesContainer}>
-              <img
-                src="/img/screensofia.png"
-                alt="Sofia Homepage"
-                className={styles.heroLogo}
-              />
-              <img
-                src="/img/screensofiaprofil.png"
-                alt="Sofia Profile"
-                className={styles.heroLogo}
-              />
-            </div>
+            <SofiaCarousel />
 
           </div>
         </section>

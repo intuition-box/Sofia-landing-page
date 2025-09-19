@@ -61,7 +61,7 @@ export default function Home(): React.ReactElement {
               </ul>
 
               <p className={styles.sectionTextmanifesto}>
-                SOFIA transforms arid dunes into fertile soil, a web serving humanity, not the Houses of Silicon Valley. The desert may be vast and unforgiving, but its power, once tamed, can build a future where the web belongs to us all again.
+                SOFIA transforms arid dunes into fertile soil, a web serving humanity, not the looming shadows of Silicon Valley. The desert may be vast and unforgiving, but its power, once tamed, can build a future where the web belongs to us all again.
               </p>
             </article>
           </div>
