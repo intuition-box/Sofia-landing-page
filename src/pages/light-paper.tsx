@@ -7,7 +7,7 @@ export default function LightPaper(): React.ReactElement {
       title="Light Paper"
       description="Sofia Light Paper">
       <main style={{ padding: '4rem 2rem', color: '#02000B', maxWidth: '800px', margin: '0 auto', lineHeight: '1.6' }}>
-        <h1>Sofia – Give Meaning to Your Browsing</h1>
+        <h1>Light Paper</h1>
         <br></br>
 
         <p>
