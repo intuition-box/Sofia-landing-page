@@ -1,6 +1,6 @@
 ---
 
-slug: Logbook
+slug: logbook-19-09
 
 title: Logbook 19/09
 
