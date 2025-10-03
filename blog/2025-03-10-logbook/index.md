@@ -2,7 +2,7 @@
 
 slug: logbook-03-10
 
-title: Logbook 10/03
+title: Logbook 03/10
 
 authors: [Samuel, Maxime]
 
