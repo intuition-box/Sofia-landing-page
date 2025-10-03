@@ -15,7 +15,7 @@ export default function Home(): React.ReactElement {
         <section className={styles.heroSection}>
           <div className="container">
           <p className={styles.sectionText}>
-            <h1>Take back your Web</h1>
+            <h1>Take your Web back</h1>
             </p>
             <SofiaCarousel />
 
