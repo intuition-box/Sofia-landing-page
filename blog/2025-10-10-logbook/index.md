@@ -12,7 +12,7 @@ This week we expanded SofIA’s intelligence layer by integrating Ollama for per
 
 On the AI side, SofIA now features a complete recommendation engine capable of analyzing user on-chain activity and generating contextual suggestions. We implemented a double-pass strategy, producing a natural language response before reformatting it into structured JSON, and configured Ollama to accept secure requests directly from the Chrome extension. Results are now stored locally through IndexedDB, with automatic accumulation and deduplication to prevent redundant entries.  
 
-On the blockchain side, we improved the search experience with EIP-55 normalization (via Viem) for wallet addresses, ensuring consistent query results. We also unified the search bar inside the SignalsTab and optimized GraphQL queries to fetch all triplets where users hold positions, making blockchain exploration faster and more reliable.  
+On the blockchain side, we improved the search experience with EIP-55 normalization (via Viem) for wallet addresses, ensuring consistent query results. We also unified the search bar inside the SignalsTab and optimized GraphQL queries to fetch all triples where users hold positions, making blockchain exploration faster and more reliable.  
 
 Together, these upgrades establish the foundation for adaptive, AI-driven insights within SofIA, linking behavioral patterns, blockchain data, and recommendation logic into one seamless experience.
 
