@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '@theme/Layout';
-import Link from '@docusaurus/Link';
-import SofiaCarousel from '@site/src/components/SofiaCarousel';
+import BentoGrid from '@site/src/components/BentoGrid';
+import KeyFeatures from '@site/src/components/KeyFeatures';
 import styles from './index.module.css';
 
 export default function Home(): React.ReactElement {
@@ -10,27 +10,21 @@ export default function Home(): React.ReactElement {
       title="Sofia"
       description="Empowering people and organizations to capture, verify, share and amplify knowledge across the web">
 
-      <main>
+      <main style={{ position: 'relative', zIndex: 1 }}>
         {/* Hero Section */}
         <section className={styles.heroSection}>
           <div className="container">
-          <p className={styles.sectionText}>
-            <h1>Take your Web back</h1>
-            </p>
-            <SofiaCarousel />
-
+            <h1 className={styles.heroTitle}>From Surfing the Web to Owning It</h1>
           </div>
         </section>
-        
-            {/* Manifesto Button */}
-            <div className={styles.manifestoSection}>
-              <Link
-                to="/manifesto"
-                className={styles.manifestoButton}
-              >
-                Read Manifesto
-              </Link>
-            </div>
+
+        {/* Bento Grid Gallery */}
+        <section className={styles.gallerySection}>
+          <BentoGrid />
+        </section>
+
+        {/* Key Features */}
+        <KeyFeatures />
       </main>
     </Layout>
   );

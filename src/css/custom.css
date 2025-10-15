@@ -28,6 +28,12 @@
   --ifm-font-color-base: #02000B;
   --ifm-font-family-base: 'Overpass Mono', monospace;
   --ifm-heading-font-family: 'Overpass Mono', monospace;
+  --ifm-navbar-height: 9rem;
+  --dark: #ffffff;
+}
+
+.authorSocialLink_O1ZE svg path {
+  fill: #ffffff !important;
 }
 
 
@@ -36,12 +42,9 @@
   height: 4.8rem !important;
 }
 
-/* Remove navbar box-shadow and make transparent */
+/* Hide the default navbar completely */
 .navbar {
-  box-shadow: none !important;
-  background-color: transparent !important;
-  height: calc(var(--ifm-navbar-height) * 1.1) !important;
-  padding: calc(var(--ifm-navbar-padding-vertical) * 1.1) var(--ifm-navbar-padding-horizontal) !important;
+  display: none !important;
 }
 
 /* Make footer background transparent and text color consistent */
@@ -55,6 +58,8 @@
 .footer * {
   color: #02000B !important;
 }
+
+
 
 .footer a {
   color: #02000B !important;
@@ -100,25 +105,6 @@
   height: 3rem !important;
 }
 
-/* Set background image */
-body {
-  background-image: url('/img/BackgroundChronicles.webp');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
-  min-height: 100vh;
-}
-
-/* Ensure background covers full viewport */
-html {
-  background-image: url('/img/BackgroundChronicles.webp');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
-}
-
 /* Blog layout adjustments - only for individual blog post pages */
 [class*="blogPostPage"] .blog-wrapper,
 .theme-blog-post-page .blog-wrapper {
@@ -131,6 +117,7 @@ html {
   width: 250px !important;
   min-width: 250px;
   flex-shrink: 0;
+  /* top: 13rem !important */
 }
 
 [class*="blogPostPage"] .blog-content,
@@ -198,6 +185,7 @@ html[data-theme] .toggle_node_modules-\@docusaurus-theme-classic-lib-theme-Color
 
   .navbar-sidebar__item {
     background-color: rgba(245, 245, 245, 0.9) !important;
+    top: 13rem
   }
 
   /* Use different logo in mobile sidebar */
@@ -231,7 +219,7 @@ html[data-theme] .toggle_node_modules-\@docusaurus-theme-classic-lib-theme-Color
 /* Remove text decoration from footer links */
 .footer .footer__link-item {
   text-decoration: none !important;
-  color: #02000B !important;
+  color: #ffffff !important;
   cursor: pointer !important;
   pointer-events: auto !important;
 }
@@ -249,25 +237,50 @@ html[data-theme] .toggle_node_modules-\@docusaurus-theme-classic-lib-theme-Color
   color: #02000B !important;
 }
 
-/* Global text color overrides */
+/* Global text color overrides and background setup for PixelBlast */
 body, html {
-  color: #02000B !important;
+  color: #ffffff !important;
+  background-color: transparent !important;
+  position: relative !important;
+}
+
+/* Main wrapper to allow PixelBlast background to show */
+#__docusaurus {
+  background-color: transparent !important;
+  position: relative !important;
+}
+
+.main-wrapper {
+  background-color: transparent !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Add padding-top to main content to avoid CardNav overlap */
+main {
+  padding-top: 5rem !important;
+}
+
+/* Override for home page which has its own hero section spacing */
+.theme-doc-page-layout main,
+body[class*="index"] main {
+  padding-top: 0 !important;
 }
 
 * {
-  color: #02000B !important;
+  color: #ffffff !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #02000B !important;
+  color: #ffffff !important;
 }
 
 p, span, div {
-  color: #02000B !important;
+  color: #ffffff !important;
 }
 
 .hero__title, .hero__subtitle {
-  color: #02000B !important;
+  color: #ffffff !important;
 }
 
 /* Navbar Blog link positioning */
@@ -288,7 +301,7 @@ a.button.button--primary.button--lg,
 .button.button--primary.button--lg {
   color: white !important;
   background-color: #02000B !important;
-  border-color: #02000B !important;
+  border-color: #ffffff !important;
   text-decoration: none !important;
   display: inline-block !important;
   cursor: pointer !important;
@@ -309,7 +322,7 @@ a.button.button--primary.button--lg:focus,
 
 a.button.button--outline.button--primary.button--lg,
 .button.button--outline.button--primary.button--lg {
-  color: #02000B !important;
+  color: #ffffff !important;
   background-color: transparent !important;
   border-color: #02000B !important;
   text-decoration: none !important;
@@ -325,7 +338,7 @@ a.button.button--outline.button--primary.button--lg:focus,
 .button.button--outline.button--primary.button--lg:focus {
   background-color: #02000B !important;
   color: white !important;
-  border-color: #02000B !important;
+  border-color: #ffffff !important;
   transform: translateY(-2px) !important;
   box-shadow: 0 4px 8px rgba(2, 0, 11, 0.2) !important;
   text-decoration: none !important;

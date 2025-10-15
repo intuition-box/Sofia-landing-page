@@ -5,19 +5,34 @@
 
 /* Hero Section */
 .heroSection {
-  padding: 2rem 0;
+  padding: 8rem 0 4rem 0;
   text-align: center;
   position: relative;
   background: transparent;
-  min-height: 50vh;
+  min-height: 40vh;
   display: flex;
   align-items: center;
 }
 
+
+
+
+
+/* Gallery Section */
+.gallerySection {
+  padding: 4rem 0;
+  background: transparent;
+  position: relative;
+}
+
 @media screen and (max-width: 996px) {
   .heroSection {
-    padding: 4rem 2rem;
-    min-height: 80vh;
+    padding: 6rem 2rem 3rem 2rem;
+    min-height: 30vh;
+  }
+
+  .gallerySection {
+    padding: 3rem 0;
   }
 }
 
@@ -146,7 +161,7 @@
 .manifestoButton {
   display: inline-block;
   background: transparent;
-  color: #02000B !important;
+  color: #ffffff !important;
   padding: 1rem 3rem;
   border: 2px solid #02000B;
   border-radius: 50px;
@@ -178,6 +193,18 @@
 }
 
 /* Typography */
+.heroTitle {
+  font-size: 4.5rem;
+  font-weight: 450;
+  color: #ffffff !important;
+  text-align: center;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 14rem;
+  margin-bottom: 27rem;
+}
+
 .sectionTitle {
   font-size: 2.18rem;
   font-weight: 700;
@@ -193,7 +220,7 @@
   font-size: 2.18rem;
   font-weight: 700;
   margin-bottom: 2rem;
-  color: #02000B !important;
+  color: #ffffff !important;
   text-align: left;
   max-width: 800px;
   margin-left: auto;
@@ -209,7 +236,7 @@
   line-height: 1.7;
   max-width: 800px;
   margin: 0 auto 2rem auto;
-  color: #02000B !important;
+  color: #ffffff !important;
   text-align: center;
 }
 
@@ -218,7 +245,7 @@
   line-height: 1.7;
   max-width: 800px;
   margin: 0 auto 2rem auto;
-  color: #02000B !important;
+  color: #ffffff !important;
   text-align: left;
 }
 
@@ -232,17 +259,33 @@
   max-width: 800px;
   margin: 0 auto 2rem auto;
   padding-left: 2rem;
-  color: #02000B !important;
+  color: #ffffff !important;
 }
 
 .manifestoList li {
   margin-bottom: 1rem;
   font-size: 1.1rem;
   line-height: 1.7;
-  color: #02000B !important;
+  color: #ffffff !important;
 }
 
 @media screen and (max-width: 768px) {
+  .heroSection {
+    padding: 4rem 1rem 2rem 1rem;
+    min-height: 25vh;
+  }
+
+  .gallerySection {
+    padding: 2rem 0;
+  }
+
+  .heroTitle {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    padding: 0 1rem;
+    line-height: 1.2;
+  }
+
   .sectionTitle {
     font-size: 1.6rem;
     margin-bottom: 1.5rem;

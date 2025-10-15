@@ -8,7 +8,6 @@
   This keeps author names aligned even if only some have socials
    */
   height: var(--docusaurus-blog-social-icon-size);
-
   display: flex;
   flex-wrap: wrap;
   align-items: center;
