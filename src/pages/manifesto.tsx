@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '@theme/Layout';
-import ContentWrapper from '@site/src/components/ContentWrapper';
+import ContentWrapperWide from '@site/src/components/ContentWrapperWide';
 
 
 export default function Manifesto(): React.ReactElement {
@@ -10,7 +10,7 @@ export default function Manifesto(): React.ReactElement {
       description="Empowering people and organizations to capture, verify, share and amplify knowledge across the web">
 
       <main style={{ padding: '5', color: '#02000B', lineHeight: '2' }}>
-        <ContentWrapper>
+        <ContentWrapperWide>
           <article>
           <h1>The Deadly Gale Across the Internet Desert</h1>
             <br></br>
@@ -70,7 +70,7 @@ export default function Manifesto(): React.ReactElement {
             SOFIA transforms arid dunes into fertile soil, a web serving humanity, not the looming shadows of Silicon Valley. The desert may be vast and unforgiving, but its power, once tamed, can build a future where the web belongs to us all again.
           </p>
         </article>
-        </ContentWrapper>
+        </ContentWrapperWide>
       </main>
     </Layout>
   );

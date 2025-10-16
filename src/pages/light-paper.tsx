@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '@theme/Layout';
-import ContentWrapper from '@site/src/components/ContentWrapper';
+import ContentWrapperWide from '@site/src/components/ContentWrapperWide';
 
 export default function LightPaper(): React.ReactElement {
   return (
@@ -8,7 +8,7 @@ export default function LightPaper(): React.ReactElement {
       title="Light Paper"
       description="Sofia Light Paper">
       <main style={{ padding: '0', color: '#02000B', lineHeight: '1.6' }}>
-        <ContentWrapper>
+        <ContentWrapperWide>
           <h1>Light Paper</h1>
         <br></br>
 
@@ -109,7 +109,7 @@ export default function LightPaper(): React.ReactElement {
           <li>Wish to showcase their skills without constant self-promotion</li>
           <li>Like to discover people and content truly aligned with them</li>
         </ul>
-        </ContentWrapper>
+        </ContentWrapperWide>
       </main>
     </Layout>
   );

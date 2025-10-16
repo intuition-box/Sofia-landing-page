@@ -30,18 +30,18 @@ export default function Home(): React.ReactElement {
           </div>
         </section>
 
-        {/* Bento Grid Gallery */}
-        <section className={styles.gallerySection}>
-          <BentoGrid />
-        </section>
+        {/* Key Features */}
+        <KeyFeatures />
 
         {/* Partner Logo Loop */}
         <section className={styles.logoSection}>
           <PartnerLogoLoop />
         </section>
 
-        {/* Key Features */}
-        <KeyFeatures />
+        {/* Bento Grid Gallery */}
+        <section className={styles.gallerySection}>
+          <BentoGrid />
+        </section>
       </main>
     </Layout>
   );
