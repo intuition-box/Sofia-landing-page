@@ -11,7 +11,9 @@ const screenshots = [
   { src: '/img/sofiascreen/6.png', alt: 'Sofia Signal', title: 'Sofia Analysis Result' },
   { src: '/img/sofiascreen/7.png', alt: 'Sofia Profile', title: 'Write Echoes On Chain' },
   { src: '/img/sofiascreen/8.png', alt: 'Sofia Settings', title: 'Chat Bot' },
-  { src: '/img/sofiascreen/9.png', alt: 'Sofia Chat', title: 'Bookmarks' }
+  { src: '/img/sofiascreen/9.png', alt: 'Sofia Chat', title: 'Bookmarks' },
+  { src: '/img/sofiascreen/11.png', alt: 'Resonance', title: 'Resonance' },
+  { src: '/img/sofiascreen/12.png', alt: 'Pulse Analysis', title: 'Pulse Analysis' }
 ];
 
 export default function BentoGrid(): React.ReactElement {

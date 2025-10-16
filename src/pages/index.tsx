@@ -4,6 +4,7 @@ import BentoGrid from '@site/src/components/BentoGrid';
 import KeyFeatures from '@site/src/components/KeyFeatures';
 import DecryptedText from '@site/src/components/DecryptedText';
 import PartnerLogoLoop from '@site/src/components/LogoLoop';
+import DiscordButton from '@site/src/components/DiscordButton';
 import styles from './index.module.css';
 
 export default function Home(): React.ReactElement {
@@ -27,6 +28,7 @@ export default function Home(): React.ReactElement {
                 maxIterations={11}
               />
             </h1>
+            <DiscordButton />
           </div>
         </section>
 
