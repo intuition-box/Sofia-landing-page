@@ -75,54 +75,7 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      logo: {
-        alt: 'Sofia Chronicles Logo',
-        src: 'img/sofiaLogo.png',
-      },
-      items: [
-        {
-          to: '/blog',
-          label: 'Sofia Chronicles',
-          position: 'right',
-        },
-        {
-          to: '/light-paper',
-          label: 'Light Paper',
-          position: 'right',
-        },
-      ],
-    },
-    footer: {
-      style: 'dark',
-      links: [
-        {
-          title: 'Social',
-          items: [
-            {
-              html: `
-                <a href="https://x.com/0xSofia3" target="_blank" rel="noreferrer noopener" aria-label="Follow us on X">
-                  <img src="/img/social/x-icon.png" alt="X" width="24" height="24" />
-                </a>
-              `,
-            },
-            {
-              html: `
-                <a href="https://github.com/intuition-box/Sofia" target="_blank" rel="noreferrer noopener" aria-label="View on GitHub">
-                  <img src="/img/social/github-icon.png" alt="GitHub" width="24" height="24" />
-                </a>
-              `,
-            },
-            {
-              html: `
-                <a href="https://discord.gg/39RP6h4WuH" target="_blank" rel="noreferrer noopener" aria-label="Join our Discord">
-                  <img src="/img/social/discord-icon.png" alt="Discord" width="24" height="24" />
-                </a>
-              `,
-            },
-          ],
-        },
-      ],
-      copyright: `Copyright © ${new Date().getFullYear()} Sofia, Inc. Built with ♡`,
+      items: [],
     },
     prism: {
       theme: prismThemes.github,

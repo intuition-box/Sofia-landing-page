@@ -16,7 +16,7 @@ import Threads from '@theme/Icon/Socials/Threads';
 import Youtube from '@theme/Icon/Socials/YouTube';
 import Mastodon from '@theme/Icon/Socials/Mastodon';
 import Twitch from '@theme/Icon/Socials/Twitch';
-import Discord from '@theme/Icon/Socials/Discord';
+
 
 import styles from './styles.module.css';
 
@@ -36,7 +36,7 @@ const SocialPlatformConfigs: Record<string, SocialPlatformConfig> = {
   mastodon: {Icon: Mastodon, label: 'Mastodon'},
   youtube: {Icon: Youtube, label: 'YouTube'},
   twitch: {Icon: Twitch, label: 'Twitch'},
-  discord: {Icon: Discord, label: 'Discord'},
+
 };
 
 function getSocialPlatformConfig(platformKey: string): SocialPlatformConfig {

@@ -1,7 +1,10 @@
 import React from 'react';
 import Layout from '@theme/Layout';
-import Link from '@docusaurus/Link';
-import SofiaCarousel from '@site/src/components/SofiaCarousel';
+import BentoGrid from '@site/src/components/BentoGrid';
+import KeyFeatures from '@site/src/components/KeyFeatures';
+import DecryptedText from '@site/src/components/DecryptedText';
+import PartnerLogoLoop from '@site/src/components/LogoLoop';
+import DiscordButton from '@site/src/components/DiscordButton';
 import styles from './index.module.css';
 
 export default function Home(): React.ReactElement {
@@ -10,27 +13,37 @@ export default function Home(): React.ReactElement {
       title="Sofia"
       description="Empowering people and organizations to capture, verify, share and amplify knowledge across the web">
 
-      <main>
+      <main style={{ position: 'relative', zIndex: 1 }}>
         {/* Hero Section */}
         <section className={styles.heroSection}>
           <div className="container">
-          <p className={styles.sectionText}>
-            <h1>Take your Web back</h1>
-            </p>
-            <SofiaCarousel />
-
+            <h1 className={styles.heroTitle}>
+              <DecryptedText
+                text="From Surfing the Web to Owning It"
+                sequential={true}
+                useOriginalCharsOnly={false}
+                animateOn="view"
+                revealDirection="center"
+                speed={90}
+                maxIterations={11}
+              />
+            </h1>
+            <DiscordButton />
           </div>
         </section>
-        
-            {/* Manifesto Button */}
-            <div className={styles.manifestoSection}>
-              <Link
-                to="/manifesto"
-                className={styles.manifestoButton}
-              >
-                Read Manifesto
-              </Link>
-            </div>
+
+        {/* Key Features */}
+        <KeyFeatures />
+
+        {/* Partner Logo Loop */}
+        <section className={styles.logoSection}>
+          <PartnerLogoLoop />
+        </section>
+
+        {/* Bento Grid Gallery */}
+        <section className={styles.gallerySection}>
+          <BentoGrid />
+        </section>
       </main>
     </Layout>
   );

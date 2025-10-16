@@ -1,13 +1,15 @@
 import React from 'react';
 import Layout from '@theme/Layout';
+import ContentWrapperWide from '@site/src/components/ContentWrapperWide';
 
 export default function LightPaper(): React.ReactElement {
   return (
     <Layout
       title="Light Paper"
       description="Sofia Light Paper">
-      <main style={{ padding: '4rem 2rem', color: '#02000B', maxWidth: '800px', margin: '0 auto', lineHeight: '1.6' }}>
-        <h1>Light Paper</h1>
+      <main style={{ padding: '0', color: '#02000B', lineHeight: '1.6' }}>
+        <ContentWrapperWide>
+          <h1>Light Paper</h1>
         <br></br>
 
         <p>
@@ -107,6 +109,7 @@ export default function LightPaper(): React.ReactElement {
           <li>Wish to showcase their skills without constant self-promotion</li>
           <li>Like to discover people and content truly aligned with them</li>
         </ul>
+        </ContentWrapperWide>
       </main>
     </Layout>
   );
