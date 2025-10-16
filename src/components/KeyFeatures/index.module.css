@@ -112,6 +112,10 @@
     font-size: 2.5rem;
   }
 
+  .featuresBigTitle {
+    font-size: 3.5rem;
+  }
+
   .featuresSubtitle {
     font-size: 1.15rem;
     margin-bottom: 3rem;
@@ -135,6 +139,12 @@
   .featuresTitle {
     font-size: 2rem;
     padding: 0 1rem;
+  }
+
+  .featuresBigTitle {
+    font-size: 2.5rem;
+    padding: 0 1rem;
+    margin-bottom: 2rem;
   }
 
   .featuresSubtitle {
