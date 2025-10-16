@@ -2,6 +2,8 @@ import React from 'react';
 import Layout from '@theme/Layout';
 import BentoGrid from '@site/src/components/BentoGrid';
 import KeyFeatures from '@site/src/components/KeyFeatures';
+import DecryptedText from '@site/src/components/DecryptedText';
+import PartnerLogoLoop from '@site/src/components/LogoLoop';
 import styles from './index.module.css';
 
 export default function Home(): React.ReactElement {
@@ -14,13 +16,28 @@ export default function Home(): React.ReactElement {
         {/* Hero Section */}
         <section className={styles.heroSection}>
           <div className="container">
-            <h1 className={styles.heroTitle}>From Surfing the Web to Owning It</h1>
+            <h1 className={styles.heroTitle}>
+              <DecryptedText
+                text="From Surfing the Web to Owning It"
+                sequential={true}
+                useOriginalCharsOnly={false}
+                animateOn="view"
+                revealDirection="center"
+                speed={90}
+                maxIterations={11}
+              />
+            </h1>
           </div>
         </section>
 
         {/* Bento Grid Gallery */}
         <section className={styles.gallerySection}>
           <BentoGrid />
+        </section>
+
+        {/* Partner Logo Loop */}
+        <section className={styles.logoSection}>
+          <PartnerLogoLoop />
         </section>
 
         {/* Key Features */}

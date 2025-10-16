@@ -25,6 +25,14 @@
   position: relative;
 }
 
+/* Logo Section */
+.logoSection {
+  padding: 4rem 0;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+}
+
 @media screen and (max-width: 996px) {
   .heroSection {
     padding: 6rem 2rem 3rem 2rem;
