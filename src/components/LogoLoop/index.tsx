@@ -17,6 +17,12 @@ const partnerLogos: LogoItem[] = [
     className: "logo-gaianet"
   },
   {
+    src: "/img/partners/colonnylogo.png",
+    alt: "Colonny",
+    href: "https://colony.io/",
+    className: "logo-gaianet"
+  },
+  {
     src: "/img/partners/intuitionlogo.svg",
     alt: "Intuition",
     href: "https://intuition.systems",
