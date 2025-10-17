@@ -5,6 +5,7 @@ import KeyFeatures from '@site/src/components/KeyFeatures';
 import DecryptedText from '@site/src/components/DecryptedText';
 import PartnerLogoLoop from '@site/src/components/LogoLoop';
 import DiscordButton from '@site/src/components/DiscordButton';
+import FAQ from '@site/src/components/FAQ';
 import styles from './index.module.css';
 
 export default function Home(): React.ReactElement {
@@ -44,6 +45,9 @@ export default function Home(): React.ReactElement {
         <section className={styles.gallerySection}>
           <BentoGrid />
         </section>
+
+        {/* FAQ Section */}
+        <FAQ />
       </main>
     </Layout>
   );
