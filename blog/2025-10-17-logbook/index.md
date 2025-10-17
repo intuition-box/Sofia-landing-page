@@ -23,26 +23,28 @@ Together, these updates represent a turning point: Sofia is evolving from an int
 
 <!-- truncate -->
 
+
+## Public Demo & Community Launch
+- Launched the official Discord server
+- Opened the early access program to contributors
+- Presented Sofia publicly on Intuition's X Space community stream
+- Received encouraging user feedback and engagement
+![Intuition Community Stream](./intuitioncommunitystream.png)
+
+
 ## OLLAMA Integration for Recommendations
 - Integrated Ollama to handle intelligent, personalized recommendations
 - Resonance page now delivers accurate website suggestions based on user behavior
 ![Resonance Recommendations](./11.png)
 
-## UI/UX Overhaul
-- Complete redesign of the website's interface and user experience
-- Updated extension UI to match the new visual identity
-- Enhanced homepage orb animation for a more dynamic presentation
-
 ## Community & Product Pages
 - Improved Follow, Trust Circle, and Account pages with better usability
 ![Improved Pages](./5.png)
 
-## Public Demo & Community Launch
-- Presented Sofia publicly on Intuition's X Space community stream
-- Received encouraging user feedback and engagement
-![Intuition Community Stream](./intuitioncommunitystream.png)
-- Launched the official Discord server
-- Opened the early access program to contributors
+## UI/UX Overhaul
+- Complete redesign of the website's interface and user experience
+- Updated extension UI to match the new visual identity
+- Enhanced homepage orb animation for a more dynamic presentation
 
 ## Overall Impact
 - First public showcase: validation from real users
