@@ -2,14 +2,14 @@ import React from 'react';
 import Layout from '@theme/Layout';
 import ContentWrapperWide from '@site/src/components/ContentWrapperWide';
 
-export default function LightPaper(): React.ReactElement {
+export default function Litepaper(): React.ReactElement {
   return (
     <Layout
-      title="Light Paper"
-      description="Sofia Light Paper">
+      title="Litepaper"
+      description="Sofia Litepaper">
       <main style={{ padding: '0', color: '#02000B', lineHeight: '1.6' }}>
         <ContentWrapperWide>
-          <h1>Light Paper</h1>
+          <h1>Litepaper</h1>
         <br></br>
 
         <p>
