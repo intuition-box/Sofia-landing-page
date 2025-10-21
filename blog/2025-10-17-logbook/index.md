@@ -29,8 +29,10 @@ Together, these updates represent a turning point: Sofia is evolving from an int
 - Opened the early access program to contributors
 - Presented Sofia publicly on Intuition's X Space community stream
 - Received encouraging user feedback and engagement
+
 ![Intuition Community Stream](./intuitioncommunitystream.png)
 
+[Watch the full stream](https://x.com/i/broadcasts/1ypJdqnZEQyxW?t=5820)
 
 ## OLLAMA Integration for Recommendations
 - Integrated Ollama to handle intelligent, personalized recommendations

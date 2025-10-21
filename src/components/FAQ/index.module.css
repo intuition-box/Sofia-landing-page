@@ -92,7 +92,7 @@
 }
 
 .faqAnswer.open {
-  max-height: 500px;
+  max-height: 1000px;
   padding: 0 2rem 1.5rem 2rem;
 }
 
