@@ -41,11 +41,6 @@ export default function Home(): React.ReactElement {
           <PartnerLogoLoop />
         </section>
 
-        {/* Bento Grid Gallery */}
-        <section className={styles.gallerySection}>
-          <BentoGrid />
-        </section>
-
         {/* FAQ Section */}
         <FAQ />
       </main>
