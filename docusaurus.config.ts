@@ -82,6 +82,10 @@ const config: Config = {
       darkTheme: prismThemes.dracula,
     },
   } satisfies Preset.ThemeConfig,
+
+  plugins: [
+    require('./plugins/webpack-plugin.cjs').webpackPlugin,
+  ],
 };
 
 export default config;

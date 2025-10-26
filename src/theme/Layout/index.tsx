@@ -15,7 +15,7 @@ export default function Layout(props: Props): JSX.Element {
       textColor: "#fff",
       links: [
         { label: "Manifesto", href: "/manifesto", ariaLabel: "Read Manifesto" },
-        { label: "Litepaper", href: "/docs/litepaper/introduction", ariaLabel: "Read Litepaper" }
+        { label: "Documentation", href: "/docs/introduction", ariaLabel: "Read Documentation" }
       ]
     },
     {
