@@ -5,44 +5,40 @@ title: Overview
 
 # Architecture Overview
 
-Sofia's architecture is designed around privacy, decentralization, and verifiable knowledge. The system leverages multiple technologies to ensure your data remains secure while providing powerful AI-driven insights.
+Sofia's architecture is designed around privacy, decentralization, and verifiable knowledge. The system ensure your data remains private while providing powerful AI-driven insights.
 
 ## Architecture Diagram
 
-import BrowserOnly from '@docusaurus/BrowserOnly';
-import ExcalidrawViewer from '@site/src/components/ExcalidrawViewer';
+The Sofia architecture consists of several interconnected layers.
 
-<BrowserOnly fallback={<p>Loading diagram...</p>}>
-  {() => <ExcalidrawViewer src="/excalidraw/architecture-diagram.excalidraw.json" />}
-</BrowserOnly>
-
-The Sofia architecture consists of several interconnected layers working together to provide a secure, private, and intelligent experience.
+![Architecture-diagram](../../static/img/architecture-diagram.png)
 
 ## Key Components
 
 ### Chrome Extension (User Layer)
 
 The Sofia Chrome Extension is your gateway to the system. It monitors your browsing activity, capturing URLs and context to build your personal knowledge graph. The extension runs locally in your browser, ensuring initial data capture happens on your device.
+All the data are stored into your localstorage and sent excusively to Phala TEE Machine to insure your complete privacy. 
 
 ### Phala TEE Machine (Privacy Layer)
 
-All sensitive data processing happens within a Trusted Execution Environment (TEE) powered by Phala Network. This ensures that your browsing data is processed in a secure, isolated environment where even the infrastructure provider cannot access your raw data.
+All sensitive data processing happens within a Trusted Execution Environment (TEE) powered by Phala. This ensures that your browsing data is processed in a secure, isolated environment where even the infrastructure provider cannot access your raw data.
 
 Our core values emphasize end-to-end encrypted data certification, ensuring that all information remains protected from the moment it is created until it is processed. We also provide public verification of data encryption through on-chain attestations, offering full transparency and trust.
 
 Our ultimate intention is to guarantee users true decentralization — even we have no access to the data that transits within the TEE.
 
-### ELIZA Docker & Agents (Intelligence Layer)
+### ELIZA Framework Docker
 
-ElizaOS agents run within the TEE, analyzing your browsing patterns and generating insights. These AI agents are trained to understand context, extract meaningful signals, and create connections in your knowledge graph – all while respecting your privacy.
+ElizaOS framework run within the TEE, analyzing your browsing patterns and generating insights. These AI agents are trained to understand context, extract meaningful signals, and create connections in your knowledge graph – all while respecting your privacy.
 
-### GaiaNet (AI Infrastructure)
+### GaiaNet (AI Models)
 
-GaiaNet provides the decentralized AI infrastructure that powers Sofia's intelligent features. It ensures AI models run efficiently while maintaining privacy and decentralization principles.
+GaiaNet provides decentralized AI models that powers Sofia's intelligent features. The anonymized data come from Phala, and processed by Gaianet which ensure the scalability of our infrastucture. 
 
 ### Intuition MCP & Indexer (Knowledge Layer)
 
-Anonymized and aggregated signals are sent to the Intuition system, where they're transformed into triples (subject-predicate-object statements) and indexed on-chain. This creates a verifiable, decentralized knowledge graph that you control.
+The intuition MCP is executed throught the TEE. Sofia agent's are connected to the MCP server which query and filter the user knowledge graph. 
 
 
 ## Data Flow

@@ -19,7 +19,7 @@ Over time, agents learn your interests and behaviors, identifying patterns that 
 
 ### Signal Generation
 
-Agents automatically generate signals (knowledge triples) about your interests, skills, and preferences based on your activity.
+Agents automatically generate signals (intuition triples) about your interests, skills, and preferences based on your activity.
 
 ### Recommendation Engine
 

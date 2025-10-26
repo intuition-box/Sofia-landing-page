@@ -57,8 +57,5 @@ Your UserWallet (ERC-4337) automatically handles these interactions, making the 
 While Intuition enables public verification, you maintain control over:
 
 - **What gets published** - Choose which signals are public vs private
-- **Who can see** - Set access controls for sensitive information
-- **When to share** - Decide timing and context for revealing data
-- **How it's used** - Define permissions for third-party applications
 
 This gives you the best of both worlds: verifiable public reputation and private personal data.
