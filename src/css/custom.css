@@ -346,8 +346,17 @@ a.button.button--outline.button--primary.button--lg:focus,
 
 
 /* Sidebar active link styling */
-[class*="sidebarItemLinkActive"] {
+aside [class*="sidebarItemLinkActive"],
+aside [class*="sidebarItemLinkActive"] a,
+aside [class*="sidebarItemLinkActive"] > *,
+.theme-doc-sidebar-item-link-level-1[class*="sidebarItemLinkActive"],
+.theme-doc-sidebar-item-link-level-2[class*="sidebarItemLinkActive"],
+.theme-doc-sidebar-item-link-level-3[class*="sidebarItemLinkActive"] {
   color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+[class*="sidebarItemLinkActive"] {
   background-color: rgba(255, 255, 255, 0.1) !important;
   border-left: 3px solid #ffffff !important;
 }
@@ -397,4 +406,20 @@ a.button.button--outline.button--primary.button--lg:focus,
     opacity: 1 !important;
     transform: none !important;
   }
+}
+
+/* Override CSS variable for sidebar links */
+aside nav,
+aside [class*="menu"],
+aside [class*="sidebar"] {
+  --ifm-color-primary: #ffffff;
+  --ifm-link-color: #ffffff;
+}
+
+/* Force white color and bold for active sidebar links - highest priority */
+html body aside [class*="sidebarItemLinkActive"],
+html body aside [class*="sidebarItemLinkActive"] *,
+aside [class*="sidebarItemLinkActive"] {
+  color: #ffffff !important;
+  font-weight: 700 !important;
 }
