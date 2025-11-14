@@ -8,7 +8,7 @@ import React from 'react';
 const config: Config = {
   title: 'Sofia Chronicles',
   tagline: 'Sofia',
-  favicon: 'img/favicon.svg',
+  favicon: 'img/favicon.png',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
