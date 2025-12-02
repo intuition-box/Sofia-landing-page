@@ -20,7 +20,7 @@ Furthermore, we completed the full deployment of our Gaianet node, enabling the 
 - **Curve 2 (Shares/Deposits)**: Used for financial investments in triples. This curve allows users to acquire shares and participate economically in signals.
 
 ### New Triples Creation Logic
-- **Minimum Required**: Each triples creation now requires a minimum deposit of 0.01 TRUST (`MIN_TRIPLE_DEPOSIT = 10^16 wei`) plus creation fees (`feeCost`).
+- **Minimum Required**: Each triples creation now requires a minimum deposit of 0.01 TRUST plus creation fees.
 - **Automatic Conversion to Shares**: If a user wants to invest more than the minimum, the system first creates the triples with the minimum amount, then automatically performs a second deposit on Curve 2 to convert the excess into shares.
 - **Example**: If a user wants to create a triples with 0.1 TRUST, the system uses 0.01 TRUST + fees for creation, then deposits the remaining 0.09 TRUST on Curve 2 as an investment.
 
@@ -30,7 +30,7 @@ Furthermore, we completed the full deployment of our Gaianet node, enabling the 
 
 
 ### Atom URI Calculation
-- Implemented atom URI calculation directly via the contract to obtain the correct `curve ID`.
+- Implemented atom URI calculation directly via the contract to obtain the correct.
 - Support for batch creation with automatic fallback to deposit if the triples already exists.
 
 ---
@@ -43,12 +43,12 @@ Furthermore, we completed the full deployment of our Gaianet node, enabling the 
 - Predefined amount options (Minimum, Default, Strong) plus a Custom option.
 
 ### Dynamic Messaging
-- **Added `operationType`**: The `useTrustPage` and `useTrustAccount` hooks now return the type of operation performed (`'created'` or `'deposit'`).
+- **Added operationType**: The useTrustPage and useTrustAccount hooks now return the type of operation performed ('created' or 'deposit').
 - **Contextual Success Messages**:
   - Creation: "Your signal has been amplified!"
   - Deposit on existing: "Your signal has been reinforced!"
   - Mixed (batch): "X signals created, Y existing signals reinforced!"
-- **`createdCount` and `depositCount` Props**: Passed to WeightModal to display the appropriate message.
+- **createdCount` and depositCount Props**: Passed to WeightModal to display the appropriate message.
 
 ### SignalsTab Improvements
 - Added sorting by shares (Curve 2) separate from sorting by support (Curve 1).
@@ -63,8 +63,8 @@ Furthermore, we completed the full deployment of our Gaianet node, enabling the 
 - Integration with ActivityTab to display action history.
 
 ### Follow Functionality
-- `useCreateFollowTriples` hook to create "I follow [user]" triples.
-- Uses the existing on-chain `PREDICATE_IDS.FOLLOW` predicate.
+- useCreateFollowTriples hook to create "I follow [user]" triples.
+- Uses the existing on-chain PREDICATE_IDS.FOLLOW predicate.
 - Same curve logic: creation on Curve 1 with option to deposit on Curve 2.
 - Custom amount support: creation fees are added on top of the user's desired amount (if user wants 0.01 TRUST in shares, total cost = 0.01 + 0.003 fees).
 
