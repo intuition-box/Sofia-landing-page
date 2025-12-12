@@ -26,7 +26,7 @@ We also improved transaction handling by adding a deposit function when triples 
 In parallel, the proxy contract is now live, and a transaction-wrapping function has been implemented for triple creation and staking to optimize gas usage and Sofia’s fees.
 
 ## Trust / Distrust System
-We extended the trust system by introducing a **distrust address constant**, allowing users to create claims such as **“I distrust <object>”**.  
+We extended the trust system by introducing a **distrust address constant**, allowing users to create claims such as **“I distrust "object"”**.  
 The trustPage component was updated to support this new feature.
 ![Distrust](./image.png)
 
