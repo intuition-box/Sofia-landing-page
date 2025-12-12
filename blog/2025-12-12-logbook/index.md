@@ -2,7 +2,7 @@
 
 slug: logbook-12-12
 
-title: Logbook 12-12
+title: Logbook 12/12
 
 authors: [Samuel, Maxime]
 
