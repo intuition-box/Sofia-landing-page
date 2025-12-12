@@ -17,7 +17,7 @@ We established a connection with the **Intuition MCP Server** and started defini
 
 ## Authentication & Privy Integration
 The **Privy authentication flow** is now fully implemented in the Chrome extension.  
-We integrated the **Privy wallet provider** and added a ([dedicated login component](https://sofia.intuition.box/auth))
+We integrated the **Privy wallet provider** and added a [dedicated login component](https://sofia.intuition.box/auth)
 The provider is now configured with the correct environment and security settings.
 
 ## Transactions & Staking
