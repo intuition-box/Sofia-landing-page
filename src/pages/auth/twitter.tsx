@@ -1,8 +1,8 @@
 /**
  * Sofia Twitter/X OAuth Initiation Page
  *
- * This page initiates the Twitter OAuth 2.0 flow with PKCE.
- * It generates the code verifier/challenge and redirects to Twitter.
+ * This page initiates the Twitter OAuth 2.0 Authorization Code flow.
+ * Web App (Confidential Client) - no PKCE required.
  *
  * URL Parameters:
  * - extensionId: Chrome extension ID for sending token back
@@ -15,41 +15,16 @@ import styles from '../auth.module.css';
 
 // ============= CONFIGURATION =============
 const TWITTER_CLIENT_ID = 'dURILW1BSzVFcEtpSkVPX3V5c0E6MTpjaQ';
-// TODO: change to https://sofia.intuition.box/auth/twitter/callback when ready for prod
-const TWITTER_REDIRECT_URI = 'http://localhost:3000/auth/twitter/callback';
+const TWITTER_REDIRECT_URI = 'https://sofia.intuition.box/auth/twitter/callback';
 const TWITTER_SCOPES = ['users.read', 'tweet.read'];
 
-// ============= PKCE HELPER FUNCTIONS =============
+// ============= HELPER FUNCTIONS =============
 
-// Generate random string for state and code verifier
+// Generate random string for state (CSRF protection)
 const generateRandomString = (length: number): string => {
   const array = new Uint8Array(length);
   crypto.getRandomValues(array);
   return Array.from(array, (byte) => byte.toString(16).padStart(2, '0')).join('');
-};
-
-// Generate code verifier (43-128 characters, base64url)
-const generateCodeVerifier = (): string => {
-  const array = new Uint8Array(32);
-  crypto.getRandomValues(array);
-  return base64UrlEncode(array);
-};
-
-// Generate code challenge from verifier using SHA-256
-const generateCodeChallenge = async (verifier: string): Promise<string> => {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(verifier);
-  const digest = await crypto.subtle.digest('SHA-256', data);
-  return base64UrlEncode(new Uint8Array(digest));
-};
-
-// Base64 URL encode (no padding, URL-safe characters)
-const base64UrlEncode = (buffer: Uint8Array): string => {
-  const base64 = btoa(String.fromCharCode(...buffer));
-  return base64
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_')
-    .replace(/=/g, '');
 };
 
 // ============= TWITTER AUTH CONTENT COMPONENT =============
@@ -65,28 +40,23 @@ const TwitterAuthContent = () => {
         const urlParams = new URLSearchParams(window.location.search);
         const extensionId = urlParams.get('extensionId') || '';
 
-        // Generate PKCE values
+        // Generate state for CSRF protection
         const state = generateRandomString(32);
-        const codeVerifier = generateCodeVerifier();
-        const codeChallenge = await generateCodeChallenge(codeVerifier);
 
         // Store OAuth state in localStorage for callback page
         localStorage.setItem('twitter_oauth_state', JSON.stringify({
           state,
-          codeVerifier,
           extensionId,
           timestamp: Date.now()
         }));
 
-        // Build Twitter OAuth URL
+        // Build Twitter OAuth URL (no PKCE for Web App / Confidential Client)
         const params = new URLSearchParams({
           client_id: TWITTER_CLIENT_ID,
           redirect_uri: TWITTER_REDIRECT_URI,
           scope: TWITTER_SCOPES.join(' '),
           state: state,
-          response_type: 'code',
-          code_challenge: codeChallenge,
-          code_challenge_method: 'S256'
+          response_type: 'code'
         });
 
         const authUrl = `https://twitter.com/i/oauth2/authorize?${params.toString()}`;

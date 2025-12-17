@@ -3,7 +3,7 @@
  *
  * This page handles the Twitter OAuth callback:
  * 1. Receives authorization code from Twitter
- * 2. Exchanges code for access token
+ * 2. Exchanges code for access token (using client_secret, no PKCE)
  * 3. Sends token back to Chrome extension
  *
  * URL Parameters (from Twitter):
@@ -30,20 +30,18 @@ declare const chrome: {
 // ============= CONFIGURATION =============
 const TWITTER_CLIENT_ID = 'dURILW1BSzVFcEtpSkVPX3V5c0E6MTpjaQ';
 const TWITTER_CLIENT_SECRET = 'l7KprhKLI-Y2qrI5AYk0nSM-83YYlfKSisP4nUZZSFWJ_XlPnc';
-// TODO: change to https://sofia.intuition.box/auth/twitter/callback when ready for prod
-const TWITTER_REDIRECT_URI = 'http://localhost:3000/auth/twitter/callback';
+const TWITTER_REDIRECT_URI = 'https://sofia.intuition.box/auth/twitter/callback';
 
 // ============= HELPER FUNCTIONS =============
 
 interface OAuthState {
   state: string;
-  codeVerifier: string;
   extensionId: string;
   timestamp: number;
 }
 
-// Exchange authorization code for access token
-const exchangeCodeForToken = async (code: string, codeVerifier: string) => {
+// Exchange authorization code for access token (Confidential Client - no PKCE)
+const exchangeCodeForToken = async (code: string) => {
   const credentials = btoa(`${TWITTER_CLIENT_ID}:${TWITTER_CLIENT_SECRET}`);
 
   const response = await fetch('https://api.x.com/2/oauth2/token', {
@@ -55,8 +53,7 @@ const exchangeCodeForToken = async (code: string, codeVerifier: string) => {
     body: new URLSearchParams({
       code,
       grant_type: 'authorization_code',
-      redirect_uri: TWITTER_REDIRECT_URI,
-      code_verifier: codeVerifier
+      redirect_uri: TWITTER_REDIRECT_URI
     })
   });
 
@@ -156,8 +153,8 @@ const TwitterCallbackContent = () => {
 
         setStatus('exchanging');
 
-        // Exchange code for token
-        const tokenData = await exchangeCodeForToken(code, storedState.codeVerifier);
+        // Exchange code for token (no PKCE, using client_secret)
+        const tokenData = await exchangeCodeForToken(code);
 
         console.log('[Sofia Twitter Callback] Token received successfully');
 
