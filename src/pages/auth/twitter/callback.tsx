@@ -29,7 +29,7 @@ declare const chrome: {
 
 // ============= CONFIGURATION =============
 const TWITTER_CLIENT_ID = 'dURILW1BSzVFcEtpSkVPX3V5c0E6MTpjaQ';
-const TWITTER_CLIENT_SECRET = 'l7KprhKLI-Y2qrI5AYk0nSM-83YYlfKSisP4nUZZSFWJ_XlPnc';
+const TWITTER_CLIENT_SECRET = '6slg39ktsHkSlQUzkt9yepSednHWx401NAEVq89O1xflPYl0_L';
 const TWITTER_REDIRECT_URI = 'https://sofia.intuition.box/auth/twitter/callback';
 
 // ============= HELPER FUNCTIONS =============
