@@ -1,8 +1,7 @@
 /**
- * Sofia Twitter/X OAuth Initiation Page
+ * Sofia Twitch OAuth Initiation Page
  *
- * This page initiates the Twitter OAuth 2.0 Authorization Code flow.
- * Web App (Confidential Client) - no PKCE required.
+ * This page initiates the Twitch OAuth 2.0 Authorization Code flow.
  *
  * URL Parameters:
  * - extensionId: Chrome extension ID for sending token back
@@ -14,9 +13,9 @@ import BrowserOnly from '@docusaurus/BrowserOnly';
 import styles from '../auth.module.css';
 
 // ============= CONFIGURATION =============
-const TWITTER_CLIENT_ID = 'by1mQy1ocE1kTVFvYXJPSWlSMlg6MTpjaQ';
-const TWITTER_REDIRECT_URI = 'https://sofia.intuition.box/auth/twitter/callback';
-const TWITTER_SCOPES = ['users.read', 'tweet.read'];
+const TWITCH_CLIENT_ID = 'pyz5o7ahuj5kt4gttextfafkzmn9cs';
+const TWITCH_REDIRECT_URI = 'https://sofia.intuition.box/auth/twitch/callback';
+const TWITCH_SCOPES = ['user:read:follows', 'user:read:subscriptions'];
 
 // ============= HELPER FUNCTIONS =============
 
@@ -27,26 +26,9 @@ const generateRandomString = (length: number): string => {
   return Array.from(array, (byte) => byte.toString(16).padStart(2, '0')).join('');
 };
 
-// Generate code verifier for PKCE (43-128 characters)
-const generateCodeVerifier = (): string => {
-  const array = new Uint8Array(32);
-  crypto.getRandomValues(array);
-  return Array.from(array, (byte) => byte.toString(16).padStart(2, '0')).join('');
-};
+// ============= TWITCH AUTH CONTENT COMPONENT =============
 
-// Generate code challenge from verifier (SHA256 + base64url)
-const generateCodeChallenge = async (verifier: string): Promise<string> => {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(verifier);
-  const digest = await crypto.subtle.digest('SHA-256', data);
-  const base64 = btoa(String.fromCharCode(...new Uint8Array(digest)));
-  // Convert to base64url
-  return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-};
-
-// ============= TWITTER AUTH CONTENT COMPONENT =============
-
-const TwitterAuthContent = () => {
+const TwitchAuthContent = () => {
   const [status, setStatus] = useState<'loading' | 'redirecting' | 'error'>('loading');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -60,30 +42,23 @@ const TwitterAuthContent = () => {
         // Generate state for CSRF protection
         const state = generateRandomString(32);
 
-        // Generate PKCE code verifier and challenge
-        const codeVerifier = generateCodeVerifier();
-        const codeChallenge = await generateCodeChallenge(codeVerifier);
-
-        // Store OAuth state in localStorage for callback page (including code_verifier for PKCE)
-        localStorage.setItem('twitter_oauth_state', JSON.stringify({
+        // Store OAuth state in localStorage for callback page
+        localStorage.setItem('twitch_oauth_state', JSON.stringify({
           state,
           extensionId,
-          codeVerifier,
           timestamp: Date.now()
         }));
 
-        // Build Twitter OAuth URL with PKCE
+        // Build Twitch OAuth URL (Authorization Code flow)
         const params = new URLSearchParams({
-          client_id: TWITTER_CLIENT_ID,
-          redirect_uri: TWITTER_REDIRECT_URI,
-          scope: TWITTER_SCOPES.join(' '),
+          client_id: TWITCH_CLIENT_ID,
+          redirect_uri: TWITCH_REDIRECT_URI,
+          scope: TWITCH_SCOPES.join(' '),
           state: state,
-          response_type: 'code',
-          code_challenge: codeChallenge,
-          code_challenge_method: 'S256'
+          response_type: 'code'
         });
 
-        const authUrl = `https://twitter.com/i/oauth2/authorize?${params.toString()}`;
+        const authUrl = `https://id.twitch.tv/oauth2/authorize?${params.toString()}`;
 
         setStatus('redirecting');
 
@@ -93,9 +68,9 @@ const TwitterAuthContent = () => {
         }, 500);
 
       } catch (error) {
-        console.error('[Sofia Twitter Auth] Error initiating OAuth:', error);
+        console.error('[Sofia Twitch Auth] Error initiating OAuth:', error);
         setStatus('error');
-        setErrorMessage(error instanceof Error ? error.message : 'Failed to initiate Twitter authentication');
+        setErrorMessage(error instanceof Error ? error.message : 'Failed to initiate Twitch authentication');
       }
     };
 
@@ -106,7 +81,7 @@ const TwitterAuthContent = () => {
     <div className={styles.container}>
       <div className={styles.card}>
         <img src="/img/logoBrut.png" alt="Sofia" className={styles.logo} />
-        <p className={styles.subtitle}>Twitter/X Authentication</p>
+        <p className={styles.subtitle}>Twitch Authentication</p>
 
         {status === 'loading' && (
           <>
@@ -118,7 +93,7 @@ const TwitterAuthContent = () => {
         {status === 'redirecting' && (
           <>
             <div className={styles.spinner} />
-            <p className={styles.text}>Redirecting to Twitter...</p>
+            <p className={styles.text}>Redirecting to Twitch...</p>
             <p className={styles.subtext}>You will be asked to authorize Sofia</p>
           </>
         )}
@@ -146,7 +121,7 @@ const LoadingPlaceholder = () => (
   <div className={styles.container}>
     <div className={styles.card}>
       <img src="/img/logoBrut.png" alt="Sofia" className={styles.logo} />
-      <p className={styles.subtitle}>Twitter/X Authentication</p>
+      <p className={styles.subtitle}>Twitch Authentication</p>
       <div className={styles.spinner} />
       <p className={styles.text}>Loading...</p>
     </div>
@@ -155,15 +130,15 @@ const LoadingPlaceholder = () => (
 
 // ============= MAIN PAGE COMPONENT =============
 
-export default function TwitterAuthPage() {
+export default function TwitchAuthPage() {
   return (
     <Layout
-      title="Twitter Authentication"
-      description="Connect your Twitter/X account to Sofia"
+      title="Twitch Authentication"
+      description="Connect your Twitch account to Sofia"
       noFooter
     >
       <BrowserOnly fallback={<LoadingPlaceholder />}>
-        {() => <TwitterAuthContent />}
+        {() => <TwitchAuthContent />}
       </BrowserOnly>
     </Layout>
   );
