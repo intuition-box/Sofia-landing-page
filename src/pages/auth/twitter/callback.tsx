@@ -3,7 +3,7 @@
  *
  * This page handles the Twitter OAuth callback:
  * 1. Receives authorization code from Twitter
- * 2. Exchanges code for access token (using client_secret, no PKCE)
+ * 2. Exchanges code for access token via Sofia API
  * 3. Sends token back to Chrome extension
  *
  * URL Parameters (from Twitter):
@@ -28,8 +28,7 @@ declare const chrome: {
 } | undefined;
 
 // ============= CONFIGURATION =============
-const TWITTER_CLIENT_ID = 'by1mQy1ocE1kTVFvYXJPSWlSMlg6MTpjaQ';
-const TWITTER_CLIENT_SECRET = 'ZCcIUwBOJDstFlKqyaCIQrojvNsnIJFPGmc4ESm5Xpwk0EEjra';
+const SOFIA_API_URL = 'https://sofia-api.maxime-moodz.workers.dev';
 const TWITTER_REDIRECT_URI = 'https://sofia.intuition.box/auth/twitter/callback';
 
 // ============= HELPER FUNCTIONS =============
@@ -40,27 +39,23 @@ interface OAuthState {
   timestamp: number;
 }
 
-// Exchange authorization code for access token (Confidential Client - no PKCE)
+// Exchange authorization code for access token via Sofia API
 const exchangeCodeForToken = async (code: string) => {
-  const credentials = btoa(`${TWITTER_CLIENT_ID}:${TWITTER_CLIENT_SECRET}`);
-
-  const response = await fetch('https://api.x.com/2/oauth2/token', {
+  const response = await fetch(`${SOFIA_API_URL}/auth/twitter/token`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': `Basic ${credentials}`
+      'Content-Type': 'application/json'
     },
-    body: new URLSearchParams({
-      code,
-      grant_type: 'authorization_code',
+    body: JSON.stringify({
+      code: code,
       redirect_uri: TWITTER_REDIRECT_URI
     })
   });
 
   if (!response.ok) {
-    const errorText = await response.text();
-    console.error('[Sofia Twitter Callback] Token exchange failed:', response.status, errorText);
-    throw new Error(`Token exchange failed: ${response.status}`);
+    const errorData = await response.json().catch(() => ({}));
+    console.error('[Sofia Twitter Callback] Token exchange failed:', response.status, errorData);
+    throw new Error(errorData.error || `Token exchange failed: ${response.status}`);
   }
 
   return response.json();
@@ -153,7 +148,7 @@ const TwitterCallbackContent = () => {
 
         setStatus('exchanging');
 
-        // Exchange code for token (no PKCE, using client_secret)
+        // Exchange code for token via API
         const tokenData = await exchangeCodeForToken(code);
 
         console.log('[Sofia Twitter Callback] Token received successfully');
