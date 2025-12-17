@@ -153,6 +153,8 @@ const TwitterCallbackContent = () => {
         // Exchange code for token via API (with PKCE code_verifier)
         const tokenData = await exchangeCodeForToken(code, storedState.codeVerifier);
 
+        // DEBUG: Log full response from proxy API
+        console.log('[Sofia Twitter Callback] FULL TOKEN DATA:', JSON.stringify(tokenData, null, 2));
         console.log('[Sofia Twitter Callback] Token received successfully');
 
         // Clean up stored state
