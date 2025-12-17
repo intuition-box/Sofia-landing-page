@@ -14,7 +14,7 @@ import BrowserOnly from '@docusaurus/BrowserOnly';
 import styles from '../auth.module.css';
 
 // ============= CONFIGURATION =============
-const TWITTER_CLIENT_ID = 'dURILW1BSzVFcEtpSkVPX3V5c0E6MTpjaQ';
+const TWITTER_CLIENT_ID = 'by1mQy1ocE1kTVFvYXJPSWlSMlg6MTpjaQ';
 const TWITTER_REDIRECT_URI = 'https://sofia.intuition.box/auth/twitter/callback';
 const TWITTER_SCOPES = ['users.read', 'tweet.read'];
 

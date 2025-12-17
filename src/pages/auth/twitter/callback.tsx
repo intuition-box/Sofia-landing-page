@@ -28,8 +28,8 @@ declare const chrome: {
 } | undefined;
 
 // ============= CONFIGURATION =============
-const TWITTER_CLIENT_ID = 'dURILW1BSzVFcEtpSkVPX3V5c0E6MTpjaQ';
-const TWITTER_CLIENT_SECRET = '6slg39ktsHkSlQUzkt9yepSednHWx401NAEVq89O1xflPYl0_L';
+const TWITTER_CLIENT_ID = 'by1mQy1ocE1kTVFvYXJPSWlSMlg6MTpjaQ';
+const TWITTER_CLIENT_SECRET = 'ZCcIUwBOJDstFlKqyaCIQrojvNsnIJFPGmc4ESm5Xpwk0EEjra';
 const TWITTER_REDIRECT_URI = 'https://sofia.intuition.box/auth/twitter/callback';
 
 // ============= HELPER FUNCTIONS =============
