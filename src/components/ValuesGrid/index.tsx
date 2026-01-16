@@ -39,7 +39,7 @@ export default function ValuesGrid(): React.ReactElement {
               {isConnecting ? 'Connecting...' : 'Connect Wallet to Vote'}
             </button>
             <p className={styles.connectHint}>
-              Vote with 0.1 TRUST per position on Intuition
+              Vote with 10 TRUST per position on Intuition
             </p>
           </div>
         )}
@@ -79,7 +79,7 @@ export default function ValuesGrid(): React.ReactElement {
           >
             Intuition Protocol
           </a>
-          . Each vote stakes 0.1 TRUST which you can redeem later.
+          . Each vote stakes 10 TRUST which you can redeem later.
         </p>
       </div>
     </div>

@@ -16,7 +16,7 @@ interface ValueCardProps {
   onConnectWallet: () => void;
 }
 
-type VoteType = 'support' | 'oppose';
+type VoteType = 'vote' | 'downvote';
 type TxStatus = 'idle' | 'pending' | 'success' | 'error';
 
 export default function ValueCard({
@@ -42,7 +42,7 @@ export default function ValueCard({
     setTxHash(null);
 
     try {
-      const hash = voteType === 'support'
+      const hash = voteType === 'vote'
         ? await depositFor(value.tripleId)
         : await depositAgainst(value.tripleId);
 
@@ -73,19 +73,19 @@ export default function ValueCard({
           <div className={styles.voteButtons}>
             <button
               className={`${styles.voteBtn} ${styles.supportBtn}`}
-              onClick={() => handleVote('support')}
-              aria-label={`Support ${value.name}`}
+              onClick={() => handleVote('vote')}
+              aria-label={`Vote for ${value.name}`}
             >
-              <span className={styles.voteLabel}>Support</span>
-              <span className={styles.stakeAmount}>0.1 TRUST</span>
+              <span className={styles.voteLabel}>Vote</span>
+              <span className={styles.stakeAmount}>10 TRUST</span>
             </button>
             <button
               className={`${styles.voteBtn} ${styles.opposeBtn}`}
-              onClick={() => handleVote('oppose')}
-              aria-label={`Oppose ${value.name}`}
+              onClick={() => handleVote('downvote')}
+              aria-label={`Downvote ${value.name}`}
             >
-              <span className={styles.voteLabel}>Oppose</span>
-              <span className={styles.stakeAmount}>0.1 TRUST</span>
+              <span className={styles.voteLabel}>Downvote</span>
+              <span className={styles.stakeAmount}>10 TRUST</span>
             </button>
           </div>
         )}
@@ -94,7 +94,7 @@ export default function ValueCard({
           <div className={styles.txPending}>
             <div className={styles.spinner} />
             <p className={styles.txText}>
-              {activeVote === 'support' ? 'Supporting' : 'Opposing'} {value.name}...
+              {activeVote === 'vote' ? 'Voting for' : 'Downvoting'} {value.name}...
             </p>
             <p className={styles.txSubtext}>Confirm in MetaMask</p>
           </div>

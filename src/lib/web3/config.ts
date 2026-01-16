@@ -40,8 +40,8 @@ export const EXPLORER_URLS = {
   ADDRESS: 'https://explorer.intuition.systems/address/',
 };
 
-// Stake amount: 0.1 TRUST in wei
-export const STAKE_AMOUNT = BigInt('100000000000000000'); // 0.1 TRUST
+// Stake amount: 10 TRUST in wei
+export const STAKE_AMOUNT = BigInt('10000000000000000000'); // 10 TRUST
 
 // Curve ID: 1 (Linear/default)
 export const CURVE_ID = 1n;
