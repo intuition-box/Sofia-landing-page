@@ -1,11 +1,11 @@
 ---
 sidebar_position: 3
-title: ElizaOS
+title: Mastra
 ---
 
-# ElizaOS - Intelligent Agent Framework
+# Mastra - Intelligent Agent Framework
 
-ElizaOS provides the agent framework that powers Sofia's intelligence. These autonomous agents analyze your browsing patterns, extract meaningful insights, and help build your personal knowledge graph.
+Mastra provides the agent framework that powers Sofia's intelligence. These autonomous agents analyze your browsing patterns, extract meaningful insights, and help build your personal knowledge graph.
 
 ## Agent Capabilities
 
@@ -40,3 +40,13 @@ Sofia employs multiple specialized agents working together:
 - **Recommendation Agent** - Generates personalized suggestions based on your graph
 
 Each agent operates independently but shares insights through a secure communication protocol, creating a comprehensive understanding of your digital activity while respecting your privacy.
+
+
+## Why Mastra for Sofia
+
+Mastra's TypeScript-native approach aligns perfectly with Sofia's browser extension architecture, enabling:
+
+- Seamless browser integration with shared TypeScript codebase
+- Rapid agent development and iteration
+- Production-grade security and observability
+- Framework flexibility for future integrations

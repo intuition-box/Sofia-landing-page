@@ -75,11 +75,11 @@ It’s been a journey, but we’re confident we’ve found a direction that work
 - Backend Documentation and knowledge capitalisation with Charmverse
 
 
-## Links 
+## Links
 
 - [Intuition System](https://www.intuition.systems/)
 - [Gaianet](https://www.gaianet.ai/)
-- [ElizaOS](https://www.elizaos.ai/)
+- [Mastra](https://mastra.ai/)
 
 
 

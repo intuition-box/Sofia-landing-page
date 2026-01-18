@@ -77,7 +77,6 @@ export default function ValueCard({
               aria-label={`Vote for ${value.name}`}
             >
               <span className={styles.voteLabel}>Vote</span>
-              <span className={styles.stakeAmount}>10 TRUST</span>
             </button>
             <button
               className={`${styles.voteBtn} ${styles.opposeBtn}`}
@@ -85,7 +84,6 @@ export default function ValueCard({
               aria-label={`Downvote ${value.name}`}
             >
               <span className={styles.voteLabel}>Downvote</span>
-              <span className={styles.stakeAmount}>10 TRUST</span>
             </button>
           </div>
         )}

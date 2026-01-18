@@ -33,7 +33,7 @@ const sidebars: SidebarsConfig = {
       items: [
         'ecosystem/phala',
         'ecosystem/gaianet',
-        'ecosystem/eliza',
+        'ecosystem/mastra',
         'ecosystem/intuition',
       ],
     },

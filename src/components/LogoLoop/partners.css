@@ -9,14 +9,14 @@
 }
 
 /* Logos noirs/sombres qui ont besoin d'être inversés */
-.logo-eliza,
+.logo-mastra,
 .logo-gaianet,
 .logo-ollama {
   filter: brightness(0) invert(1) !important;
   opacity: 0.9 !important;
 }
 
-.logo-eliza:hover,
+.logo-mastra:hover,
 .logo-gaianet:hover,
 .logo-ollama:hover {
   opacity: 1 !important;

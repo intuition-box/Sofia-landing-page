@@ -10,7 +10,7 @@ Every visited page, every action, every interest becomes a signal (who/what you 
 
 ## What Sofia Does for You
 
-- **An AI that belongs to you** – Thanks to Gaianet and ElizaOS, Sofia provides you with a personal and inviolable AI.
+- **An AI that belongs to you** – Thanks to Gaianet and Mastra, Sofia provides you with a personal and inviolable AI.
 - **Seamless analysis of your browsing** – automatic capture of URLs, topics, behaviors
 - **Automatic creation of verifiable signals** (triples of atoms) about your interests, skills and taste
 - **Personalized recommendations** – content and people matched to your real behavior

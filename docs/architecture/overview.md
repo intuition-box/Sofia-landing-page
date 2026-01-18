@@ -28,9 +28,9 @@ Our core values emphasize end-to-end encrypted data certification, ensuring that
 
 Our ultimate intention is to guarantee users true decentralization — even we have no access to the data that transits within the TEE.
 
-### ELIZA Framework Docker
+### Mastra Framework Docker
 
-ElizaOS framework run within the TEE, analyzing your browsing patterns and generating insights. These AI agents are trained to understand context, extract meaningful signals, and create connections in your knowledge graph – all while respecting your privacy.
+Mastra framework run within the TEE, analyzing your browsing patterns and generating insights. These AI agents are trained to understand context, extract meaningful signals, and create connections in your knowledge graph – all while respecting your privacy.
 
 ### GaiaNet (AI Models)
 

@@ -279,6 +279,15 @@ p, span, div {
   color: #ffffff !important;
 }
 
+/* Exception for nav-cards only */
+.nav-card,
+.nav-card *,
+.nav-card h1, .nav-card h2, .nav-card h3, .nav-card h4, .nav-card h5, .nav-card h6,
+.nav-card p, .nav-card span, .nav-card div,
+.nav-card a {
+  color: #000 !important;
+}
+
 .hero__title, .hero__subtitle {
   color: #ffffff !important;
 }

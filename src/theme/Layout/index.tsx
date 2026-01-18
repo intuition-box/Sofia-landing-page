@@ -11,8 +11,8 @@ export default function Layout(props: Props): JSX.Element {
   const menuItems = [
     {
       label: "About",
-      bgColor: "#00020e",
-      textColor: "#fff",
+      bgColor: "#ffcd00",
+      textColor: "#000",
       links: [
         { label: "Manifesto", href: "/manifesto", ariaLabel: "Read Manifesto" },
         { label: "Sofia Values", href: "/values", ariaLabel: "View Sofia Values" },
@@ -21,8 +21,8 @@ export default function Layout(props: Props): JSX.Element {
     },
     {
       label: "Resources",
-      bgColor: "#0e0e1a",
-      textColor: "#fff",
+      bgColor: "#ffcd00",
+      textColor: "#000",
       links: [
         { label: "Sofia Chronicles", href: "/blog", ariaLabel: "Sofia Chronicles" },
         { label: "GitHub", href: "https://github.com/intuition-box/Sofia", ariaLabel: "View on GitHub" }
@@ -30,8 +30,8 @@ export default function Layout(props: Props): JSX.Element {
     },
     {
       label: "Social",
-      bgColor: "#1d1e2f",
-      textColor: "#fff",
+      bgColor: "#ffcd00",
+      textColor: "#000",
       links: [
         { label: "X", href: "https://x.com/0xSofia3", ariaLabel: "Follow us on X" },
         { label: "Discord", href: "https://discord.gg/39RP6h4WuH", ariaLabel: "Join our Discord" }

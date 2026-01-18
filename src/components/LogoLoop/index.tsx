@@ -5,10 +5,10 @@ import './partners.css';
 
 const partnerLogos: LogoItem[] = [
   {
-    src: "/img/partners/eliza-header-logo.svg",
-    alt: "Eliza",
-    href: "https://github.com/ai16z/eliza",
-    className: "logo-eliza"
+    src: "/img/partners/mastra.svg",
+    alt: "Mastra",
+    href: "https://mastra.ai/",
+    className: "logo-mastra"
   },
   {
     src: "/img/partners/gaianetlogo.png",
@@ -47,6 +47,7 @@ export default function PartnerLogoLoop() {
         gap={120}
         pauseOnHover={false}
         fadeOut={true}
+        fadeOutColor="#0b0b0b"
         scaleOnHover={true}
         ariaLabel="Partner logos"
       />

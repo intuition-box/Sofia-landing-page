@@ -81,7 +81,7 @@ Furthermore, we completed the full deployment of our Gaianet node, enabling the 
 
 ### Gaianet Node
 - Gaianet node opened and configured.
-- Powers the Sofia extension's AI agents via Elizaos framework
+- Powers the Sofia extension's AI agents via Mastra framework
 - Enables decentralized model execution.
 
 ### TEE Architecture (Trusted Execution Environment)
