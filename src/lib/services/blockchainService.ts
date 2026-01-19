@@ -1,7 +1,39 @@
-import type { PublicClient, WalletClient, Address, Hash } from 'viem';
+import type { Address, Hash } from 'viem';
 import { SofiaFeeProxyAbi } from '../ABI/SofiaFeeProxy';
 import { MultiVaultAbi } from '../ABI/MultiVault';
 import { MULTIVAULT_ADDRESS, SOFIA_PROXY_ADDRESS, intuitionMainnet } from '../config/chainConfig';
+
+/**
+ * Generic type for any public client with readContract method
+ */
+type ReadableClient = {
+  readContract: (args: {
+    address: Address;
+    abi: readonly unknown[];
+    functionName: string;
+    args?: readonly unknown[];
+    authorizationList?: undefined;
+  }) => Promise<unknown>;
+  waitForTransactionReceipt: (args: { hash: Hash }) => Promise<unknown>;
+};
+
+/**
+ * Generic type for any wallet client with writeContract method
+ */
+type WritableClient = {
+  writeContract: (args: {
+    address: Address;
+    abi: readonly unknown[];
+    functionName: string;
+    args?: readonly unknown[];
+    account: Address;
+    chain: typeof intuitionMainnet;
+    value?: bigint;
+    gas?: bigint;
+    maxFeePerGas?: bigint;
+    maxPriorityFeePerGas?: bigint;
+  }) => Promise<Hash>;
+};
 
 /**
  * Centralized service for blockchain operations
@@ -23,7 +55,7 @@ export class BlockchainService {
    * Fees: 0.1 TRUST fixed + 5% of deposit amount
    */
   static async getTotalDepositCost(
-    publicClient: PublicClient,
+    publicClient: ReadableClient,
     depositAmount: bigint
   ): Promise<bigint> {
     return await publicClient.readContract({
@@ -31,6 +63,7 @@ export class BlockchainService {
       abi: SofiaFeeProxyAbi,
       functionName: 'getTotalDepositCost',
       args: [depositAmount],
+      authorizationList: undefined,
     }) as bigint;
   }
 
@@ -38,7 +71,7 @@ export class BlockchainService {
    * Check if user has approved proxy for deposits on MultiVault
    */
   static async checkProxyApproval(
-    publicClient: PublicClient,
+    publicClient: ReadableClient,
     userAddress: string
   ): Promise<boolean> {
     const approvalType = await publicClient.readContract({
@@ -46,6 +79,7 @@ export class BlockchainService {
       abi: MultiVaultAbi,
       functionName: 'approvals',
       args: [userAddress as Address, SOFIA_PROXY_ADDRESS],
+      authorizationList: undefined,
     }) as number;
 
     // ApprovalTypes: 0=NONE, 1=DEPOSIT, 2=REDEMPTION, 3=BOTH
@@ -56,7 +90,7 @@ export class BlockchainService {
    * Request user to approve proxy for deposits on MultiVault
    */
   static async requestProxyApproval(
-    walletClient: WalletClient,
+    walletClient: WritableClient,
     account: Address
   ): Promise<Hash> {
     return await walletClient.writeContract({
@@ -67,6 +101,23 @@ export class BlockchainService {
       account,
       chain: intuitionMainnet,
     });
+  }
+
+  /**
+   * Get counter triple ID from the contract (for oppose/downvote operations)
+   * Uses on-chain calculation to ensure correct salt and encoding
+   */
+  static async getCounterTripleId(
+    publicClient: ReadableClient,
+    tripleId: `0x${string}`
+  ): Promise<`0x${string}`> {
+    return await publicClient.readContract({
+      address: MULTIVAULT_ADDRESS,
+      abi: MultiVaultAbi,
+      functionName: 'getCounterIdFromTripleId',
+      args: [tripleId],
+      authorizationList: undefined,
+    }) as `0x${string}`;
   }
 
   /**

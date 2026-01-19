@@ -4,7 +4,7 @@ import { BlockchainService } from '@site/src/lib/services/blockchainService';
 import { SofiaFeeProxyAbi } from '@site/src/lib/ABI/SofiaFeeProxy';
 import { intuitionMainnet, SOFIA_PROXY_ADDRESS, BLOCKCHAIN_CONFIG } from '@site/src/lib/config/chainConfig';
 import { STAKE_AMOUNT, CURVE_ID } from '@site/src/lib/config/constants';
-import { calculateCounterTripleId, parseContractError } from '@site/src/lib/web3/utils';
+import { parseContractError } from '@site/src/lib/web3/utils';
 
 declare global {
   interface Window {
@@ -35,7 +35,7 @@ export function useVoting() {
   }, []);
 
   /**
-   * Ensure proxy is approved before deposit
+   * Ensure proxy approval before deposit
    */
   const ensureProxyApproval = useCallback(async (
     walletClient: ReturnType<typeof createWalletClient>,
@@ -107,8 +107,8 @@ export function useVoting() {
       // Ensure proxy is approved (auto-approval on first vote)
       await ensureProxyApproval(walletClient, publicClient, account);
 
-      // Calculate the counter triple ID for opposition
-      const counterTripleId = calculateCounterTripleId(tripleId);
+      // Get counter triple ID from contract
+      const counterTripleId = await BlockchainService.getCounterTripleId(publicClient, tripleId);
 
       // Calculate total cost with Sofia fees
       const totalCost = await BlockchainService.getTotalDepositCost(publicClient, STAKE_AMOUNT);
