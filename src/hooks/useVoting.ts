@@ -1,65 +1,73 @@
 import { useCallback } from 'react';
-import { createPublicClient, http } from 'viem';
-import { useWallets } from '@privy-io/react-auth';
+import { createWalletClient, createPublicClient, custom, http } from 'viem';
 import { BlockchainService } from '@site/src/lib/services/blockchainService';
 import { SofiaFeeProxyAbi } from '@site/src/lib/ABI/SofiaFeeProxy';
 import { intuitionMainnet, SOFIA_PROXY_ADDRESS, BLOCKCHAIN_CONFIG } from '@site/src/lib/config/chainConfig';
 import { STAKE_AMOUNT, CURVE_ID } from '@site/src/lib/config/constants';
 import { parseContractError } from '@site/src/lib/web3/utils';
 
+declare global {
+  interface Window {
+    ethereum?: any;
+  }
+}
+
 export function useVoting() {
-  const { wallets } = useWallets();
-
-  // Check if wallet is ready
-  const isWalletReady = wallets.length > 0 && wallets[0]?.address;
-
   /**
-   * Get Privy wallet client and public client
+   * Get wallet and public clients using window.ethereum (MetaMask)
    */
   const getClients = useCallback(async () => {
-    console.log('getClients: wallets =', wallets);
-    const wallet = wallets[0];
-    if (!wallet || !wallet.address) {
-      console.error('getClients: No wallet found');
-      throw new Error('Please connect your wallet first');
+    if (!window.ethereum) {
+      throw new Error('Please install MetaMask to vote');
     }
 
-    console.log('getClients: wallet found =', wallet.address, 'type =', wallet.walletClientType);
+    // Request account access
+    const accounts = await window.ethereum.request({
+      method: 'eth_requestAccounts'
+    });
 
-    // Switch to correct chain if needed
+    if (!accounts || accounts.length === 0) {
+      throw new Error('Please connect your wallet');
+    }
+
+    const account = accounts[0] as `0x${string}`;
+
+    // Switch to Intuition chain if needed
     try {
-      console.log('getClients: switching to chain', intuitionMainnet.id);
-      await wallet.switchChain(intuitionMainnet.id);
-      console.log('getClients: chain switched successfully');
-    } catch (switchError) {
-      console.error('getClients: chain switch error', switchError);
-      throw switchError;
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: `0x${intuitionMainnet.id.toString(16)}` }],
+      });
+    } catch (switchError: any) {
+      // Chain not added, add it
+      if (switchError.code === 4902) {
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [{
+            chainId: `0x${intuitionMainnet.id.toString(16)}`,
+            chainName: intuitionMainnet.name,
+            nativeCurrency: intuitionMainnet.nativeCurrency,
+            rpcUrls: [intuitionMainnet.rpcUrls.default.http[0]],
+            blockExplorerUrls: [intuitionMainnet.blockExplorers.default.url],
+          }],
+        });
+      } else {
+        throw switchError;
+      }
     }
 
-    // Get the EIP-1193 provider from Privy wallet
-    console.log('getClients: getting ethereum provider...');
-    const provider = await wallet.getEthereumProvider();
-    console.log('getClients: provider obtained', provider);
-
-    // Create viem wallet client from Privy provider
-    const { createWalletClient, custom } = await import('viem');
     const walletClient = createWalletClient({
       chain: intuitionMainnet,
-      transport: custom(provider),
+      transport: custom(window.ethereum),
     });
-    console.log('getClients: walletClient created');
 
     const publicClient = createPublicClient({
       chain: intuitionMainnet,
       transport: http(intuitionMainnet.rpcUrls.default.http[0]),
     });
-    console.log('getClients: publicClient created');
-
-    const account = wallet.address as `0x${string}`;
-    console.log('getClients: returning clients with account', account);
 
     return { walletClient, publicClient, account };
-  }, [wallets]);
+  }, []);
 
   /**
    * Ensure proxy approval before deposit
@@ -82,8 +90,6 @@ export function useVoting() {
 
   /**
    * Deposit FOR a triple (Support/Vote)
-   * @param tripleId - The triple ID to support
-   * @returns Transaction hash
    */
   const depositFor = useCallback(async (tripleId: `0x${string}`): Promise<string> => {
     try {
@@ -91,7 +97,7 @@ export function useVoting() {
 
       console.log('Voting FOR with account:', account);
 
-      // Ensure proxy is approved (auto-approval on first vote)
+      // Ensure proxy is approved
       await ensureProxyApproval(walletClient, publicClient, account);
 
       // Calculate total cost with Sofia fees
@@ -122,8 +128,6 @@ export function useVoting() {
 
   /**
    * Deposit AGAINST a triple (Oppose/Downvote)
-   * @param tripleId - The triple ID to oppose
-   * @returns Transaction hash
    */
   const depositAgainst = useCallback(async (tripleId: `0x${string}`): Promise<string> => {
     try {
@@ -131,7 +135,7 @@ export function useVoting() {
 
       console.log('Voting AGAINST with account:', account);
 
-      // Ensure proxy is approved (auto-approval on first vote)
+      // Ensure proxy is approved
       await ensureProxyApproval(walletClient, publicClient, account);
 
       // Get counter triple ID from contract
@@ -168,6 +172,5 @@ export function useVoting() {
     depositFor,
     depositAgainst,
     stakeAmount: STAKE_AMOUNT,
-    isWalletReady,
   };
 }
