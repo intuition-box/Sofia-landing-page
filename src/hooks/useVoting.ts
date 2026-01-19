@@ -1,29 +1,35 @@
 import { useCallback } from 'react';
-import { createWalletClient, createPublicClient, custom, http } from 'viem';
+import { createPublicClient, http } from 'viem';
+import { useWallets } from '@privy-io/react-auth';
 import { BlockchainService } from '@site/src/lib/services/blockchainService';
 import { SofiaFeeProxyAbi } from '@site/src/lib/ABI/SofiaFeeProxy';
 import { intuitionMainnet, SOFIA_PROXY_ADDRESS, BLOCKCHAIN_CONFIG } from '@site/src/lib/config/chainConfig';
 import { STAKE_AMOUNT, CURVE_ID } from '@site/src/lib/config/constants';
 import { parseContractError } from '@site/src/lib/web3/utils';
 
-declare global {
-  interface Window {
-    ethereum?: any;
-  }
-}
-
 export function useVoting() {
+  const { wallets } = useWallets();
+
   /**
-   * Get wallet and public clients
+   * Get Privy wallet client and public client
    */
-  const getClients = useCallback(() => {
-    if (!window.ethereum) {
-      throw new Error('MetaMask not available');
+  const getClients = useCallback(async () => {
+    const wallet = wallets[0];
+    if (!wallet) {
+      throw new Error('No wallet connected');
     }
 
+    // Switch to correct chain if needed
+    await wallet.switchChain(intuitionMainnet.id);
+
+    // Get the EIP-1193 provider from Privy wallet
+    const provider = await wallet.getEthereumProvider();
+
+    // Create viem wallet client from Privy provider
+    const { createWalletClient, custom } = await import('viem');
     const walletClient = createWalletClient({
       chain: intuitionMainnet,
-      transport: custom(window.ethereum),
+      transport: custom(provider),
     });
 
     const publicClient = createPublicClient({
@@ -31,22 +37,27 @@ export function useVoting() {
       transport: http(intuitionMainnet.rpcUrls.default.http[0]),
     });
 
-    return { walletClient, publicClient };
-  }, []);
+    const account = wallet.address as `0x${string}`;
+
+    return { walletClient, publicClient, account };
+  }, [wallets]);
 
   /**
    * Ensure proxy approval before deposit
    */
   const ensureProxyApproval = useCallback(async (
-    walletClient: ReturnType<typeof createWalletClient>,
-    publicClient: ReturnType<typeof createPublicClient>,
+    walletClient: any,
+    publicClient: any,
     account: `0x${string}`
   ): Promise<void> => {
     const isApproved = await BlockchainService.checkProxyApproval(publicClient, account);
 
     if (!isApproved) {
+      console.log('Requesting proxy approval...');
       const approvalHash = await BlockchainService.requestProxyApproval(walletClient, account);
+      console.log('Approval tx:', approvalHash);
       await publicClient.waitForTransactionReceipt({ hash: approvalHash });
+      console.log('Approval confirmed');
     }
   }, []);
 
@@ -57,18 +68,16 @@ export function useVoting() {
    */
   const depositFor = useCallback(async (tripleId: `0x${string}`): Promise<string> => {
     try {
-      const { walletClient, publicClient } = getClients();
-      const [account] = await walletClient.getAddresses();
+      const { walletClient, publicClient, account } = await getClients();
 
-      if (!account) {
-        throw new Error('No account connected');
-      }
+      console.log('Voting FOR with account:', account);
 
       // Ensure proxy is approved (auto-approval on first vote)
       await ensureProxyApproval(walletClient, publicClient, account);
 
       // Calculate total cost with Sofia fees
       const totalCost = await BlockchainService.getTotalDepositCost(publicClient, STAKE_AMOUNT);
+      console.log('Total cost:', totalCost.toString());
 
       // Execute deposit via proxy
       const hash = await walletClient.writeContract({
@@ -84,8 +93,10 @@ export function useVoting() {
         maxPriorityFeePerGas: BLOCKCHAIN_CONFIG.MAX_PRIORITY_FEE_PER_GAS,
       });
 
+      console.log('Deposit tx:', hash);
       return hash;
     } catch (error) {
+      console.error('depositFor error:', error);
       throw new Error(parseContractError(error));
     }
   }, [getClients, ensureProxyApproval]);
@@ -97,21 +108,20 @@ export function useVoting() {
    */
   const depositAgainst = useCallback(async (tripleId: `0x${string}`): Promise<string> => {
     try {
-      const { walletClient, publicClient } = getClients();
-      const [account] = await walletClient.getAddresses();
+      const { walletClient, publicClient, account } = await getClients();
 
-      if (!account) {
-        throw new Error('No account connected');
-      }
+      console.log('Voting AGAINST with account:', account);
 
       // Ensure proxy is approved (auto-approval on first vote)
       await ensureProxyApproval(walletClient, publicClient, account);
 
       // Get counter triple ID from contract
       const counterTripleId = await BlockchainService.getCounterTripleId(publicClient, tripleId);
+      console.log('Counter triple ID:', counterTripleId);
 
       // Calculate total cost with Sofia fees
       const totalCost = await BlockchainService.getTotalDepositCost(publicClient, STAKE_AMOUNT);
+      console.log('Total cost:', totalCost.toString());
 
       // Execute deposit on the counter triple via proxy
       const hash = await walletClient.writeContract({
@@ -127,8 +137,10 @@ export function useVoting() {
         maxPriorityFeePerGas: BLOCKCHAIN_CONFIG.MAX_PRIORITY_FEE_PER_GAS,
       });
 
+      console.log('Deposit tx:', hash);
       return hash;
     } catch (error) {
+      console.error('depositAgainst error:', error);
       throw new Error(parseContractError(error));
     }
   }, [getClients, ensureProxyApproval]);

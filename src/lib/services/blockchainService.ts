@@ -3,37 +3,8 @@ import { SofiaFeeProxyAbi } from '../ABI/SofiaFeeProxy';
 import { MultiVaultAbi } from '../ABI/MultiVault';
 import { MULTIVAULT_ADDRESS, SOFIA_PROXY_ADDRESS, intuitionMainnet } from '../config/chainConfig';
 
-/**
- * Generic type for any public client with readContract method
- */
-type ReadableClient = {
-  readContract: (args: {
-    address: Address;
-    abi: readonly unknown[];
-    functionName: string;
-    args?: readonly unknown[];
-    authorizationList?: undefined;
-  }) => Promise<unknown>;
-  waitForTransactionReceipt: (args: { hash: Hash }) => Promise<unknown>;
-};
-
-/**
- * Generic type for any wallet client with writeContract method
- */
-type WritableClient = {
-  writeContract: (args: {
-    address: Address;
-    abi: readonly unknown[];
-    functionName: string;
-    args?: readonly unknown[];
-    account: Address;
-    chain: typeof intuitionMainnet;
-    value?: bigint;
-    gas?: bigint;
-    maxFeePerGas?: bigint;
-    maxPriorityFeePerGas?: bigint;
-  }) => Promise<Hash>;
-};
+/* eslint-disable @typescript-eslint/no-explicit-any */
+type AnyClient = any;
 
 /**
  * Centralized service for blockchain operations
@@ -55,7 +26,7 @@ export class BlockchainService {
    * Fees: 0.1 TRUST fixed + 5% of deposit amount
    */
   static async getTotalDepositCost(
-    publicClient: ReadableClient,
+    publicClient: AnyClient,
     depositAmount: bigint
   ): Promise<bigint> {
     return await publicClient.readContract({
@@ -71,7 +42,7 @@ export class BlockchainService {
    * Check if user has approved proxy for deposits on MultiVault
    */
   static async checkProxyApproval(
-    publicClient: ReadableClient,
+    publicClient: AnyClient,
     userAddress: string
   ): Promise<boolean> {
     const approvalType = await publicClient.readContract({
@@ -90,7 +61,7 @@ export class BlockchainService {
    * Request user to approve proxy for deposits on MultiVault
    */
   static async requestProxyApproval(
-    walletClient: WritableClient,
+    walletClient: AnyClient,
     account: Address
   ): Promise<Hash> {
     return await walletClient.writeContract({
@@ -108,7 +79,7 @@ export class BlockchainService {
    * Uses on-chain calculation to ensure correct salt and encoding
    */
   static async getCounterTripleId(
-    publicClient: ReadableClient,
+    publicClient: AnyClient,
     tripleId: `0x${string}`
   ): Promise<`0x${string}`> {
     return await publicClient.readContract({
