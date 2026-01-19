@@ -10,9 +10,10 @@
  * - autoLogin: Set to "true" to auto-trigger login modal
  */
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import Layout from '@theme/Layout';
 import BrowserOnly from '@docusaurus/BrowserOnly';
+import { useWalletConnection } from '@site/src/lib/web3/PrivyContext';
 import styles from './auth.module.css';
 
 // Chrome extension API type declaration
@@ -26,30 +27,10 @@ declare const chrome: {
   };
 } | undefined;
 
-// ============= CONFIGURATION =============
-const PRIVY_APP_ID = 'cmj05tjsj03thjs0c3mgxrixm';
-const PRIVY_CLIENT_ID = 'client-WY6U3b3LFEgbveR2FVgiyTTbRWKCZhy6vEVFzQt9NvZYS';
-
 // Default extension ID - can be overridden via URL param
 const DEFAULT_EXTENSION_ID = 'YOUR_EXTENSION_ID_HERE';
 
 // ============= HELPER FUNCTIONS =============
-
-// Extract wallet address from Privy user
-const getWalletAddress = (user: any): string | null => {
-  if (!user) return null;
-
-  // Try linkedAccounts first (v3 API)
-  const walletAccount = user.linkedAccounts?.find(
-    (account: any) => account.type === 'wallet'
-  );
-  if (walletAccount?.address) return walletAccount.address;
-
-  // Fallback to wallet property (v2 API)
-  if (user.wallet?.address) return user.wallet.address;
-
-  return null;
-};
 
 // Send wallet address to extension via multiple methods
 const sendToExtension = (address: string, extensionId?: string) => {
@@ -106,175 +87,128 @@ const sendToExtension = (address: string, extensionId?: string) => {
   }
 };
 
-// ============= AUTH CONTENT COMPONENT (Client-side only) =============
+// ============= AUTH CONTENT COMPONENT =============
 
-const AuthContentInner = () => {
-  // Dynamic import of Privy hooks (client-side only)
-  const { PrivyProvider, usePrivy, useLogin } = require('@privy-io/react-auth');
+const AuthContent = () => {
+  const { address, isConnected, isConnecting, error, connect, disconnect, clearError } = useWalletConnection();
+  const [hasSentToExtension, setHasSentToExtension] = useState(false);
+  const autoLoginTriggered = useRef(false);
 
-  const PrivyAuthContent = () => {
-    const { authenticated, ready, user, logout } = usePrivy();
-    const [status, setStatus] = useState<'loading' | 'connect' | 'success' | 'error'>('loading');
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  // Get extension ID from URL params
+  const extensionId = typeof window !== 'undefined'
+    ? new URLSearchParams(window.location.search).get('extensionId') || DEFAULT_EXTENSION_ID
+    : DEFAULT_EXTENSION_ID;
 
-    // Get extension ID from URL params
-    const extensionId = typeof window !== 'undefined'
-      ? new URLSearchParams(window.location.search).get('extensionId') || DEFAULT_EXTENSION_ID
-      : DEFAULT_EXTENSION_ID;
+  // Send to extension when connected
+  useEffect(() => {
+    if (isConnected && address && !hasSentToExtension) {
+      console.log('[Sofia Auth] Wallet connected, sending to extension:', address);
+      sendToExtension(address, extensionId);
+      setHasSentToExtension(true);
+    }
+  }, [isConnected, address, extensionId, hasSentToExtension]);
 
-    const { login } = useLogin({
-      onComplete: ({ user }: { user: any }) => {
-        console.log('[Sofia Auth] onComplete triggered, user:', user);
-        const address = getWalletAddress(user);
-        console.log('[Sofia Auth] Extracted address:', address);
-        if (address) {
-          setWalletAddress(address);
-          setStatus('success');
-          sendToExtension(address, extensionId);
-        } else {
-          console.log('[Sofia Auth] No address found in user object');
-          setStatus('error');
-          setErrorMessage('No wallet address found. Please try connecting with a wallet.');
-        }
-      },
-      onError: (error: any) => {
-        console.error('[Sofia Auth] Login error:', error);
-        setStatus('error');
-        setErrorMessage(typeof error === 'string' ? error : 'Authentication failed. Please try again.');
-      }
-    });
+  // Auto-trigger login if specified in URL (only once)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (autoLoginTriggered.current) return;
 
-    // Check initial state when Privy is ready
-    useEffect(() => {
-      if (ready) {
-        if (authenticated && user) {
-          const address = getWalletAddress(user);
-          if (address) {
-            setWalletAddress(address);
-            setStatus('success');
-            sendToExtension(address, extensionId);
-          } else {
-            setStatus('connect');
-          }
-        } else {
-          setStatus('connect');
-        }
-      }
-    }, [ready, authenticated, user, extensionId]);
+    const urlParams = new URLSearchParams(window.location.search);
+    const autoLogin = urlParams.get('autoLogin');
 
-    // Auto-trigger login if specified in URL (only once)
-    const [autoLoginTriggered, setAutoLoginTriggered] = useState(false);
+    if (autoLogin === 'true' && !isConnected && !isConnecting) {
+      autoLoginTriggered.current = true;
+      connect();
+    }
+  }, [isConnected, isConnecting, connect]);
 
-    useEffect(() => {
-      if (typeof window === 'undefined') return;
-      if (autoLoginTriggered) return;
+  const handleClose = useCallback(() => {
+    window.close();
+  }, []);
 
-      const urlParams = new URLSearchParams(window.location.search);
-      const autoLogin = urlParams.get('autoLogin');
+  const handleRetry = useCallback(() => {
+    clearError();
+  }, [clearError]);
 
-      if (autoLogin === 'true' && ready && !authenticated && status === 'connect') {
-        setAutoLoginTriggered(true);
-        login();
-      }
-    }, [ready, authenticated, status, autoLoginTriggered, login]);
+  const handleDisconnect = useCallback(async () => {
+    await disconnect();
+    setHasSentToExtension(false);
+    try {
+      localStorage.removeItem('sofia_wallet_address');
+      localStorage.removeItem('sofia_wallet_timestamp');
+    } catch (e) {}
+  }, [disconnect]);
 
-    const handleClose = useCallback(() => {
-      window.close();
-    }, []);
-
-    const handleRetry = useCallback(() => {
-      setErrorMessage(null);
-      setStatus('connect');
-    }, []);
-
-    const handleDisconnect = useCallback(async () => {
-      await logout();
-      setWalletAddress(null);
-      setStatus('connect');
-      try {
-        localStorage.removeItem('sofia_wallet_address');
-        localStorage.removeItem('sofia_wallet_timestamp');
-      } catch (e) {}
-    }, [logout]);
-
-    return (
-      <div className={styles.container}>
-        <div className={styles.card}>
-          <img src="/img/logoBrut.png" alt="Sofia" className={styles.logo} />
-          <p className={styles.subtitle}>Secure Wallet Connection</p>
-
-          {/* Loading State */}
-          {status === 'loading' && (
-            <>
-              <div className={styles.spinner} />
-              <p className={styles.text}>Initializing...</p>
-            </>
-          )}
-
-          {/* Connect State */}
-          {status === 'connect' && (
-            <>
-              <p className={styles.text}>Connect your wallet</p>
-              <p className={styles.subtext}>Connect with MetaMask or another Web3 wallet</p>
-              <button className={styles.btn} onClick={() => login()}>
-                Connect Wallet
-              </button>
-            </>
-          )}
-
-          {/* Success State */}
-          {status === 'success' && walletAddress && (
-            <>
-              <div className={styles.checkmark}>✓</div>
-              <p className={styles.text}>Wallet Connected!</p>
-              <div className={styles.walletAddress}>
-                {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
-              </div>
-              <div className={styles.instructions}>
-                <p className={styles.instructionsText}>
-                  Your wallet is now connected to Sofia. You can close this tab.
-                </p>
-              </div>
-              <button className={styles.closeBtn} onClick={handleClose}>
-                Close
-              </button>
-              <button className={styles.disconnectBtn} onClick={handleDisconnect}>
-                Disconnect
-              </button>
-            </>
-          )}
-
-          {/* Error State */}
-          {status === 'error' && (
-            <>
-              <div className={styles.errorIcon}>✕</div>
-              <p className={styles.text}>Connection Failed</p>
-              <p className={styles.subtext}>{errorMessage}</p>
-              <button className={styles.btn} onClick={handleRetry}>
-                Try Again
-              </button>
-            </>
-          )}
-        </div>
-      </div>
-    );
+  // Determine display status
+  const getStatus = () => {
+    if (error) return 'error';
+    if (isConnected && address) return 'success';
+    if (isConnecting) return 'loading';
+    return 'connect';
   };
 
+  const status = getStatus();
+
   return (
-    <PrivyProvider
-      appId={PRIVY_APP_ID}
-      clientId={PRIVY_CLIENT_ID}
-      config={{
-        appearance: {
-          theme: 'dark',
-          accentColor: '#ffffff',
-        },
-        loginMethods: ['wallet'],
-      }}
-    >
-      <PrivyAuthContent />
-    </PrivyProvider>
+    <div className={styles.container}>
+      <div className={styles.card}>
+        <img src="/img/logoBrut.png" alt="Sofia" className={styles.logo} />
+        <p className={styles.subtitle}>Secure Wallet Connection</p>
+
+        {/* Loading State */}
+        {status === 'loading' && (
+          <>
+            <div className={styles.spinner} />
+            <p className={styles.text}>Connecting...</p>
+          </>
+        )}
+
+        {/* Connect State */}
+        {status === 'connect' && (
+          <>
+            <p className={styles.text}>Connect your wallet</p>
+            <p className={styles.subtext}>Connect with MetaMask or another Web3 wallet</p>
+            <button className={styles.btn} onClick={connect}>
+              Connect Wallet
+            </button>
+          </>
+        )}
+
+        {/* Success State */}
+        {status === 'success' && address && (
+          <>
+            <div className={styles.checkmark}>✓</div>
+            <p className={styles.text}>Wallet Connected!</p>
+            <div className={styles.walletAddress}>
+              {address.slice(0, 6)}...{address.slice(-4)}
+            </div>
+            <div className={styles.instructions}>
+              <p className={styles.instructionsText}>
+                Your wallet is now connected to Sofia. You can close this tab.
+              </p>
+            </div>
+            <button className={styles.closeBtn} onClick={handleClose}>
+              Close
+            </button>
+            <button className={styles.disconnectBtn} onClick={handleDisconnect}>
+              Disconnect
+            </button>
+          </>
+        )}
+
+        {/* Error State */}
+        {status === 'error' && (
+          <>
+            <div className={styles.errorIcon}>✕</div>
+            <p className={styles.text}>Connection Failed</p>
+            <p className={styles.subtext}>{error}</p>
+            <button className={styles.btn} onClick={handleRetry}>
+              Try Again
+            </button>
+          </>
+        )}
+      </div>
+    </div>
   );
 };
 
@@ -300,7 +234,7 @@ export default function SofiaAuthPage() {
       noFooter
     >
       <BrowserOnly fallback={<LoadingPlaceholder />}>
-        {() => <AuthContentInner />}
+        {() => <AuthContent />}
       </BrowserOnly>
     </Layout>
   );
