@@ -10,20 +10,36 @@ import { parseContractError } from '@site/src/lib/web3/utils';
 export function useVoting() {
   const { wallets } = useWallets();
 
+  // Check if wallet is ready
+  const isWalletReady = wallets.length > 0 && wallets[0]?.address;
+
   /**
    * Get Privy wallet client and public client
    */
   const getClients = useCallback(async () => {
+    console.log('getClients: wallets =', wallets);
     const wallet = wallets[0];
-    if (!wallet) {
-      throw new Error('No wallet connected');
+    if (!wallet || !wallet.address) {
+      console.error('getClients: No wallet found');
+      throw new Error('Please connect your wallet first');
     }
 
+    console.log('getClients: wallet found =', wallet.address, 'type =', wallet.walletClientType);
+
     // Switch to correct chain if needed
-    await wallet.switchChain(intuitionMainnet.id);
+    try {
+      console.log('getClients: switching to chain', intuitionMainnet.id);
+      await wallet.switchChain(intuitionMainnet.id);
+      console.log('getClients: chain switched successfully');
+    } catch (switchError) {
+      console.error('getClients: chain switch error', switchError);
+      throw switchError;
+    }
 
     // Get the EIP-1193 provider from Privy wallet
+    console.log('getClients: getting ethereum provider...');
     const provider = await wallet.getEthereumProvider();
+    console.log('getClients: provider obtained', provider);
 
     // Create viem wallet client from Privy provider
     const { createWalletClient, custom } = await import('viem');
@@ -31,13 +47,16 @@ export function useVoting() {
       chain: intuitionMainnet,
       transport: custom(provider),
     });
+    console.log('getClients: walletClient created');
 
     const publicClient = createPublicClient({
       chain: intuitionMainnet,
       transport: http(intuitionMainnet.rpcUrls.default.http[0]),
     });
+    console.log('getClients: publicClient created');
 
     const account = wallet.address as `0x${string}`;
+    console.log('getClients: returning clients with account', account);
 
     return { walletClient, publicClient, account };
   }, [wallets]);
@@ -149,5 +168,6 @@ export function useVoting() {
     depositFor,
     depositAgainst,
     stakeAmount: STAKE_AMOUNT,
+    isWalletReady,
   };
 }

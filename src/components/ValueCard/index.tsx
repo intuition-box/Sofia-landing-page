@@ -31,6 +31,8 @@ export default function ValueCard({
   const [activeVote, setActiveVote] = useState<VoteType | null>(null);
 
   const handleVote = async (voteType: VoteType) => {
+    console.log('handleVote called:', { voteType, isWalletConnected, tripleId: value.tripleId });
+
     if (!isWalletConnected) {
       onConnectWallet();
       return;
@@ -42,13 +44,16 @@ export default function ValueCard({
     setTxHash(null);
 
     try {
+      console.log('Calling deposit function...');
       const hash = voteType === 'vote'
         ? await depositFor(value.tripleId)
         : await depositAgainst(value.tripleId);
 
+      console.log('Transaction hash:', hash);
       setTxHash(hash);
       setTxStatus('success');
     } catch (err) {
+      console.error('Vote error:', err);
       setTxError(err instanceof Error ? err.message : 'Transaction failed');
       setTxStatus('error');
     }
