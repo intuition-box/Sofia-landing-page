@@ -99,6 +99,51 @@ export class BlockchainService {
   }
 
   /**
+   * Get vault stats (totalAssets, totalShares) for a triple
+   */
+  static async getVaultStats(
+    publicClient: AnyClient,
+    tripleId: `0x${string}`,
+    curveId: bigint
+  ): Promise<{ totalAssets: bigint; totalShares: bigint }> {
+    const [totalAssets, totalShares] = await publicClient.readContract({
+      address: MULTIVAULT_ADDRESS,
+      abi: MultiVaultAbi,
+      functionName: 'getVault',
+      args: [tripleId, curveId],
+      authorizationList: undefined,
+    }) as [bigint, bigint];
+
+    return { totalAssets, totalShares };
+  }
+
+  /**
+   * Get support and oppose stats for a triple
+   */
+  static async getTripleVoteStats(
+    publicClient: AnyClient,
+    tripleId: `0x${string}`,
+    curveId: bigint
+  ): Promise<{ forAssets: bigint; againstAssets: bigint }> {
+    try {
+      // Get FOR stats
+      const forStats = await this.getVaultStats(publicClient, tripleId, curveId);
+
+      // Get AGAINST stats (counter triple)
+      const counterTripleId = await this.getCounterTripleId(publicClient, tripleId);
+      const againstStats = await this.getVaultStats(publicClient, counterTripleId, curveId);
+
+      return {
+        forAssets: forStats.totalAssets,
+        againstAssets: againstStats.totalAssets,
+      };
+    } catch (error) {
+      console.error('Error getting triple vote stats:', error);
+      return { forAssets: 0n, againstAssets: 0n };
+    }
+  }
+
+  /**
    * Get contract addresses
    */
   static getProxyAddress(): typeof SOFIA_PROXY_ADDRESS {

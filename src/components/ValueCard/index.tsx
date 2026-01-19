@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useVoting } from '@site/src/hooks/useVoting';
+import { useVoteStats } from '@site/src/hooks/useVoteStats';
 import { EXPLORER_URLS } from '@site/src/lib/config/chainConfig';
 import styles from './index.module.css';
 
@@ -25,6 +26,7 @@ export default function ValueCard({
   onConnectWallet,
 }: ValueCardProps): React.ReactElement {
   const { depositFor, depositAgainst } = useVoting();
+  const { forDisplay, againstDisplay, isLoading: statsLoading, refetch } = useVoteStats(value.tripleId);
   const [txStatus, setTxStatus] = useState<TxStatus>('idle');
   const [txHash, setTxHash] = useState<string | null>(null);
   const [txError, setTxError] = useState<string | null>(null);
@@ -52,6 +54,8 @@ export default function ValueCard({
       console.log('Transaction hash:', hash);
       setTxHash(hash);
       setTxStatus('success');
+      // Refresh stats after successful vote
+      refetch();
     } catch (err) {
       console.error('Vote error:', err);
       setTxError(err instanceof Error ? err.message : 'Transaction failed');
@@ -82,6 +86,9 @@ export default function ValueCard({
               aria-label={`Vote for ${value.name}`}
             >
               <span className={styles.voteLabel}>Vote</span>
+              <span className={styles.voteCount}>
+                {statsLoading ? '...' : `${forDisplay} TRUST`}
+              </span>
             </button>
             <button
               className={`${styles.voteBtn} ${styles.opposeBtn}`}
@@ -89,6 +96,9 @@ export default function ValueCard({
               aria-label={`Downvote ${value.name}`}
             >
               <span className={styles.voteLabel}>Downvote</span>
+              <span className={styles.voteCount}>
+                {statsLoading ? '...' : `${againstDisplay} TRUST`}
+              </span>
             </button>
           </div>
         )}
