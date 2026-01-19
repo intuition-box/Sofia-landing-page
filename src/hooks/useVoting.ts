@@ -110,6 +110,19 @@ export function useVoting() {
   }, []);
 
   /**
+   * Check if user has already voted on a triple
+   */
+  const checkExistingVote = useCallback(async (tripleId: `0x${string}`): Promise<{ hasVoted: boolean; voteType: 'for' | 'against' | null }> => {
+    try {
+      const { publicClient, account } = await getClients();
+      return await BlockchainService.checkExistingVote(publicClient, account, tripleId, CURVE_ID);
+    } catch (error) {
+      console.error('Error checking existing vote:', error);
+      return { hasVoted: false, voteType: null };
+    }
+  }, [getClients]);
+
+  /**
    * Deposit FOR a triple (Support/Vote)
    */
   const depositFor = useCallback(async (tripleId: `0x${string}`): Promise<string> => {
@@ -117,6 +130,13 @@ export function useVoting() {
       const { walletClient, publicClient, account } = await getClients();
 
       console.log('Voting FOR with account:', account);
+
+      // Check if user has already voted
+      const { hasVoted, voteType } = await BlockchainService.checkExistingVote(publicClient, account, tripleId, CURVE_ID);
+      if (hasVoted) {
+        const voteLabel = voteType === 'for' ? 'voted for' : 'voted against';
+        throw new Error(`You have already ${voteLabel} this value. Each wallet can only vote once.`);
+      }
 
       // Ensure proxy is approved
       await ensureProxyApproval(walletClient, publicClient, account);
@@ -156,6 +176,13 @@ export function useVoting() {
 
       console.log('Voting AGAINST with account:', account);
 
+      // Check if user has already voted
+      const { hasVoted, voteType } = await BlockchainService.checkExistingVote(publicClient, account, tripleId, CURVE_ID);
+      if (hasVoted) {
+        const voteLabel = voteType === 'for' ? 'voted for' : 'voted against';
+        throw new Error(`You have already ${voteLabel} this value. Each wallet can only vote once.`);
+      }
+
       // Ensure proxy is approved
       await ensureProxyApproval(walletClient, publicClient, account);
 
@@ -192,6 +219,7 @@ export function useVoting() {
   return {
     depositFor,
     depositAgainst,
+    checkExistingVote,
     stakeAmount: STAKE_AMOUNT,
   };
 }

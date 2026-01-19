@@ -99,6 +99,52 @@ export class BlockchainService {
   }
 
   /**
+   * Check if user has already voted on a triple (has shares on triple or counter-triple)
+   * @returns object with hasVoted boolean and voteType ('for' | 'against' | null)
+   */
+  static async checkExistingVote(
+    publicClient: AnyClient,
+    userAddress: string,
+    tripleId: `0x${string}`,
+    curveId: bigint
+  ): Promise<{ hasVoted: boolean; voteType: 'for' | 'against' | null }> {
+    try {
+      // Check shares on the triple (FOR vote)
+      const forShares = await publicClient.readContract({
+        address: MULTIVAULT_ADDRESS,
+        abi: MultiVaultAbi,
+        functionName: 'getShares',
+        args: [userAddress as Address, tripleId, curveId],
+        authorizationList: undefined,
+      }) as bigint;
+
+      if (forShares > 0n) {
+        return { hasVoted: true, voteType: 'for' };
+      }
+
+      // Check shares on counter-triple (AGAINST vote)
+      const counterTripleId = await this.getCounterTripleId(publicClient, tripleId);
+      const againstShares = await publicClient.readContract({
+        address: MULTIVAULT_ADDRESS,
+        abi: MultiVaultAbi,
+        functionName: 'getShares',
+        args: [userAddress as Address, counterTripleId, curveId],
+        authorizationList: undefined,
+      }) as bigint;
+
+      if (againstShares > 0n) {
+        return { hasVoted: true, voteType: 'against' };
+      }
+
+      return { hasVoted: false, voteType: null };
+    } catch (error) {
+      console.error('Error checking existing vote:', error);
+      // If check fails, allow voting (will fail on-chain if already voted)
+      return { hasVoted: false, voteType: null };
+    }
+  }
+
+  /**
    * Get contract addresses
    */
   static getProxyAddress(): typeof SOFIA_PROXY_ADDRESS {

@@ -1,5 +1,5 @@
 /**
- * MultiVault ABI - Minimal subset for approval and counter triple operations
+ * MultiVault ABI - Minimal subset for approval, shares, and counter triple operations
  */
 export const MultiVaultAbi = [
   {
@@ -30,5 +30,16 @@ export const MultiVaultAbi = [
     ],
     outputs: [{ name: '', type: 'bytes32', internalType: 'bytes32' }],
     stateMutability: 'pure',
+  },
+  {
+    type: 'function',
+    name: 'getShares',
+    inputs: [
+      { name: 'account', type: 'address', internalType: 'address' },
+      { name: 'termId', type: 'bytes32', internalType: 'bytes32' },
+      { name: 'curveId', type: 'uint256', internalType: 'uint256' }
+    ],
+    outputs: [{ name: '', type: 'uint256', internalType: 'uint256' }],
+    stateMutability: 'view',
   },
 ] as const;
