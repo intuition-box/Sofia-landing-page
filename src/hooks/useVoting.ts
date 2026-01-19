@@ -32,27 +32,47 @@ export function useVoting() {
 
     const account = accounts[0] as `0x${string}`;
 
+    // Get current chain ID
+    const currentChainId = await window.ethereum.request({ method: 'eth_chainId' });
+    const targetChainId = `0x${intuitionMainnet.id.toString(16)}`;
+
+    console.log('Current chain:', currentChainId, 'Target chain:', targetChainId);
+
     // Switch to Intuition chain if needed
-    try {
-      await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: `0x${intuitionMainnet.id.toString(16)}` }],
-      });
-    } catch (switchError: any) {
-      // Chain not added, add it
-      if (switchError.code === 4902) {
+    if (currentChainId !== targetChainId) {
+      try {
+        console.log('Switching to Intuition chain...');
         await window.ethereum.request({
-          method: 'wallet_addEthereumChain',
-          params: [{
-            chainId: `0x${intuitionMainnet.id.toString(16)}`,
-            chainName: intuitionMainnet.name,
-            nativeCurrency: intuitionMainnet.nativeCurrency,
-            rpcUrls: [intuitionMainnet.rpcUrls.default.http[0]],
-            blockExplorerUrls: [intuitionMainnet.blockExplorers.default.url],
-          }],
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: targetChainId }],
         });
-      } else {
-        throw switchError;
+        console.log('Chain switch successful');
+      } catch (switchError: any) {
+        // Chain not added, add it
+        if (switchError.code === 4902) {
+          console.log('Chain not found, adding Intuition chain...');
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [{
+              chainId: targetChainId,
+              chainName: intuitionMainnet.name,
+              nativeCurrency: intuitionMainnet.nativeCurrency,
+              rpcUrls: [intuitionMainnet.rpcUrls.default.http[0]],
+              blockExplorerUrls: [intuitionMainnet.blockExplorers.default.url],
+            }],
+          });
+          console.log('Chain added successfully');
+        } else {
+          console.error('Chain switch error:', switchError);
+          throw new Error('Please switch to Intuition network in MetaMask');
+        }
+      }
+
+      // Verify chain switch completed
+      const newChainId = await window.ethereum.request({ method: 'eth_chainId' });
+      console.log('Chain after switch:', newChainId);
+      if (newChainId !== targetChainId) {
+        throw new Error('Please switch to Intuition network to vote');
       }
     }
 
@@ -61,6 +81,7 @@ export function useVoting() {
       transport: custom(window.ethereum),
     });
 
+    // Use direct RPC for public client (not MetaMask) to ensure correct chain
     const publicClient = createPublicClient({
       chain: intuitionMainnet,
       transport: http(intuitionMainnet.rpcUrls.default.http[0]),
