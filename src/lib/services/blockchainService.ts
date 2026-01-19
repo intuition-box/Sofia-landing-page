@@ -109,6 +109,8 @@ export class BlockchainService {
     curveId: bigint
   ): Promise<{ hasVoted: boolean; voteType: 'for' | 'against' | null }> {
     try {
+      console.log('Checking existing vote for:', { userAddress, tripleId, curveId: curveId.toString() });
+
       // Check shares on the triple (FOR vote)
       const forShares = await publicClient.readContract({
         address: MULTIVAULT_ADDRESS,
@@ -118,12 +120,16 @@ export class BlockchainService {
         authorizationList: undefined,
       }) as bigint;
 
+      console.log('FOR shares:', forShares.toString());
+
       if (forShares > 0n) {
         return { hasVoted: true, voteType: 'for' };
       }
 
       // Check shares on counter-triple (AGAINST vote)
       const counterTripleId = await this.getCounterTripleId(publicClient, tripleId);
+      console.log('Counter triple ID:', counterTripleId);
+
       const againstShares = await publicClient.readContract({
         address: MULTIVAULT_ADDRESS,
         abi: MultiVaultAbi,
@@ -132,10 +138,13 @@ export class BlockchainService {
         authorizationList: undefined,
       }) as bigint;
 
+      console.log('AGAINST shares:', againstShares.toString());
+
       if (againstShares > 0n) {
         return { hasVoted: true, voteType: 'against' };
       }
 
+      console.log('No existing vote found');
       return { hasVoted: false, voteType: null };
     } catch (error) {
       console.error('Error checking existing vote:', error);
