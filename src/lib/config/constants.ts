@@ -1,52 +1,16 @@
-import { defineChain } from 'viem';
-
-// Intuition Mainnet Chain Definition
-export const intuitionMainnet = defineChain({
-  id: 1155,
-  name: 'Intuition Mainnet',
-  nativeCurrency: {
-    decimals: 18,
-    name: 'Trust',
-    symbol: 'TRUST',
-  },
-  rpcUrls: {
-    default: { http: ['https://rpc.intuition.systems'] },
-    public: { http: ['https://rpc.intuition.systems'] },
-  },
-  blockExplorers: {
-    default: { name: 'Explorer', url: 'https://explorer.intuition.systems' },
-  },
-});
-
-// Chain parameters for MetaMask wallet_addEthereumChain
-export const CHAIN_PARAMS = {
-  chainId: `0x${(1155).toString(16)}`, // 0x483
-  chainName: 'Intuition Mainnet',
-  nativeCurrency: {
-    name: 'Trust',
-    symbol: 'TRUST',
-    decimals: 18,
-  },
-  rpcUrls: ['https://rpc.intuition.systems'],
-  blockExplorerUrls: ['https://explorer.intuition.systems'],
-};
-
-// Contract addresses
-export const MULTIVAULT_ADDRESS = '0x6E35cF57A41fA15eA0EaE9C33e751b01A784Fe7e' as const;
-
-// Explorer URLs
-export const EXPLORER_URLS = {
-  TRANSACTION: 'https://explorer.intuition.systems/tx/',
-  ADDRESS: 'https://explorer.intuition.systems/address/',
-};
-
-// Stake amount: 10 TRUST in wei
+/**
+ * Stake amount: 10 TRUST in wei
+ */
 export const STAKE_AMOUNT = BigInt('10000000000000000000'); // 10 TRUST
 
-// Curve ID: 1 (Linear/default)
+/**
+ * Curve ID: 1 (Linear/default bonding curve)
+ */
 export const CURVE_ID = 1n;
 
-// Values data with triple IDs
+/**
+ * Sofia Values data with pre-computed triple IDs
+ */
 export const VALUES_DATA = [
   {
     id: 1,
@@ -77,28 +41,5 @@ export const VALUES_DATA = [
     name: 'Collective Narrative',
     description: 'Sofia is built in public and open-source by design, embracing transparency at every level. Regular quarterly reports ensure accountability, while the community retains real control over the direction and evolution of the protocol.',
     tripleId: '0x4190a5bf28eb7608c9ee34d50a66733cc55bac461f09b9ca8adcc03572f612ec' as `0x${string}`,
-  },
-] as const;
-
-// Minimal MultiVault ABI for deposit and counter triple calculation
-export const MULTIVAULT_ABI = [
-  {
-    type: 'function',
-    name: 'deposit',
-    inputs: [
-      { name: 'receiver', type: 'address', internalType: 'address' },
-      { name: 'termId', type: 'bytes32', internalType: 'bytes32' },
-      { name: 'curveId', type: 'uint256', internalType: 'uint256' },
-      { name: 'minShares', type: 'uint256', internalType: 'uint256' },
-    ],
-    outputs: [{ name: '', type: 'uint256', internalType: 'uint256' }],
-    stateMutability: 'payable',
-  },
-  {
-    type: 'function',
-    name: 'getCounterIdFromTripleId',
-    inputs: [{ name: 'tripleId', type: 'bytes32', internalType: 'bytes32' }],
-    outputs: [{ name: '', type: 'bytes32', internalType: 'bytes32' }],
-    stateMutability: 'pure',
   },
 ] as const;

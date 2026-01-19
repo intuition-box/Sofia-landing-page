@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useVoting } from '@site/src/lib/web3/useVoting';
-import { EXPLORER_URLS } from '@site/src/lib/web3/config';
+import { useVoting } from '@site/src/hooks/useVoting';
+import { EXPLORER_URLS } from '@site/src/lib/config/chainConfig';
 import styles from './index.module.css';
 
 interface Value {

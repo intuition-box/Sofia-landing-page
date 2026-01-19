@@ -1,7 +1,7 @@
 import React from 'react';
 import ValueCard from '@site/src/components/ValueCard';
-import { useWalletConnection } from '@site/src/lib/web3/useWalletConnection';
-import { VALUES_DATA } from '@site/src/lib/web3/config';
+import { useWalletConnection } from '@site/src/hooks/useWalletConnection';
+import { VALUES_DATA } from '@site/src/lib/config/constants';
 import { formatAddress } from '@site/src/lib/web3/utils';
 import styles from './index.module.css';
 
