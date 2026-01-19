@@ -40,21 +40,28 @@ export class BlockchainService {
 
   /**
    * Check if user has approved proxy for deposits on MultiVault
+   * Note: If the check fails, we assume no approval and will request one
    */
   static async checkProxyApproval(
     publicClient: AnyClient,
     userAddress: string
   ): Promise<boolean> {
-    const approvalType = await publicClient.readContract({
-      address: MULTIVAULT_ADDRESS,
-      abi: MultiVaultAbi,
-      functionName: 'approvals',
-      args: [userAddress as Address, SOFIA_PROXY_ADDRESS],
-      authorizationList: undefined,
-    }) as number;
+    try {
+      const approvalType = await publicClient.readContract({
+        address: MULTIVAULT_ADDRESS,
+        abi: MultiVaultAbi,
+        functionName: 'approvals',
+        args: [userAddress as Address, SOFIA_PROXY_ADDRESS],
+        authorizationList: undefined,
+      }) as number;
 
-    // ApprovalTypes: 0=NONE, 1=DEPOSIT, 2=REDEMPTION, 3=BOTH
-    return approvalType === this.ApprovalTypes.DEPOSIT || approvalType === this.ApprovalTypes.BOTH;
+      // ApprovalTypes: 0=NONE, 1=DEPOSIT, 2=REDEMPTION, 3=BOTH
+      return approvalType === this.ApprovalTypes.DEPOSIT || approvalType === this.ApprovalTypes.BOTH;
+    } catch (error) {
+      console.error('Error checking proxy approval:', error);
+      // If we can't check, assume not approved
+      return false;
+    }
   }
 
   /**
