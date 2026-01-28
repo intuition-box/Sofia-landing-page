@@ -29,6 +29,7 @@
   border-radius: 20px;
   padding: 1.5rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  min-height: 550px;
 }
 
 /* Card Content */
@@ -166,6 +167,7 @@
 
   .featureCard {
     padding: 1.5rem;
+    min-height: 300px;
   }
 
   .cardContent {
