@@ -2,12 +2,13 @@
  * Sofia Logout Page
  *
  * Dedicated page for logging out from Privy and clearing all session data.
- * This ensures clean logout regardless of other open tabs.
+ * Uses the existing WalletProvider context - no duplicate PrivyProvider.
  */
 
 import { useEffect, useState, useRef } from 'react';
 import Layout from '@theme/Layout';
 import BrowserOnly from '@docusaurus/BrowserOnly';
+import { useWalletConnection } from '@site/src/lib/web3/PrivyContext';
 import styles from '../auth.module.css';
 
 // Chrome extension API type declaration
@@ -43,17 +44,37 @@ const notifyExtensionDisconnected = (extensionId?: string) => {
 
   // Method 3: Clear localStorage
   try {
+    // Clear Sofia-specific storage
     localStorage.removeItem('sofia_wallet_address');
     localStorage.removeItem('sofia_wallet_timestamp');
-    console.log('[Sofia Logout] LocalStorage cleared');
+
+    // Clear all Privy-related storage
+    const keysToRemove: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && (key.includes('privy') || key.includes('Privy'))) {
+        keysToRemove.push(key);
+      }
+    }
+    keysToRemove.forEach(key => {
+      try {
+        localStorage.removeItem(key);
+        console.log('[Sofia Logout] Removed:', key);
+      } catch (e) {}
+    });
+
+    // Clear session storage
+    sessionStorage.clear();
+
+    console.log('[Sofia Logout] Storage cleared');
   } catch (e) {
-    console.log('[Sofia Logout] Failed to clear localStorage');
+    console.log('[Sofia Logout] Failed to clear storage:', e);
   }
 };
 
 const LogoutContent = () => {
+  const { isConnected, disconnect } = useWalletConnection();
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const logoutAttempted = useRef(false);
 
   // Get extension ID from URL params
@@ -66,48 +87,31 @@ const LogoutContent = () => {
     logoutAttempted.current = true;
 
     const performLogout = async () => {
+      console.log('[Sofia Logout] Starting logout, isConnected:', isConnected);
+
       try {
-        // Dynamic import of Privy to get logout function
-        const { useLogout, usePrivy } = await import('@privy-io/react-auth');
-
-        // Clear all Privy-related storage
-        const keysToRemove: string[] = [];
-        for (let i = 0; i < localStorage.length; i++) {
-          const key = localStorage.key(i);
-          if (key && (key.includes('privy') || key.includes('Privy') || key.includes('sofia'))) {
-            keysToRemove.push(key);
-          }
+        // Call disconnect from wallet context (which calls Privy logout)
+        if (isConnected) {
+          await disconnect();
+          console.log('[Sofia Logout] Wallet disconnected');
         }
-        keysToRemove.forEach(key => {
-          try {
-            localStorage.removeItem(key);
-            console.log('[Sofia Logout] Removed:', key);
-          } catch (e) {}
-        });
 
-        // Clear session storage too
-        try {
-          sessionStorage.clear();
-        } catch (e) {}
-
-        // Notify extension
+        // Clear all storage and notify extension
         notifyExtensionDisconnected(extensionId);
 
         setStatus('success');
         console.log('[Sofia Logout] Logout complete');
       } catch (error) {
         console.error('[Sofia Logout] Error:', error);
-
-        // Even if Privy logout fails, clear local storage
+        // Still clear storage even if disconnect fails
         notifyExtensionDisconnected(extensionId);
-
-        // Still show success since we cleared what we could
-        setStatus('success');
+        setStatus('success'); // Show success anyway since we cleared storage
       }
     };
 
-    performLogout();
-  }, [extensionId]);
+    // Small delay to ensure context is ready
+    setTimeout(performLogout, 100);
+  }, [isConnected, disconnect, extensionId]);
 
   const handleClose = () => {
     window.close();
@@ -140,121 +144,9 @@ const LogoutContent = () => {
           <>
             <div className={styles.errorIcon}>✕</div>
             <p className={styles.text}>Logout Failed</p>
-            <p className={styles.subtext}>{errorMessage || 'Please try again.'}</p>
+            <p className={styles.subtext}>Please try again.</p>
             <button className={styles.btn} onClick={() => window.location.reload()}>
               Retry
-            </button>
-          </>
-        )}
-      </div>
-    </div>
-  );
-};
-
-// We need a wrapper that includes PrivyProvider for logout to work
-const LogoutWithPrivy = () => {
-  const { PrivyProvider } = require('@privy-io/react-auth');
-
-  return (
-    <PrivyProvider
-      appId="cmj05tjsj03thjs0c3mgxrixm"
-      clientId="client-WY6U3b3LFEgbveR2FVgiyTTbRWKCZhy6vEVFzQt9NvZYS"
-      config={{
-        appearance: { theme: 'dark' },
-        loginMethods: ['wallet'],
-      }}
-    >
-      <LogoutContentWithHooks />
-    </PrivyProvider>
-  );
-};
-
-// Inner component that can use Privy hooks
-const LogoutContentWithHooks = () => {
-  const { useLogout, usePrivy } = require('@privy-io/react-auth');
-  const { ready, authenticated } = usePrivy();
-  const { logout } = useLogout();
-
-  const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
-  const logoutAttempted = useRef(false);
-
-  const extensionId = typeof window !== 'undefined'
-    ? new URLSearchParams(window.location.search).get('extensionId') || undefined
-    : undefined;
-
-  useEffect(() => {
-    if (!ready) return;
-    if (logoutAttempted.current) return;
-    logoutAttempted.current = true;
-
-    const performLogout = async () => {
-      console.log('[Sofia Logout] Starting logout, authenticated:', authenticated);
-
-      try {
-        // Call Privy logout if authenticated
-        if (authenticated) {
-          await logout();
-          console.log('[Sofia Logout] Privy logout complete');
-        }
-
-        // Clear all Privy and Sofia storage
-        const keysToRemove: string[] = [];
-        for (let i = 0; i < localStorage.length; i++) {
-          const key = localStorage.key(i);
-          if (key && (key.includes('privy') || key.includes('Privy') || key.includes('sofia'))) {
-            keysToRemove.push(key);
-          }
-        }
-        keysToRemove.forEach(key => {
-          try {
-            localStorage.removeItem(key);
-            console.log('[Sofia Logout] Removed:', key);
-          } catch (e) {}
-        });
-
-        // Clear session storage
-        try {
-          sessionStorage.clear();
-        } catch (e) {}
-
-        // Notify extension
-        notifyExtensionDisconnected(extensionId);
-
-        setStatus('success');
-      } catch (error) {
-        console.error('[Sofia Logout] Error:', error);
-        // Still clear what we can
-        notifyExtensionDisconnected(extensionId);
-        setStatus('success'); // Show success anyway
-      }
-    };
-
-    performLogout();
-  }, [ready, authenticated, logout, extensionId]);
-
-  const handleClose = () => {
-    window.close();
-  };
-
-  return (
-    <div className={styles.container}>
-      <div className={styles.card}>
-        <img src="/img/logoBrut.png" alt="Sofia" className={styles.logo} />
-
-        {status === 'loading' && (
-          <>
-            <div className={styles.spinner} />
-            <p className={styles.text}>Logging out...</p>
-          </>
-        )}
-
-        {status === 'success' && (
-          <>
-            <div className={styles.checkmark}>✓</div>
-            <p className={styles.text}>Logged Out</p>
-            <p className={styles.subtext}>Your wallet has been disconnected from Sofia.</p>
-            <button className={styles.closeBtn} onClick={handleClose}>
-              Close
             </button>
           </>
         )}
@@ -282,7 +174,7 @@ export default function LogoutPage() {
       noFooter
     >
       <BrowserOnly fallback={<LoadingPlaceholder />}>
-        {() => <LogoutWithPrivy />}
+        {() => <LogoutContent />}
       </BrowserOnly>
     </Layout>
   );
