@@ -33,11 +33,10 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
-/* Card Content - Two columns */
+/* Card Content */
 .cardContent {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
@@ -77,18 +76,19 @@
   margin: 0;
 }
 
-/* Image Content (Right) */
+/* Image Content */
 .imageContent {
   border-radius: 16px;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 900px;
 }
 
 .featureImage {
   width: 100%;
   height: auto;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 /* Carousel Indicators */

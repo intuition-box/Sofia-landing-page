@@ -47,7 +47,7 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(calc(-9 * (400px + 2.5rem)));
+    transform: translateX(calc(-6 * (400px + 2.5rem)));
   }
 }
 
