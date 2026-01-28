@@ -32,7 +32,7 @@ const DEFAULT_EXTENSION_ID = 'YOUR_EXTENSION_ID_HERE';
 
 // ============= HELPER FUNCTIONS =============
 
-// Send wallet address to extension via multiple methods
+// Send wallet address to extension via multiple methods (does NOT auto-close)
 const sendToExtension = (address: string, extensionId?: string) => {
   // Method 1: chrome.runtime.sendMessage (if extension ID is known)
   if (extensionId && extensionId !== DEFAULT_EXTENSION_ID &&
@@ -43,9 +43,7 @@ const sendToExtension = (address: string, extensionId?: string) => {
         walletAddress: address
       }, (response) => {
         console.log('[Sofia Auth] Extension response:', response);
-        if (response?.success) {
-          window.close();
-        }
+        // Don't auto-close - let user see the success state
       });
     } catch (e) {
       console.log('[Sofia Auth] Failed to send to extension:', e);
@@ -70,7 +68,7 @@ const sendToExtension = (address: string, extensionId?: string) => {
     console.log('[Sofia Auth] LocalStorage not available');
   }
 
-  // Method 4: URL callback redirect
+  // Method 4: URL callback redirect (only if explicitly requested)
   const urlParams = new URLSearchParams(window.location.search);
   const callbackUrl = urlParams.get('callback');
   if (callbackUrl) {
