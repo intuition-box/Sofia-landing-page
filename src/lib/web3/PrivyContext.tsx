@@ -5,6 +5,7 @@ const PRIVY_CLIENT_ID = 'client-WY6U3b3LFEgbveR2FVgiyTTbRWKCZhy6vEVFzQt9NvZYS';
 
 interface WalletContextValue {
   address: string | null;
+  walletType: string | null; // 'metamask', 'rabby', 'coinbase_wallet', etc.
   isConnected: boolean;
   isConnecting: boolean;
   error: string | null;
@@ -16,6 +17,7 @@ interface WalletContextValue {
 
 const defaultValue: WalletContextValue = {
   address: null,
+  walletType: null,
   isConnected: false,
   isConnecting: false,
   error: null,
@@ -27,18 +29,30 @@ const defaultValue: WalletContextValue = {
 
 const WalletContext = createContext<WalletContextValue>(defaultValue);
 
-// Extract wallet address from Privy user
-const getWalletAddress = (user: any): string | null => {
-  if (!user) return null;
+// Extract wallet info from Privy user
+const getWalletInfo = (user: any): { address: string | null; walletType: string | null } => {
+  if (!user) return { address: null, walletType: null };
 
+  // Check linkedAccounts first
   const walletAccount = user.linkedAccounts?.find(
     (account: any) => account.type === 'wallet'
   );
-  if (walletAccount?.address) return walletAccount.address;
+  if (walletAccount?.address) {
+    return {
+      address: walletAccount.address,
+      walletType: walletAccount.walletClientType || walletAccount.walletClient || null,
+    };
+  }
 
-  if (user.wallet?.address) return user.wallet.address;
+  // Fallback to user.wallet
+  if (user.wallet?.address) {
+    return {
+      address: user.wallet.address,
+      walletType: user.wallet.walletClientType || user.wallet.walletClient || null,
+    };
+  }
 
-  return null;
+  return { address: null, walletType: null };
 };
 
 function PrivyWalletProvider({ children }: { children: React.ReactNode }) {
@@ -50,6 +64,7 @@ function PrivyWalletProvider({ children }: { children: React.ReactNode }) {
 
     const [state, setState] = useState({
       address: null as string | null,
+      walletType: null as string | null,
       isConnected: false,
       isConnecting: false,
       error: null as string | null,
@@ -57,10 +72,12 @@ function PrivyWalletProvider({ children }: { children: React.ReactNode }) {
 
     const { login } = useLogin({
       onComplete: ({ user }: { user: any }) => {
-        const address = getWalletAddress(user);
+        const { address, walletType } = getWalletInfo(user);
         if (address) {
+          console.log('[Privy] Connected wallet:', { address, walletType });
           setState({
             address,
+            walletType,
             isConnected: true,
             isConnecting: false,
             error: null,
@@ -85,10 +102,12 @@ function PrivyWalletProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
       if (ready) {
         if (authenticated && user) {
-          const address = getWalletAddress(user);
+          const { address, walletType } = getWalletInfo(user);
           if (address) {
+            console.log('[Privy] Restored wallet:', { address, walletType });
             setState({
               address,
+              walletType,
               isConnected: true,
               isConnecting: false,
               error: null,
@@ -97,6 +116,7 @@ function PrivyWalletProvider({ children }: { children: React.ReactNode }) {
         } else {
           setState({
             address: null,
+            walletType: null,
             isConnected: false,
             isConnecting: false,
             error: null,
@@ -115,6 +135,7 @@ function PrivyWalletProvider({ children }: { children: React.ReactNode }) {
         await logout();
         setState({
           address: null,
+          walletType: null,
           isConnected: false,
           isConnecting: false,
           error: null,

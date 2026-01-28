@@ -32,15 +32,18 @@ const DEFAULT_EXTENSION_ID = 'YOUR_EXTENSION_ID_HERE';
 
 // ============= HELPER FUNCTIONS =============
 
-// Send wallet address to extension via multiple methods (does NOT auto-close)
-const sendToExtension = (address: string, extensionId?: string) => {
+// Send wallet address and type to extension via multiple methods (does NOT auto-close)
+const sendToExtension = (address: string, walletType: string | null, extensionId?: string) => {
+  console.log('[Sofia Auth] Sending to extension:', { address, walletType });
+
   // Method 1: chrome.runtime.sendMessage (if extension ID is known)
   if (extensionId && extensionId !== DEFAULT_EXTENSION_ID &&
       typeof chrome !== 'undefined' && chrome?.runtime?.sendMessage) {
     try {
       chrome.runtime.sendMessage(extensionId, {
         type: 'WALLET_CONNECTED',
-        walletAddress: address
+        walletAddress: address,
+        walletType: walletType || 'unknown'
       }, (response) => {
         console.log('[Sofia Auth] Extension response:', response);
         // Don't auto-close - let user see the success state
@@ -54,7 +57,8 @@ const sendToExtension = (address: string, extensionId?: string) => {
   if (window.opener) {
     window.opener.postMessage({
       type: 'SOFIA_WALLET_CONNECTED',
-      address: address
+      address: address,
+      walletType: walletType || 'unknown'
     }, '*');
     console.log('[Sofia Auth] Sent postMessage to opener');
   }
@@ -62,6 +66,7 @@ const sendToExtension = (address: string, extensionId?: string) => {
   // Method 3: Store in localStorage for polling
   try {
     localStorage.setItem('sofia_wallet_address', address);
+    localStorage.setItem('sofia_wallet_type', walletType || 'unknown');
     localStorage.setItem('sofia_wallet_timestamp', Date.now().toString());
     console.log('[Sofia Auth] Stored in localStorage');
   } catch (e) {
@@ -75,6 +80,7 @@ const sendToExtension = (address: string, extensionId?: string) => {
     try {
       const redirectUrl = new URL(callbackUrl);
       redirectUrl.searchParams.set('address', address);
+      redirectUrl.searchParams.set('walletType', walletType || 'unknown');
       console.log('[Sofia Auth] Redirecting to callback:', redirectUrl.toString());
       setTimeout(() => {
         window.location.href = redirectUrl.toString();
@@ -88,7 +94,7 @@ const sendToExtension = (address: string, extensionId?: string) => {
 // ============= AUTH CONTENT COMPONENT =============
 
 const AuthContent = () => {
-  const { address, isConnected, isConnecting, error, connect, disconnect, clearError } = useWalletConnection();
+  const { address, walletType, isConnected, isConnecting, error, connect, disconnect, clearError } = useWalletConnection();
   const [hasSentToExtension, setHasSentToExtension] = useState(false);
   const autoLoginTriggered = useRef(false);
 
@@ -100,11 +106,11 @@ const AuthContent = () => {
   // Send to extension when connected
   useEffect(() => {
     if (isConnected && address && !hasSentToExtension) {
-      console.log('[Sofia Auth] Wallet connected, sending to extension:', address);
-      sendToExtension(address, extensionId);
+      console.log('[Sofia Auth] Wallet connected, sending to extension:', { address, walletType });
+      sendToExtension(address, walletType, extensionId);
       setHasSentToExtension(true);
     }
-  }, [isConnected, address, extensionId, hasSentToExtension]);
+  }, [isConnected, address, walletType, extensionId, hasSentToExtension]);
 
   // Auto-trigger login if specified in URL (only once)
   useEffect(() => {
@@ -133,6 +139,7 @@ const AuthContent = () => {
     setHasSentToExtension(false);
     try {
       localStorage.removeItem('sofia_wallet_address');
+      localStorage.removeItem('sofia_wallet_type');
       localStorage.removeItem('sofia_wallet_timestamp');
     } catch (e) {}
   }, [disconnect]);
