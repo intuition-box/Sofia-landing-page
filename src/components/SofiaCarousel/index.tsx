@@ -2,42 +2,12 @@ import React from 'react';
 import styles from './index.module.css';
 
 const sofiaImages = [
-  {
-    src: '/img/sofiascreen/sofiascreenhomepage.png',
-    alt: 'Sofia Homepage'
-  },
-  {
-    src: '/img/sofiascreen/screensofiaprofil.png',
-    alt: 'Sofia Profile View'
-  },
-  {
-    src: '/img/sofiascreen/sofiascreenbookmarks.png',
-    alt: 'Sofia Bookmarks'
-  },
-  {
-    src: '/img/sofiascreen/sofiascreenechoes.png',
-    alt: 'Sofia Echoes'
-  },
-  {
-    src: '/img/sofiascreen/sofiascreenpulse.png',
-    alt: 'Sofia Pulse'
-  },
-  {
-    src: '/img/sofiascreen/sofiascreenpulsepng.png',
-    alt: 'Sofia Pulse View'
-  },
-  {
-    src: '/img/sofiascreen/sofiascreensettings.png',
-    alt: 'Sofia Settings'
-  },
-  {
-    src: '/img/sofiascreen/sofiascreensignal.png',
-    alt: 'Sofia Signal'
-  },
-  {
-    src: '/img/sofiascreen/sofiascreentriples.png',
-    alt: 'Sofia Triples'
-  }
+  { src: '/img/sofiascreen/Workspace-Sofia/slide1.png', alt: 'Sofia Screenshot 1' },
+  { src: '/img/sofiascreen/Workspace-Sofia/slide2.png', alt: 'Sofia Screenshot 2' },
+  { src: '/img/sofiascreen/Workspace-Sofia/slide3.png', alt: 'Sofia Screenshot 3' },
+  { src: '/img/sofiascreen/Workspace-Sofia/slide4.png', alt: 'Sofia Screenshot 4' },
+  { src: '/img/sofiascreen/Workspace-Sofia/slide5.png', alt: 'Sofia Screenshot 5' },
+  { src: '/img/sofiascreen/Workspace-Sofia/slide6.png', alt: 'Sofia Screenshot 6' },
 ];
 
 export default function SofiaCarousel(): React.ReactElement {
