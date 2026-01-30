@@ -14,10 +14,10 @@ export default function Layout(props: Props): JSX.Element {
       bgColor: "#ffcd00",
       textColor: "#000",
       links: [
-        { label: "Manifesto", href: "/manifesto", ariaLabel: "Read Manifesto" },
         { label: "Sofia Values", href: "/values", ariaLabel: "View Sofia Values" },
         { label: "Documentation", href: "/docs/introduction", ariaLabel: "Read Documentation" },
-        { label: "Privacy Policy", href: "/privacy", ariaLabel: "Read Privacy Policy" }
+        { label: "Privacy Policy", href: "/privacy", ariaLabel: "Read Privacy Policy" },
+        { label: "Terms & Conditions", href: "/terms", ariaLabel: "Read Terms and Conditions" }
       ]
     },
     {
@@ -25,6 +25,7 @@ export default function Layout(props: Props): JSX.Element {
       bgColor: "#ffcd00",
       textColor: "#000",
       links: [
+        { label: "Manifesto", href: "/manifesto", ariaLabel: "Read Manifesto" },
         { label: "Sofia Chronicles", href: "/blog", ariaLabel: "Sofia Chronicles" },
         { label: "GitHub", href: "https://github.com/intuition-box/Sofia", ariaLabel: "View on GitHub" }
       ]
