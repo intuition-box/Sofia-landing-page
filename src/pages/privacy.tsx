@@ -159,9 +159,6 @@ export default function Privacy(): React.ReactElement {
             <h3>6.6 IPFS</h3>
             <p>Metadata for published signals may be stored on IPFS, a decentralized and public storage network.</p>
 
-            <h3>6.7 Local AI (Optional)</h3>
-            <p>If Ollama is installed locally, Sofia may communicate with it for on-device AI processing. In this case, no data leaves your device.</p>
-
             <h2>7. Chrome Permissions Justification</h2>
             <p>Sofia requests permissions strictly necessary for its functionality, including: storage, history, tabs, activeTab, sidePanel, bookmarks, identity, offscreen, scripting, and host permissions (all URLs).</p>
             <p>Each permission is used solely for the purposes described in this policy.</p>
