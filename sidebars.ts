@@ -14,7 +14,7 @@ import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
  */
 const sidebars: SidebarsConfig = {
   // Documentation sidebar
-  docsSidebar: [
+  tutorialSidebar: [
     {
       type: 'doc',
       id: 'introduction',

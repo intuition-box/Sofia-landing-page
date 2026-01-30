@@ -89,6 +89,14 @@ const config: Config = {
               label: 'Manifesto',
               to: '/manifesto',
             },
+            {
+              label: 'Privacy',
+              to: '/privacy',
+            },
+            {
+              label: 'Terms',
+              to: '/terms',
+            },
           ],
         },
         {
@@ -98,7 +106,7 @@ const config: Config = {
           items: [
             {
               label: 'Documentation',
-              to: '/docs/intro',
+              to: '/docs/introduction',
             },
             {
               label: 'Sofia Values',

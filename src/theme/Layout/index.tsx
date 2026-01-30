@@ -15,7 +15,9 @@ export default function Layout(props: Props): JSX.Element {
       textColor: "#000",
       links: [
         { label: "About us", href: "/about", ariaLabel: "About us" },
-        { label: "Manifesto", href: "/manifesto", ariaLabel: "Read Manifesto" }
+        { label: "Manifesto", href: "/manifesto", ariaLabel: "Read Manifesto" },
+        { label: "Privacy", href: "/privacy", ariaLabel: "Privacy Policy" },
+        { label: "Terms", href: "/terms", ariaLabel: "Terms and Conditions" }
       ]
     },
     {
@@ -23,7 +25,7 @@ export default function Layout(props: Props): JSX.Element {
       bgColor: "#ffcd00",
       textColor: "#000",
       links: [
-        { label: "Documentation", href: "/docs/intro", ariaLabel: "Read Documentation" },
+        { label: "Documentation", href: "/docs/introduction", ariaLabel: "Read Documentation" },
         { label: "Sofia Values", href: "/values", ariaLabel: "View Sofia Values" },
         { label: "Sofia Chronicles", href: "/blog", ariaLabel: "Sofia Chronicles" }
       ]
