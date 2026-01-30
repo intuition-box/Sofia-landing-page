@@ -75,7 +75,61 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      items: [],
+      items: [
+        {
+          type: 'dropdown',
+          label: 'About',
+          position: 'right',
+          items: [
+            {
+              label: 'About us',
+              to: '/about',
+            },
+            {
+              label: 'Manifesto',
+              to: '/manifesto',
+            },
+          ],
+        },
+        {
+          type: 'dropdown',
+          label: 'Resources',
+          position: 'right',
+          items: [
+            {
+              label: 'Documentation',
+              to: '/docs/intro',
+            },
+            {
+              label: 'Sofia Values',
+              to: '/values',
+            },
+            {
+              label: 'Sofia Chronicles',
+              to: '/blog',
+            },
+          ],
+        },
+        {
+          type: 'dropdown',
+          label: 'Links',
+          position: 'right',
+          items: [
+            {
+              label: 'Github',
+              href: 'https://github.com/intuition-box',
+            },
+            {
+              label: 'X',
+              href: 'https://x.com/Sofia_Intuition',
+            },
+            {
+              label: 'Discord',
+              href: 'https://discord.gg/intuition',
+            },
+          ],
+        },
+      ],
     },
     prism: {
       theme: prismThemes.github,
