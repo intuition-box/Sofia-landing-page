@@ -16,7 +16,8 @@ export default function Layout(props: Props): JSX.Element {
       links: [
         { label: "Manifesto", href: "/manifesto", ariaLabel: "Read Manifesto" },
         { label: "Sofia Values", href: "/values", ariaLabel: "View Sofia Values" },
-        { label: "Documentation", href: "/docs/introduction", ariaLabel: "Read Documentation" }
+        { label: "Documentation", href: "/docs/introduction", ariaLabel: "Read Documentation" },
+        { label: "Privacy Policy", href: "/privacy", ariaLabel: "Read Privacy Policy" }
       ]
     },
     {
