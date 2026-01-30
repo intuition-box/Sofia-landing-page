@@ -14,10 +14,8 @@ export default function Layout(props: Props): JSX.Element {
       bgColor: "#ffcd00",
       textColor: "#000",
       links: [
-        { label: "Sofia Values", href: "/values", ariaLabel: "View Sofia Values" },
-        { label: "Documentation", href: "/docs/introduction", ariaLabel: "Read Documentation" },
-        { label: "Privacy Policy", href: "/privacy", ariaLabel: "Read Privacy Policy" },
-        { label: "Terms & Conditions", href: "/terms", ariaLabel: "Read Terms and Conditions" }
+        { label: "About us", href: "/about", ariaLabel: "About us" },
+        { label: "Manifesto", href: "/manifesto", ariaLabel: "Read Manifesto" }
       ]
     },
     {
@@ -25,18 +23,19 @@ export default function Layout(props: Props): JSX.Element {
       bgColor: "#ffcd00",
       textColor: "#000",
       links: [
-        { label: "Manifesto", href: "/manifesto", ariaLabel: "Read Manifesto" },
-        { label: "Sofia Chronicles", href: "/blog", ariaLabel: "Sofia Chronicles" },
-        { label: "GitHub", href: "https://github.com/intuition-box/Sofia", ariaLabel: "View on GitHub" }
+        { label: "Documentation", href: "/docs/intro", ariaLabel: "Read Documentation" },
+        { label: "Sofia Values", href: "/values", ariaLabel: "View Sofia Values" },
+        { label: "Sofia Chronicles", href: "/blog", ariaLabel: "Sofia Chronicles" }
       ]
     },
     {
-      label: "Social",
+      label: "Links",
       bgColor: "#ffcd00",
       textColor: "#000",
       links: [
-        { label: "X", href: "https://x.com/0xSofia3", ariaLabel: "Follow us on X" },
-        { label: "Discord", href: "https://discord.gg/39RP6h4WuH", ariaLabel: "Join our Discord" }
+        { label: "Github", href: "https://github.com/intuition-box", ariaLabel: "View on GitHub" },
+        { label: "X", href: "https://x.com/Sofia_Intuition", ariaLabel: "Follow us on X" },
+        { label: "Discord", href: "https://discord.gg/intuition", ariaLabel: "Join our Discord" }
       ]
     }
   ];
