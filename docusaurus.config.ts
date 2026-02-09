@@ -116,6 +116,10 @@ const config: Config = {
               label: 'Sofia Chronicles',
               to: '/blog',
             },
+            {
+              label: 'Proxy Dashboard',
+              href: 'https://sofia-proxy.intuition.box/',
+            },
           ],
         },
         {

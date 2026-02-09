@@ -27,7 +27,8 @@ export default function Layout(props: Props): JSX.Element {
       links: [
         { label: "Documentation", href: "/docs/introduction", ariaLabel: "Read Documentation" },
         { label: "Sofia Values", href: "/values", ariaLabel: "View Sofia Values" },
-        { label: "Sofia Chronicles", href: "/blog", ariaLabel: "Sofia Chronicles" }
+        { label: "Sofia Chronicles", href: "/blog", ariaLabel: "Sofia Chronicles" },
+        { label: "Proxy Dashboard", href: "https://sofia-proxy.intuition.box/", ariaLabel: "Sofia Fee Proxy Dashboard" }
       ]
     },
     {
