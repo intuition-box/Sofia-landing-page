@@ -182,7 +182,7 @@ const SpotifyCallbackContent = () => {
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-        <img src="/img/logoBrut.png" alt="Sofia" className={styles.logo} />
+        <img src="/img/logoWhite.svg" alt="Sofia" className={styles.logo} />
         <p className={styles.subtitle}>Spotify Authentication</p>
 
         {status === 'loading' && (
@@ -243,7 +243,7 @@ const SpotifyCallbackContent = () => {
 const LoadingPlaceholder = () => (
   <div className={styles.container}>
     <div className={styles.card}>
-      <img src="/img/logoBrut.png" alt="Sofia" className={styles.logo} />
+      <img src="/img/logoWhite.svg" alt="Sofia" className={styles.logo} />
       <p className={styles.subtitle}>Spotify Authentication</p>
       <div className={styles.spinner} />
       <p className={styles.text}>Loading...</p>

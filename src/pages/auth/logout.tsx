@@ -120,7 +120,7 @@ const LogoutContent = () => {
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-        <img src="/img/logoBrut.png" alt="Sofia" className={styles.logo} />
+        <img src="/img/logoWhite.svg" alt="Sofia" className={styles.logo} />
 
         {status === 'loading' && (
           <>
@@ -159,7 +159,7 @@ const LogoutContent = () => {
 const LoadingPlaceholder = () => (
   <div className={styles.container}>
     <div className={styles.card}>
-      <img src="/img/logoBrut.png" alt="Sofia" className={styles.logo} />
+      <img src="/img/logoWhite.svg" alt="Sofia" className={styles.logo} />
       <div className={styles.spinner} />
       <p className={styles.text}>Loading...</p>
     </div>

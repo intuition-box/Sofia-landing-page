@@ -105,7 +105,7 @@ const TwitterAuthContent = () => {
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-        <img src="/img/logoBrut.png" alt="Sofia" className={styles.logo} />
+        <img src="/img/logoWhite.svg" alt="Sofia" className={styles.logo} />
         <p className={styles.subtitle}>Twitter/X Authentication</p>
 
         {status === 'loading' && (
@@ -145,7 +145,7 @@ const TwitterAuthContent = () => {
 const LoadingPlaceholder = () => (
   <div className={styles.container}>
     <div className={styles.card}>
-      <img src="/img/logoBrut.png" alt="Sofia" className={styles.logo} />
+      <img src="/img/logoWhite.svg" alt="Sofia" className={styles.logo} />
       <p className={styles.subtitle}>Twitter/X Authentication</p>
       <div className={styles.spinner} />
       <p className={styles.text}>Loading...</p>

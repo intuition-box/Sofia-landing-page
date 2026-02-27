@@ -82,7 +82,7 @@ const YouTubeAuthContent = () => {
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-        <img src="/img/logoBrut.png" alt="Sofia" className={styles.logo} />
+        <img src="/img/logoWhite.svg" alt="Sofia" className={styles.logo} />
         <p className={styles.subtitle}>YouTube Authentication</p>
 
         {status === 'loading' && (
@@ -122,7 +122,7 @@ const YouTubeAuthContent = () => {
 const LoadingPlaceholder = () => (
   <div className={styles.container}>
     <div className={styles.card}>
-      <img src="/img/logoBrut.png" alt="Sofia" className={styles.logo} />
+      <img src="/img/logoWhite.svg" alt="Sofia" className={styles.logo} />
       <p className={styles.subtitle}>YouTube Authentication</p>
       <div className={styles.spinner} />
       <p className={styles.text}>Loading...</p>

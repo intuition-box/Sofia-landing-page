@@ -80,7 +80,7 @@ const TwitchAuthContent = () => {
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-        <img src="/img/logoBrut.png" alt="Sofia" className={styles.logo} />
+        <img src="/img/logoWhite.svg" alt="Sofia" className={styles.logo} />
         <p className={styles.subtitle}>Twitch Authentication</p>
 
         {status === 'loading' && (
@@ -120,7 +120,7 @@ const TwitchAuthContent = () => {
 const LoadingPlaceholder = () => (
   <div className={styles.container}>
     <div className={styles.card}>
-      <img src="/img/logoBrut.png" alt="Sofia" className={styles.logo} />
+      <img src="/img/logoWhite.svg" alt="Sofia" className={styles.logo} />
       <p className={styles.subtitle}>Twitch Authentication</p>
       <div className={styles.spinner} />
       <p className={styles.text}>Loading...</p>
