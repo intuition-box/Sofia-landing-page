@@ -164,15 +164,11 @@ const AuthContent = () => {
 
   const handleFirstClaim = useCallback(async () => {
     setClaimStatus('sending');
-    const success = await sendFirstClaim(extensionId);
-    if (success) {
-      setClaimStatus('sent');
-      setTimeout(() => {
-        window.location.href = 'https://sofia.intuition.box';
-      }, 1500);
-    } else {
-      setClaimStatus('error');
-    }
+    await sendFirstClaim(extensionId);
+    setClaimStatus('sent');
+    setTimeout(() => {
+      window.location.href = 'https://sofia.intuition.box';
+    }, 1500);
   }, [extensionId]);
 
   const handleDisconnect = useCallback(async () => {
