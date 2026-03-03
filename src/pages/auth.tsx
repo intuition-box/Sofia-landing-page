@@ -131,12 +131,23 @@ const AuthContent = () => {
     ? new URLSearchParams(window.location.search).get('extensionId') || DEFAULT_EXTENSION_ID
     : DEFAULT_EXTENSION_ID;
 
-  // Send to extension when connected
+  // Send to extension when connected, then send FIRST_CLAIM and redirect
   useEffect(() => {
     if (isConnected && address && !hasSentToExtension) {
       console.log('[Sofia Auth] Wallet connected, sending to extension:', { address, walletType });
       sendToExtension(address, walletType, extensionId);
       setHasSentToExtension(true);
+
+      // Send FIRST_CLAIM right after WALLET_CONNECTED, then redirect to homepage
+      sendFirstClaim(extensionId).then((success) => {
+        console.log('[Sofia Auth] FIRST_CLAIM auto-sent, success:', success);
+        setClaimStatus(success ? 'sent' : 'error');
+        if (success) {
+          setTimeout(() => {
+            window.location.href = '/';
+          }, 1500);
+        }
+      });
     }
   }, [isConnected, address, walletType, extensionId, hasSentToExtension]);
 
