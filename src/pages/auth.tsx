@@ -32,6 +32,33 @@ const DEFAULT_EXTENSION_ID = 'YOUR_EXTENSION_ID_HERE';
 
 // ============= HELPER FUNCTIONS =============
 
+// Send FIRST_CLAIM message to extension to trigger onboarding
+const sendFirstClaim = (extensionId: string): Promise<boolean> => {
+  return new Promise((resolve) => {
+    if (extensionId === DEFAULT_EXTENSION_ID ||
+        typeof chrome === 'undefined' || !chrome?.runtime?.sendMessage) {
+      console.log('[Sofia Auth] Cannot send FIRST_CLAIM: no valid extension ID or chrome API');
+      resolve(false);
+      return;
+    }
+
+    try {
+      chrome.runtime.sendMessage(extensionId, {
+        type: 'FIRST_CLAIM',
+        data: {
+          url: 'https://sofia.intuition.box'
+        }
+      }, (response) => {
+        console.log('[Sofia Auth] FIRST_CLAIM response:', response);
+        resolve(response?.success === true);
+      });
+    } catch (e) {
+      console.log('[Sofia Auth] Failed to send FIRST_CLAIM:', e);
+      resolve(false);
+    }
+  });
+};
+
 // Send wallet address and type to extension via multiple methods (does NOT auto-close)
 const sendToExtension = (address: string, walletType: string | null, extensionId?: string) => {
   console.log('[Sofia Auth] Sending to extension:', { address, walletType });
@@ -96,6 +123,7 @@ const sendToExtension = (address: string, walletType: string | null, extensionId
 const AuthContent = () => {
   const { address, walletType, isConnected, isConnecting, error, connect, disconnect, clearError } = useWalletConnection();
   const [hasSentToExtension, setHasSentToExtension] = useState(false);
+  const [claimStatus, setClaimStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const autoLoginTriggered = useRef(false);
 
   // Get extension ID from URL params
@@ -133,6 +161,19 @@ const AuthContent = () => {
   const handleRetry = useCallback(() => {
     clearError();
   }, [clearError]);
+
+  const handleFirstClaim = useCallback(async () => {
+    setClaimStatus('sending');
+    const success = await sendFirstClaim(extensionId);
+    if (success) {
+      setClaimStatus('sent');
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 1500);
+    } else {
+      setClaimStatus('error');
+    }
+  }, [extensionId]);
 
   const handleDisconnect = useCallback(async () => {
     await disconnect();
@@ -187,14 +228,49 @@ const AuthContent = () => {
             <div className={styles.walletAddress}>
               {address.slice(0, 6)}...{address.slice(-4)}
             </div>
-            <div className={styles.instructions}>
-              <p className={styles.instructionsText}>
-                Your wallet is now connected to Sofia. You can close this tab.
-              </p>
-            </div>
-            <button className={styles.closeBtn} onClick={handleClose}>
-              Close
-            </button>
+
+            {claimStatus === 'idle' && (
+              <>
+                <div className={styles.instructions}>
+                  <p className={styles.instructionsText}>
+                    Your wallet is connected. Create your first claim to get started with Sofia.
+                  </p>
+                </div>
+                <button className={styles.claimBtn} onClick={handleFirstClaim}>
+                  Create your first claim
+                </button>
+              </>
+            )}
+
+            {claimStatus === 'sending' && (
+              <>
+                <div className={styles.spinner} />
+                <p className={styles.subtext}>Sending to extension...</p>
+              </>
+            )}
+
+            {claimStatus === 'sent' && (
+              <div className={styles.instructions}>
+                <p className={styles.instructionsText}>
+                  Your first claim has been sent to the extension. You can close this tab.
+                </p>
+              </div>
+            )}
+
+            {claimStatus === 'error' && (
+              <div className={styles.instructions}>
+                <p className={styles.instructionsText}>
+                  Could not reach the extension. Make sure Sofia is installed and try again.
+                </p>
+              </div>
+            )}
+
+            {(claimStatus === 'error' || claimStatus === 'sent') && (
+              <button className={styles.closeBtn} onClick={handleClose}>
+                Close
+              </button>
+            )}
+
             <button className={styles.disconnectBtn} onClick={handleDisconnect}>
               Disconnect
             </button>
