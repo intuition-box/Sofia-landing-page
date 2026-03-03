@@ -131,23 +131,12 @@ const AuthContent = () => {
     ? new URLSearchParams(window.location.search).get('extensionId') || DEFAULT_EXTENSION_ID
     : DEFAULT_EXTENSION_ID;
 
-  // Send to extension when connected, then send FIRST_CLAIM and redirect
+  // Send wallet info to extension when connected (FIRST_CLAIM waits for user click)
   useEffect(() => {
     if (isConnected && address && !hasSentToExtension) {
       console.log('[Sofia Auth] Wallet connected, sending to extension:', { address, walletType });
       sendToExtension(address, walletType, extensionId);
       setHasSentToExtension(true);
-
-      // Send FIRST_CLAIM right after WALLET_CONNECTED, then redirect to homepage
-      sendFirstClaim(extensionId).then((success) => {
-        console.log('[Sofia Auth] FIRST_CLAIM auto-sent, success:', success);
-        setClaimStatus(success ? 'sent' : 'error');
-        if (success) {
-          setTimeout(() => {
-            window.location.href = '/';
-          }, 1500);
-        }
-      });
     }
   }, [isConnected, address, walletType, extensionId, hasSentToExtension]);
 
@@ -179,7 +168,7 @@ const AuthContent = () => {
     if (success) {
       setClaimStatus('sent');
       setTimeout(() => {
-        window.location.href = '/';
+        window.location.href = 'https://sofia.intuition.box';
       }, 1500);
     } else {
       setClaimStatus('error');
