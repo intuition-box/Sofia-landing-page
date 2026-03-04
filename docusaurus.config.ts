@@ -116,10 +116,6 @@ const config: Config = {
               label: 'Sofia Chronicles',
               to: '/blog',
             },
-            {
-              label: 'Proxy Dashboard',
-              href: 'https://sofia-proxy.intuition.box/',
-            },
           ],
         },
         {
@@ -137,7 +133,11 @@ const config: Config = {
             },
             {
               label: 'Discord',
-              href: 'https://discord.gg/intuition',
+              href: 'https://discord.gg/bDXWsV7Bb',
+            },
+            {
+              label: 'Proxy Dashboard',
+              href: 'https://sofia-proxy.intuition.box/',
             },
           ],
         },

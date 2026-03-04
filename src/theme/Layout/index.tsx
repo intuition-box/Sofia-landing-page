@@ -28,7 +28,6 @@ export default function Layout(props: Props): JSX.Element {
         { label: "Documentation", href: "/docs/introduction", ariaLabel: "Read Documentation" },
         { label: "Sofia Values", href: "/values", ariaLabel: "View Sofia Values" },
         { label: "Sofia Chronicles", href: "/blog", ariaLabel: "Sofia Chronicles" },
-        { label: "Proxy Dashboard", href: "https://sofia-proxy.intuition.box/", ariaLabel: "Sofia Fee Proxy Dashboard" }
       ]
     },
     {
@@ -38,7 +37,8 @@ export default function Layout(props: Props): JSX.Element {
       links: [
         { label: "Github", href: "https://github.com/intuition-box", ariaLabel: "View on GitHub" },
         { label: "X", href: "https://x.com/Sofia_Intuition", ariaLabel: "Follow us on X" },
-        { label: "Discord", href: "https://discord.gg/intuition", ariaLabel: "Join our Discord" }
+        { label: "Discord", href: "https://discord.gg/bDXWsV7Bb", ariaLabel: "Join our Discord" },
+        { label: "Proxy Dashboard", href: "https://sofia-proxy.intuition.box/", ariaLabel: "Sofia Fee Proxy Dashboard" }
       ]
     }
   ];
