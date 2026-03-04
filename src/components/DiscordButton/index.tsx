@@ -4,7 +4,7 @@ import styles from './index.module.css';
 
 export default function DiscordButton(): React.ReactElement {
   const handleClick = () => {
-    window.open('https://discord.gg/39RP6h4WuH', '_blank');
+    window.open('https://discord.gg/bDXWsV7Bb8', '_blank');
   };
 
   return (

@@ -2,12 +2,13 @@ import React from 'react';
 import styles from './index.module.css';
 
 const sofiaImages = [
-  { src: '/img/sofiascreen/Workspace-Sofia/slide1.png', alt: 'Sofia Screenshot 1' },
-  { src: '/img/sofiascreen/Workspace-Sofia/slide2.png', alt: 'Sofia Screenshot 2' },
-  { src: '/img/sofiascreen/Workspace-Sofia/slide3.png', alt: 'Sofia Screenshot 3' },
-  { src: '/img/sofiascreen/Workspace-Sofia/slide4.png', alt: 'Sofia Screenshot 4' },
-  { src: '/img/sofiascreen/Workspace-Sofia/slide5.png', alt: 'Sofia Screenshot 5' },
-  { src: '/img/sofiascreen/Workspace-Sofia/slide6.png', alt: 'Sofia Screenshot 6' },
+  { src: '/img/sofiascreen/Workspace-Sofia/hero-v1.png', alt: 'Control your data - Trust your network' },
+  { src: '/img/sofiascreen/Workspace-Sofia/connectsocials.png', alt: 'Connect Your Socials - Earn XP - Level UP - Earn Gold' },
+  { src: '/img/sofiascreen/Workspace-Sofia/rightwhereyoubrowse.png', alt: 'Trust signals right where you browse' },
+  { src: '/img/sofiascreen/Workspace-Sofia/trendings.png', alt: 'Browse the latest Trendings' },
+  { src: '/img/sofiascreen/Workspace-Sofia/proofofaction.png', alt: 'Turn your browsing into Proof of Action' },
+  { src: '/img/sofiascreen/Workspace-Sofia/verifiedonchain.png', alt: 'Your browsing verified on-chain' },
+  { src: '/img/sofiascreen/Workspace-Sofia/connectwithfriends.png', alt: 'Connect with friends - Share without sharing' },
 ];
 
 export default function SofiaCarousel(): React.ReactElement {

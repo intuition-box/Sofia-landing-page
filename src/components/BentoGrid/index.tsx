@@ -2,18 +2,13 @@ import React, { useState } from 'react';
 import styles from './index.module.css';
 
 const screenshots = [
-  { src: '/img/sofiascreen/10.png', alt: 'Sofia Analytics', title: 'Homepage' },
-  { src: '/img/sofiascreen/1.png', alt: 'Sofia Homepage', title: 'Signals Details' },
-  { src: '/img/sofiascreen/2.png', alt: 'Sofia Bookmarks', title: 'Signals List' },
-  { src: '/img/sofiascreen/3.png', alt: 'Sofia Pulse', title: 'Add a Signals to a Bookmark' },
-  { src: '/img/sofiascreen/4.png', alt: 'Sofia Echoes', title: 'Orb Tools Selection' },
-  { src: '/img/sofiascreen/5.png', alt: 'Sofia Triples', title: 'Follow List' },
-  { src: '/img/sofiascreen/6.png', alt: 'Sofia Signal', title: 'Sofia Analysis Result' },
-  { src: '/img/sofiascreen/7.png', alt: 'Sofia Profile', title: 'Write Echoes On Chain' },
-  { src: '/img/sofiascreen/8.png', alt: 'Sofia Settings', title: 'Chat Bot' },
-  { src: '/img/sofiascreen/9.png', alt: 'Sofia Chat', title: 'Bookmarks' },
-  { src: '/img/sofiascreen/11.png', alt: 'Resonance', title: 'Resonance' },
-  { src: '/img/sofiascreen/12.png', alt: 'Pulse Analysis', title: 'Pulse Analysis' }
+  { src: '/img/sofiascreen/Workspace-Sofia/hero-v1.png', alt: 'Control your data - Trust your network', title: 'Sofia Overview' },
+  { src: '/img/sofiascreen/Workspace-Sofia/connectsocials.png', alt: 'Connect Your Socials', title: 'Connect Your Socials' },
+  { src: '/img/sofiascreen/Workspace-Sofia/rightwhereyoubrowse.png', alt: 'Trust signals right where you browse', title: 'Trust Signals' },
+  { src: '/img/sofiascreen/Workspace-Sofia/trendings.png', alt: 'Browse the latest Trendings', title: 'Trendings' },
+  { src: '/img/sofiascreen/Workspace-Sofia/proofofaction.png', alt: 'Turn your browsing into Proof of Action', title: 'Proof of Action' },
+  { src: '/img/sofiascreen/Workspace-Sofia/verifiedonchain.png', alt: 'Your browsing verified on-chain', title: 'Verified On-Chain' },
+  { src: '/img/sofiascreen/Workspace-Sofia/connectwithfriends.png', alt: 'Connect with friends', title: 'Connect with Friends' }
 ];
 
 export default function BentoGrid(): React.ReactElement {
