@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import Lightbox from '@site/src/components/Lightbox';
 import styles from './index.module.css';
 
 const features = [
@@ -12,9 +13,16 @@ const features = [
   { id: 7, image: '/img/sofiascreen/Workspace-Sofia/connectwithfriends.png' },
 ];
 
+const lightboxImages = features.map((f) => ({
+  src: f.image,
+  alt: `Sofia Screenshot ${f.id}`,
+}));
+
 export default function KeyFeatures(): React.ReactElement {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
 
   // Auto-rotate through images every 3 seconds
   useEffect(() => {
@@ -50,7 +58,14 @@ export default function KeyFeatures(): React.ReactElement {
                 transition={{ duration: 0.6 }}
               >
                 <div className={styles.cardContent}>
-                  <div className={styles.imageContent}>
+                  <div
+                    className={styles.imageContent}
+                    onClick={() => {
+                      setLightboxIndex(currentIndex);
+                      setLightboxOpen(true);
+                    }}
+                    style={{ cursor: 'pointer' }}
+                  >
                     <img
                       src={currentFeature.image}
                       alt={`Sofia Screenshot ${currentFeature.id}`}
@@ -75,6 +90,16 @@ export default function KeyFeatures(): React.ReactElement {
           </div>
         </div>
       </div>
+
+      {lightboxOpen && (
+        <Lightbox
+          images={lightboxImages}
+          currentIndex={lightboxIndex}
+          onClose={() => setLightboxOpen(false)}
+          onPrev={() => setLightboxIndex((i) => (i === 0 ? features.length - 1 : i - 1))}
+          onNext={() => setLightboxIndex((i) => (i === features.length - 1 ? 0 : i + 1))}
+        />
+      )}
     </section>
   );
 }
