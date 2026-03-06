@@ -8,7 +8,8 @@ const screenshots = [
   { src: '/img/sofiascreen/Workspace-Sofia/trendings.png', alt: 'Browse the latest Trendings', title: 'Trendings' },
   { src: '/img/sofiascreen/Workspace-Sofia/proofofaction.png', alt: 'Turn your browsing into Proof of Action', title: 'Proof of Action' },
   { src: '/img/sofiascreen/Workspace-Sofia/verifiedonchain.png', alt: 'Your browsing verified on-chain', title: 'Verified On-Chain' },
-  { src: '/img/sofiascreen/Workspace-Sofia/connectwithfriends.png', alt: 'Connect with friends', title: 'Connect with Friends' }
+  { src: '/img/sofiascreen/Workspace-Sofia/connectwithfriends.png', alt: 'Connect with friends', title: 'Connect with Friends' },
+  { src: '/img/sofiascreen/Workspace-Sofia/Vote.png', alt: 'Vote on claims - Support or Oppose', title: 'Vote' }
 ];
 
 export default function BentoGrid(): React.ReactElement {

@@ -11,6 +11,7 @@ const features = [
   { id: 5, image: '/img/sofiascreen/Workspace-Sofia/proofofaction.png' },
   { id: 6, image: '/img/sofiascreen/Workspace-Sofia/verifiedonchain.png' },
   { id: 7, image: '/img/sofiascreen/Workspace-Sofia/connectwithfriends.png' },
+  { id: 8, image: '/img/sofiascreen/Workspace-Sofia/Vote.png' },
 ];
 
 const lightboxImages = features.map((f) => ({

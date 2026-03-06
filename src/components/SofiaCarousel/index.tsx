@@ -9,6 +9,7 @@ const sofiaImages = [
   { src: '/img/sofiascreen/Workspace-Sofia/proofofaction.png', alt: 'Turn your browsing into Proof of Action' },
   { src: '/img/sofiascreen/Workspace-Sofia/verifiedonchain.png', alt: 'Your browsing verified on-chain' },
   { src: '/img/sofiascreen/Workspace-Sofia/connectwithfriends.png', alt: 'Connect with friends - Share without sharing' },
+  { src: '/img/sofiascreen/Workspace-Sofia/Vote.png', alt: 'Vote on claims - Support or Oppose' },
 ];
 
 export default function SofiaCarousel(): React.ReactElement {
