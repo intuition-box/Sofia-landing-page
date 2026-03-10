@@ -129,7 +129,7 @@ const config: Config = {
             },
             {
               label: 'X',
-              href: 'https://x.com/Sofia_Intuition',
+              href: 'https://x.com/0xsofia3',
             },
             {
               label: 'Discord',
