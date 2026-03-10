@@ -74,6 +74,11 @@ const config: Config = {
   themeConfig: {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
+    colorMode: {
+      defaultMode: 'dark',
+      disableSwitch: true,
+      respectPrefersColorScheme: false,
+    },
     navbar: {
       items: [
         {
@@ -106,7 +111,7 @@ const config: Config = {
           items: [
             {
               label: 'Documentation',
-              to: '/docs/introduction',
+              to: '/docs/intro',
             },
             {
               label: 'Sofia Values',
@@ -129,7 +134,7 @@ const config: Config = {
             },
             {
               label: 'X',
-              href: 'https://x.com/Sofia_Intuition',
+              href: 'https://x.com/0xsofia3',
             },
             {
               label: 'Discord',
@@ -151,6 +156,17 @@ const config: Config = {
 
   plugins: [
     require('./plugins/webpack-plugin.cjs').webpackPlugin,
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+          {
+            from: '/docs/introduction',
+            to: '/docs/intro',
+          },
+        ],
+      },
+    ],
   ],
 };
 

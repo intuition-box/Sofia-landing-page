@@ -13,12 +13,38 @@ import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
  Create as many sidebars as you want.
  */
 const sidebars: SidebarsConfig = {
-  // Documentation sidebar
-  tutorialSidebar: [
+  docsSidebar: [
     {
       type: 'doc',
-      id: 'introduction',
-      label: 'Introduction',
+      id: 'intro',
+      label: 'What is Sofia?',
+    },
+    {
+      type: 'category',
+      label: 'User Guide',
+      items: [
+        'core-concepts',
+        'features',
+        'gamification',
+        'ai-features',
+        'resonance',
+        'social',
+        'known-issues',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Litepaper',
+      items: [
+        'litepaper/introduction',
+        'litepaper/network',
+        'litepaper/subscription',
+        'litepaper/dao',
+        'litepaper/features',
+        'litepaper/privacy',
+        'litepaper/why-unique',
+        'litepaper/audience',
+      ],
     },
     {
       type: 'category',
@@ -35,24 +61,6 @@ const sidebars: SidebarsConfig = {
         'ecosystem/gaianet',
         'ecosystem/mastra',
         'ecosystem/intuition',
-      ],
-    },
-  ],
-
-  // Litepaper sidebar (kept for backward compatibility)
-  litepaperSidebar: [
-    {
-      type: 'category',
-      label: 'Litepaper',
-      items: [
-        'litepaper/introduction',
-        'litepaper/network',
-        'litepaper/subscription',
-        'litepaper/dao',
-        'litepaper/features',
-        'litepaper/privacy',
-        'litepaper/why-unique',
-        'litepaper/audience',
       ],
     },
   ],
