@@ -9,6 +9,7 @@ interface StatBoxProps {
 export default function StatBox({ value, label, icon }: StatBoxProps) {
   return (
     <div
+      className="stat-box"
       style={{
         background: 'rgba(255, 255, 255, 0.03)',
         border: '1px solid rgba(255, 255, 255, 0.08)',
@@ -16,6 +17,8 @@ export default function StatBox({ value, label, icon }: StatBoxProps) {
         padding: '1.2rem',
         textAlign: 'center',
         fontFamily: "'Montserrat', sans-serif",
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
       {icon && <div style={{ fontSize: '1.5rem', marginBottom: '0.4rem' }}>{icon}</div>}

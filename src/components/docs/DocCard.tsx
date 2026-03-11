@@ -11,6 +11,7 @@ interface DocCardProps {
 export default function DocCard({ title, description, href, icon, accent }: DocCardProps) {
   const card = (
     <div
+      className="doc-card"
       style={{
         background: 'rgba(255, 255, 255, 0.03)',
         border: '1px solid rgba(255, 255, 255, 0.08)',
@@ -22,19 +23,21 @@ export default function DocCard({ title, description, href, icon, accent }: DocC
         flexDirection: 'column',
         gap: '0.5rem',
         minHeight: '120px',
+        position: 'relative',
+        overflow: 'hidden',
       }}
-      onMouseEnter={(e) => {
+      onMouseEnter={href ? (e) => {
         e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)';
-        e.currentTarget.style.borderColor = 'rgba(255, 205, 0, 0.25)';
+        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
         e.currentTarget.style.transform = 'translateY(-2px)';
         e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.3)';
-      }}
-      onMouseLeave={(e) => {
+      } : undefined}
+      onMouseLeave={href ? (e) => {
         e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)';
         e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
         e.currentTarget.style.transform = 'translateY(0)';
         e.currentTarget.style.boxShadow = 'none';
-      }}
+      } : undefined}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
         {icon && <span style={{ fontSize: '1.3rem' }}>{icon}</span>}
@@ -64,7 +67,7 @@ export default function DocCard({ title, description, href, icon, accent }: DocC
 
   if (href) {
     return (
-      <a href={href} style={{ textDecoration: 'none', color: 'inherit' }}>
+      <a href={href} className="doc-card-link" style={{ textDecoration: 'none', color: 'inherit', border: 'none' }}>
         {card}
       </a>
     );

@@ -23,13 +23,72 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'User Guide',
       items: [
-        'core-concepts',
-        'features',
-        'gamification',
-        'ai-features',
-        'resonance',
-        'social',
-        'known-issues',
+        {
+          type: 'category',
+          label: 'Core Concepts',
+          items: [
+            'core-concepts/atoms',
+            'core-concepts/triples',
+            'core-concepts/predicates',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Features',
+          items: [
+            'features/getting-started',
+            'features/echoes',
+            'features/intentions',
+            'features/certifications',
+            'features/bookmarks-signals',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Gamification',
+          items: [
+            'gamification/currencies-levels',
+            'gamification/quests-discovery',
+            'gamification/streaks-voting',
+            'gamification/badges-rewards',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'AI Features',
+          items: [
+            'ai-features/pulse-analysis',
+            'ai-features/interest-analysis',
+            'ai-features/chat-predicates',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Resonance',
+          items: [
+            'resonance/circle-feed',
+            'resonance/trending',
+            'resonance/vote',
+            'resonance/featured-lists',
+            'resonance/leaderboard',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Social',
+          items: [
+            'social/verification',
+            'social/following-trust',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Known Issues',
+          items: [
+            'known-issues/transactions',
+            'known-issues/social-verification',
+          ],
+        },
       ],
     },
     {
