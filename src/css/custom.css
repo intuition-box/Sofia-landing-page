@@ -1,113 +1,603 @@
 /**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
+ * Sofia Chronicles — Obsidian Glass Theme
+ *
+ * Architecture:
+ * 1. CSS Variables (design tokens)
+ * 2. Base / Reset (dark mode defaults via Infima variables)
+ * 3. Layout (transparency for PixelBlast background)
+ * 4. Navbar (hidden — CardNav is used instead)
+ * 5. Sidebar (glassmorphism)
+ * 6. Documentation content (typography, tables, code, admonitions)
+ * 7. Blog
+ * 8. Footer
+ * 9. Buttons
+ * 10. Responsive
+ * 11. Accessibility
  */
 
-/* Import custom fonts */
-@import url('https://fonts.googleapis.com/css2?family=Overpass+Mono:ital,wght@0,300..700;1,300..700&display=swap');
+/* ============================================
+   1. FONTS & DESIGN TOKENS
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@300..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lalezar&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-/* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #02000B;
-  --ifm-color-primary-dark: #02000B;
-  --ifm-color-primary-darker: rgb(24, 24, 24);
-  --ifm-color-primary-darkest: #02000B;
-  --ifm-color-primary-light: rgb(107, 107, 107);
-  --ifm-color-primary-lighter: #4d4d4d;
-  --ifm-color-primary-lightest: #666666;
-  --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  /* Sofia palette */
+  --sofia-void: #02000B;
+  --sofia-surface: rgba(2, 0, 11, 0.55);
+  --sofia-surface-hover: rgba(2, 0, 11, 0.7);
+  --sofia-glass-border: rgba(255, 255, 255, 0.08);
+  --sofia-glass-border-hover: rgba(255, 255, 255, 0.15);
+  --sofia-accent: #ffcd00;
+  --sofia-accent-dim: rgba(255, 205, 0, 0.15);
+  --sofia-text: #f0eff4;
+  --sofia-text-muted: rgba(240, 239, 244, 0.55);
+  --sofia-text-dim: rgba(240, 239, 244, 0.35);
+  --sofia-glow: 0 0 40px rgba(255, 205, 0, 0.06);
+
+  /* Infima overrides — these cascade properly without !important */
+  --ifm-color-primary: #ffcd00;
+  --ifm-color-primary-dark: #e6b800;
+  --ifm-color-primary-darker: #cca300;
+  --ifm-color-primary-darkest: #997a00;
+  --ifm-color-primary-light: #ffd633;
+  --ifm-color-primary-lighter: #ffe066;
+  --ifm-color-primary-lightest: #ffeb99;
+
   --ifm-background-color: transparent;
   --ifm-background-surface-color: transparent;
   --ifm-navbar-background-color: transparent;
-  --ifm-color-content: #02000B;
-  --ifm-color-content-secondary: #02000B;
-  --ifm-link-color: #02000B;
-  --ifm-link-hover-color: #02000B;
-  --ifm-font-color-base: #02000B;
+  --ifm-footer-background-color: transparent;
+
+  --ifm-font-color-base: var(--sofia-text);
+  --ifm-color-content: var(--sofia-text);
+  --ifm-color-content-secondary: var(--sofia-text-muted);
+  --ifm-heading-color: var(--sofia-text);
+
+  --ifm-link-color: var(--sofia-accent);
+  --ifm-link-hover-color: var(--ifm-color-primary-light);
+  --ifm-link-hover-decoration: none;
+
   --ifm-font-family-base: 'Overpass Mono', monospace;
   --ifm-heading-font-family: 'Overpass Mono', monospace;
+  --ifm-font-family-monospace: 'Overpass Mono', monospace;
+  --ifm-code-font-size: 92%;
+
   --ifm-navbar-height: 9rem;
-  --dark: #ffffff;
+
+  --ifm-table-stripe-background: rgba(255, 255, 255, 0.03);
+  --ifm-table-border-color: var(--sofia-glass-border);
+  --ifm-hr-border-color: var(--sofia-glass-border);
+
+  --docusaurus-highlighted-code-line-bg: rgba(255, 205, 0, 0.1);
 }
 
-.authorSocialLink_O1ZE svg path {
-  fill: #ffffff !important;
+/* ============================================
+   2. BASE — Dark mode defaults
+   ============================================ */
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
 }
 
-
-/* Make navbar logo 30% larger */
-.navbar__logo img {
-  height: 4.8rem !important;
+html, body {
+  background-color: var(--sofia-void);
+  color: var(--sofia-text);
 }
 
-/* Hide the default navbar completely */
+/* ============================================
+   3. LAYOUT — Transparent for PixelBlast
+   ============================================ */
+
+#__docusaurus,
+.main-wrapper {
+  background-color: transparent;
+  position: relative;
+}
+
+.main-wrapper {
+  z-index: 1;
+}
+
+/* CardNav overlap offset */
+main {
+  padding-top: 5rem;
+}
+
+/* Doc pages and homepage have their own spacing */
+.theme-doc-page-layout main,
+body[class*="index"] main {
+  padding-top: 0;
+}
+
+/* ============================================
+   4. NAVBAR — Hidden (CardNav replaces it)
+   ============================================ */
+
 .navbar {
   display: none !important;
 }
 
-/* Make footer background transparent and text color consistent */
-.footer {
+/* Mobile sidebar when navbar is somehow triggered */
+@media (max-width: 996px) {
+  .navbar__toggle {
+    display: flex !important;
+  }
+
+  .navbar-sidebar__backdrop,
+  .theme-layout-navbar-sidebar-panel {
+    background-color: rgba(2, 0, 11, 0.9);
+    backdrop-filter: blur(16px);
+  }
+
+  .navbar-sidebar__item {
+    background-color: rgba(2, 0, 11, 0.95);
+    top: 13rem;
+  }
+
+  .navbar-sidebar .navbar__brand img {
+    content: url('/img/logoBrut.png');
+    width: 2rem;
+    height: 2rem;
+    object-fit: contain;
+  }
+}
+
+/* Color mode toggle — already disabled via config, belt-and-suspenders */
+.navbar [class*="colorModeToggle"],
+.navbar [data-value="light"],
+.navbar [data-value="dark"] {
+  display: none !important;
+}
+
+/* ============================================
+   5. SIDEBAR — Glassmorphism
+   ============================================ */
+
+[class*="docSidebar"],
+.theme-doc-sidebar-container {
+  background: var(--sofia-surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 12px;
+  border: 1px solid var(--sofia-glass-border);
+  padding: 1rem;
+  margin-right: 1rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Sidebar category labels */
+aside .menu__list-item-collapsible > .menu__link {
+  color: var(--sofia-text-muted);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+/* Sidebar links */
+aside .menu__link {
+  color: var(--sofia-text-muted);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-size: 0.85rem;
+}
+
+aside .menu__link:hover {
+  color: var(--sofia-text);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Active sidebar link */
+aside .menu__link--active,
+aside .menu__link--active:hover {
+  color: var(--sofia-accent) !important;
+  font-weight: 600;
+  background-color: var(--sofia-accent-dim);
+  border-left: 3px solid var(--sofia-accent);
+}
+
+/* Override Infima primary for sidebar */
+aside nav,
+aside [class*="menu"],
+aside [class*="sidebar"] {
+  --ifm-color-primary: var(--sofia-accent);
+  --ifm-link-color: var(--sofia-text-muted);
+  --ifm-menu-color-active: var(--sofia-accent);
+}
+
+/* ============================================
+   6. DOCUMENTATION CONTENT
+   ============================================ */
+
+/* Glass panel for doc container */
+[class*="docPage"] .container,
+.theme-doc-page-layout .container,
+[class*="docMainContainer"] {
+  background: var(--sofia-surface);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--sofia-glass-border);
+  border-radius: 14px;
+  padding: 2rem;
+  box-shadow: var(--sofia-glow), 0 8px 32px rgba(0, 0, 0, 0.4);
+  margin-top: 95px;
+}
+
+/* Doc pages use Montserrat */
+[class*="docPage"],
+.theme-doc-page-layout,
+[class*="docMainContainer"],
+[class*="docSidebar"],
+.theme-doc-sidebar-container {
+  font-family: 'Montserrat', sans-serif;
+}
+
+[class*="docPage"] p,
+[class*="docPage"] li,
+[class*="docPage"] td,
+[class*="docPage"] th,
+[class*="docPage"] span,
+[class*="docPage"] div,
+.theme-doc-page-layout p,
+.theme-doc-page-layout li,
+.theme-doc-page-layout td,
+.theme-doc-page-layout span {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Keep code in monospace */
+[class*="docPage"] pre,
+[class*="docPage"] code,
+[class*="docPage"] .prism-code,
+[class*="docPage"] [class*="codeBlockLines"] {
+  font-family: 'Overpass Mono', monospace;
+}
+
+/* --- Typography hierarchy --- */
+
+[class*="docPage"] h1,
+.theme-doc-page-layout h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--sofia-text);
+  border-bottom: 2px solid var(--sofia-accent-dim);
+  padding-bottom: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+[class*="docPage"] h2,
+.theme-doc-page-layout h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--sofia-text);
+  margin-top: 2.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--sofia-glass-border);
+}
+
+[class*="docPage"] h3,
+.theme-doc-page-layout h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--sofia-text-muted);
+  margin-top: 1.8rem;
+}
+
+/* --- Links in docs --- */
+
+[class*="docPage"] a:not(.button):not(.nav-card-link):not(.doc-card-link),
+.theme-doc-page-layout a:not(.button):not(.nav-card-link):not(.doc-card-link),
+.theme-doc-markdown a:not(.hash-link):not(.doc-card-link) {
+  color: var(--sofia-accent);
+  text-decoration: none;
+  font-weight: 700 !important;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+[class*="docPage"] a:not(.button):not(.nav-card-link):not(.doc-card-link):hover,
+.theme-doc-page-layout a:not(.button):not(.nav-card-link):not(.doc-card-link):hover,
+.theme-doc-markdown a:not(.hash-link):not(.doc-card-link):hover {
+  border-bottom-color: var(--sofia-accent);
+}
+
+/* --- Tables --- */
+
+[class*="docPage"] table,
+.theme-doc-page-layout table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--sofia-glass-border);
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+}
+
+[class*="docPage"] table thead tr,
+.theme-doc-page-layout table thead tr {
+  background: rgba(255, 205, 0, 0.06);
+}
+
+[class*="docPage"] table th,
+.theme-doc-page-layout table th {
+  color: var(--sofia-accent);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--sofia-glass-border);
+  text-align: left;
+}
+
+[class*="docPage"] table td,
+.theme-doc-page-layout table td {
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--sofia-text);
+  font-size: 0.9rem;
+}
+
+[class*="docPage"] table tbody tr:hover,
+.theme-doc-page-layout table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+[class*="docPage"] table tbody tr:last-child td,
+.theme-doc-page-layout table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* --- Code blocks --- */
+
+pre {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  border: 1px solid var(--sofia-glass-border);
+  border-radius: 10px;
+  padding: 1.2rem;
+}
+
+.codeBlockLines,
+[class*="codeBlockLines"],
+pre[class*="language-"],
+code[class*="language-"],
+.prism-code {
   background-color: transparent !important;
-  color: #02000B !important;
-  position: relative !important;
-  z-index: 100 !important;
 }
 
-.footer * {
-  color: #02000B !important;
+/* Code block title bar */
+[class*="codeBlockTitle"] {
+  background: rgba(255, 205, 0, 0.08);
+  border-bottom: 1px solid var(--sofia-glass-border);
+  color: var(--sofia-accent);
+  font-family: 'Overpass Mono', monospace;
+  font-size: 0.8rem;
 }
 
-
-
-.footer a {
-  color: #02000B !important;
+/* Inline code */
+[class*="docPage"] code:not(pre code),
+.theme-doc-page-layout code:not(pre code) {
+  background: rgba(255, 205, 0, 0.1);
+  border: 1px solid rgba(255, 205, 0, 0.15);
+  color: var(--sofia-accent);
+  border-radius: 4px;
+  padding: 0.15em 0.4em;
+  font-size: 0.88em;
 }
 
-.footer a:hover {
-  color: #02000B !important;
+/* --- Admonitions --- */
+/* Target only the top-level admonition wrapper, not inner elements */
+
+.theme-admonition {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--sofia-glass-border);
+  border-radius: 10px;
+  border-left: 4px solid;
+  padding: 1rem 1.2rem;
+  backdrop-filter: blur(6px);
 }
 
-/* Footer full-width inline display */
-.footer__links {
-  justify-content: center !important;
-  gap: 3rem !important;
-  flex-wrap: wrap !important;
+/* Note */
+.theme-admonition-note {
+  border-left-color: #60a5fa;
 }
 
-.footer__col {
-  margin-right: 0 !important;
-  text-align: center !important;
+.theme-admonition-note .admonitionHeading_Gvgb,
+.theme-admonition-note [class*="admonitionHeading"] {
+  color: #60a5fa;
 }
 
-.footer__title {
-  margin-bottom: 1rem !important;
+/* Tip */
+.theme-admonition-tip {
+  border-left-color: #34d399;
 }
 
-.footer__items {
-  display: flex !important;
-  justify-content: center !important;
-  gap: 2rem !important;
-  flex-wrap: wrap !important;
+.theme-admonition-tip [class*="admonitionHeading"] {
+  color: #34d399;
 }
 
-/* LinkedIn author icon styling - remove CSS override since we swizzled the component */
+/* Info */
+.theme-admonition-info {
+  border-left-color: #818cf8;
+}
 
-/* Increase author profile image size */
+.theme-admonition-info [class*="admonitionHeading"] {
+  color: #818cf8;
+}
+
+/* Warning */
+.theme-admonition-warning,
+.theme-admonition-caution {
+  border-left-color: var(--sofia-accent);
+}
+
+.theme-admonition-warning [class*="admonitionHeading"],
+.theme-admonition-caution [class*="admonitionHeading"] {
+  color: var(--sofia-accent);
+}
+
+/* Danger */
+.theme-admonition-danger {
+  border-left-color: #f87171;
+}
+
+.theme-admonition-danger [class*="admonitionHeading"] {
+  color: #f87171;
+}
+
+/* Admonition content text */
+.theme-admonition p,
+.theme-admonition li,
+.theme-admonition span {
+  color: var(--sofia-text-muted);
+}
+
+.theme-admonition a {
+  color: var(--sofia-accent);
+  text-decoration: none;
+}
+
+/* --- Horizontal rules --- */
+
+[class*="docPage"] hr,
+.theme-doc-page-layout hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--sofia-glass-border-hover) 20%,
+    rgba(255, 205, 0, 0.12) 50%,
+    var(--sofia-glass-border-hover) 80%,
+    transparent 100%
+  );
+  margin: 2.5rem 0;
+}
+
+/* --- Blockquotes --- */
+
+[class*="docPage"] blockquote,
+.theme-doc-page-layout blockquote {
+  border-left: 3px solid var(--sofia-accent-dim);
+  background: rgba(255, 255, 255, 0.02);
+  padding: 0.8rem 1.2rem;
+  border-radius: 0 8px 8px 0;
+  color: var(--sofia-text-muted);
+  font-style: italic;
+}
+
+/* --- Lists --- */
+
+[class*="docPage"] ul li::marker,
+.theme-doc-page-layout ul li::marker {
+  color: var(--sofia-accent);
+}
+
+[class*="docPage"] ol li::marker,
+.theme-doc-page-layout ol li::marker {
+  color: var(--sofia-accent);
+  font-weight: 600;
+}
+
+/* --- Pagination (next/prev) --- */
+
+.pagination-nav__link {
+  background: var(--sofia-surface);
+  border: 1px solid var(--sofia-glass-border);
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.pagination-nav__link:hover {
+  background: var(--sofia-surface-hover);
+  border-color: var(--sofia-glass-border-hover);
+  box-shadow: var(--sofia-glow);
+}
+
+.pagination-nav__sublabel {
+  color: var(--sofia-text-dim);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.pagination-nav__label {
+  color: var(--sofia-text);
+}
+
+/* --- TOC (table of contents) --- */
+
+.table-of-contents__link {
+  color: var(--sofia-text-dim);
+  transition: color 0.2s ease;
+}
+
+.table-of-contents__link:hover,
+.table-of-contents__link--active {
+  color: var(--sofia-accent);
+}
+
+.table-of-contents__left-border {
+  border-left-color: var(--sofia-glass-border);
+}
+
+/* --- Edit this page link --- */
+
+.theme-edit-this-page {
+  color: var(--sofia-text-dim);
+  font-size: 0.85rem;
+}
+
+.theme-edit-this-page:hover {
+  color: var(--sofia-accent);
+}
+
+/* --- Breadcrumbs --- */
+
+.breadcrumbs__link {
+  color: var(--sofia-text-dim);
+  background: transparent;
+  transition: color 0.2s ease;
+}
+
+.breadcrumbs__link:hover {
+  color: var(--sofia-text);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.breadcrumbs__item--active .breadcrumbs__link {
+  color: var(--sofia-accent);
+  background: var(--sofia-accent-dim);
+}
+
+/* ============================================
+   7. BLOG
+   ============================================ */
+
+.authorSocialLink_O1ZE svg path {
+  fill: var(--sofia-text);
+}
+
 .avatar__photo {
-  width: 4rem !important;
-  height: 4rem !important;
+  width: 4rem;
+  height: 4rem;
 }
 
 .blog-post-authors .avatar__photo {
-  width: 3rem !important;
-  height: 3rem !important;
+  width: 3rem;
+  height: 3rem;
 }
 
-/* Blog layout adjustments - only for individual blog post pages */
+/* Blog layout adjustments */
 [class*="blogPostPage"] .blog-wrapper,
 .theme-blog-post-page .blog-wrapper {
   display: flex;
@@ -116,10 +606,9 @@
 
 [class*="blogPostPage"] .blog-sidebar,
 .theme-blog-post-page .blog-sidebar {
-  width: 250px !important;
+  width: 250px;
   min-width: 250px;
   flex-shrink: 0;
-  /* top: 13rem !important */
 }
 
 [class*="blogPostPage"] .blog-content,
@@ -128,309 +617,227 @@
   min-width: 0;
 }
 
-/* Adjust only blog post page layout for better spacing */
 [class*="blogPostPage"] .container.margin-vert--lg,
 .theme-blog-post-page .container.margin-vert--lg {
-  max-width: none !important;
+  max-width: none;
 }
 
-/* Specific adjustments for individual blog post layout */
 [class*="blogPostPage"] article .container,
 .theme-blog-post-page article .container {
-  max-width: none !important;
+  max-width: none;
 }
 
-/* Ensure sidebar stays compact on blog post pages */
 [class*="blogPostPage"] .theme-blog-sidebar,
 .theme-blog-post-page .theme-blog-sidebar {
-  width: 250px !important;
+  width: 250px;
   margin-right: 2rem;
 }
 
-/* Hide dark/light mode toggle */
-[data-theme] .navbar__item.navbar__toggle {
-  display: none !important;
+/* ============================================
+   8. FOOTER
+   ============================================ */
+
+.footer {
+  background-color: transparent;
+  position: relative;
+  z-index: 100;
+  border-top: 1px solid var(--sofia-glass-border);
 }
 
-html[data-theme] .toggle_node_modules-\@docusaurus-theme-classic-lib-theme-ColorModeToggle-styles-module {
-  display: none !important;
+.footer,
+.footer *,
+.footer a,
+.footer a:hover,
+.footer a:visited {
+  color: var(--sofia-text-muted);
 }
 
-.navbar .colorModeToggle_node_modules-\@docusaurus-theme-classic-lib-theme-ColorModeToggle-styles-module {
-  display: none !important;
+.footer a:hover {
+  color: var(--sofia-text);
 }
 
-/* Alternative selector for color mode toggle */
-.navbar [class*="colorModeToggle"] {
-  display: none !important;
+.footer__links {
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
 }
 
-/* Hide only color mode toggle, not mobile menu */
-.navbar [class*="colorModeToggle"],
-.navbar [data-value="light"],
-.navbar [data-value="dark"] {
-  display: none !important;
+.footer__col {
+  margin-right: 0;
+  text-align: center;
 }
 
-/* Restore mobile menu burger on small screens */
-@media (max-width: 996px) {
-  .navbar__toggle {
-    display: flex !important;
-  }
-
-  /* Mobile menu background */
-  .navbar-sidebar__backdrop,
-  .theme-layout-navbar-sidebar-panel {
-    background-color: rgba(245, 245, 245, 1) !important;
-    backdrop-filter: blur(10px) !important;
-  }
-
-  .navbar-sidebar__item {
-    background-color: rgba(245, 245, 245, 0.9) !important;
-    top: 13rem
-  }
-
-  /* Use different logo in mobile sidebar */
-  .navbar-sidebar .navbar__brand img {
-    content: url('/img/logoBrut.png') !important;
-    width: 2rem !important;
-    height: 2rem !important;
-    object-fit: contain !important;
-  }
+.footer__title {
+  margin-bottom: 1rem;
+  color: var(--sofia-text);
+  font-weight: 600;
 }
 
-/* Footer social icons styling for PNG images */
-.footer__link-item img {
-  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
-  filter: none;
+.footer__items {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
 }
 
-.footer__link-item:hover img {
-  transform: scale(1.2);
-  opacity: 0.8;
-}
-
-/* Footer social links layout */
-.footer .footer__items {
-  display: flex !important;
-  justify-content: center !important;
-  gap: 1.5rem !important;
-  flex-wrap: wrap !important;
-}
-
-/* Remove text decoration from footer links */
 .footer .footer__link-item {
-  text-decoration: none !important;
-  color: #ffffff !important;
-  cursor: pointer !important;
-  pointer-events: auto !important;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
 }
 
 .footer .footer__link-item:hover {
-  text-decoration: none !important;
-  color: #02000B !important;
-  cursor: pointer !important;
+  color: var(--sofia-accent);
 }
 
-/* Ensure footer links are clickable */
-.footer a, .footer a:hover, .footer a:visited {
-  pointer-events: auto !important;
-  cursor: pointer !important;
-  color: #02000B !important;
+.footer__link-item img {
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
 
-/* Global text color overrides and background setup for PixelBlast */
-body, html {
-  color: #ffffff !important;
-  background-color: transparent !important;
-  position: relative !important;
+.footer__link-item:hover img {
+  transform: scale(1.15);
+  opacity: 0.85;
 }
 
-/* Main wrapper to allow PixelBlast background to show */
-#__docusaurus {
-  background-color: transparent !important;
-  position: relative !important;
-}
+/* ============================================
+   9. BUTTONS
+   ============================================ */
 
-.main-wrapper {
-  background-color: transparent !important;
-  position: relative !important;
-  z-index: 1 !important;
-}
-
-/* Add padding-top to main content to avoid CardNav overlap */
-main {
-  padding-top: 5rem !important;
-}
-
-/* Override for home page which has its own hero section spacing */
-.theme-doc-page-layout main,
-body[class*="index"] main {
-  padding-top: 0 !important;
-}
-
-* {
-  color: #ffffff !important;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  color: #ffffff !important;
-}
-
-p, span, div {
-  color: #ffffff !important;
-}
-
-/* Exception for nav-cards only */
-.nav-card,
-.nav-card *,
-.nav-card h1, .nav-card h2, .nav-card h3, .nav-card h4, .nav-card h5, .nav-card h6,
-.nav-card p, .nav-card span, .nav-card div,
-.nav-card a {
-  color: #000 !important;
-}
-
-.hero__title, .hero__subtitle {
-  color: #ffffff !important;
-}
-
-/* Navbar Blog link positioning */
-.navbar__items--right .navbar__item {
-  align-self: flex-end;
-  margin-bottom: 0.5rem;
-}
-
-/* Removed all scroll and text animations */
-
-/* Smooth scrolling for better UX */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Button styling with higher specificity */
 a.button.button--primary.button--lg,
 .button.button--primary.button--lg {
-  color: white !important;
-  background-color: #02000B !important;
-  border-color: #ffffff !important;
-  text-decoration: none !important;
-  display: inline-block !important;
-  cursor: pointer !important;
-  transition: all 0.2s ease !important;
-  pointer-events: auto !important;
+  color: var(--sofia-void);
+  background-color: var(--sofia-accent);
+  border-color: var(--sofia-accent);
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  border-radius: 8px;
 }
 
 a.button.button--primary.button--lg:hover,
 .button.button--primary.button--lg:hover,
 a.button.button--primary.button--lg:focus,
 .button.button--primary.button--lg:focus {
-  background-color: #333333 !important;
-  color: white !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 4px 8px rgba(2, 0, 11, 0.2) !important;
-  text-decoration: none !important;
+  background-color: var(--ifm-color-primary-light);
+  color: var(--sofia-void);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 205, 0, 0.25);
 }
 
 a.button.button--outline.button--primary.button--lg,
 .button.button--outline.button--primary.button--lg {
-  color: #ffffff !important;
-  background-color: transparent !important;
-  border-color: #02000B !important;
-  text-decoration: none !important;
-  display: inline-block !important;
-  cursor: pointer !important;
-  transition: all 0.2s ease !important;
-  pointer-events: auto !important;
+  color: var(--sofia-accent);
+  background-color: transparent;
+  border-color: var(--sofia-accent);
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border-radius: 8px;
 }
 
 a.button.button--outline.button--primary.button--lg:hover,
-.button.button--outline.button--primary.button--lg:hover,
-a.button.button--outline.button--primary.button--lg:focus,
-.button.button--outline.button--primary.button--lg:focus {
-  background-color: #02000B !important;
-  color: white !important;
-  border-color: #ffffff !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 4px 8px rgba(2, 0, 11, 0.2) !important;
-  text-decoration: none !important;
+.button.button--outline.button--primary.button--lg:hover {
+  background-color: var(--sofia-accent);
+  color: var(--sofia-void);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 205, 0, 0.25);
 }
 
+/* ============================================
+   10. NAV-CARD EXCEPTION
+   ============================================ */
 
-/* Sidebar active link styling */
-aside [class*="sidebarItemLinkActive"],
-aside [class*="sidebarItemLinkActive"] a,
-aside [class*="sidebarItemLinkActive"] > *,
-.theme-doc-sidebar-item-link-level-1[class*="sidebarItemLinkActive"],
-.theme-doc-sidebar-item-link-level-2[class*="sidebarItemLinkActive"],
-.theme-doc-sidebar-item-link-level-3[class*="sidebarItemLinkActive"] {
-  color: #ffffff !important;
-  font-weight: 700 !important;
+/* CardNav has its own colors via inline styles —
+   just ensure its text stays dark on yellow cards */
+.nav-card,
+.nav-card * {
+  font-family: 'Overpass Mono', monospace;
 }
 
-[class*="sidebarItemLinkActive"] {
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  border-left: 3px solid #ffffff !important;
+/* ============================================
+   11. RESPONSIVE
+   ============================================ */
+
+@media (max-width: 996px) {
+  [class*="docPage"] .container,
+  .theme-doc-page-layout .container,
+  [class*="docMainContainer"] {
+    padding: 1rem;
+    margin-top: 80px;
+    border-radius: 10px;
+  }
+
+  [class*="docPage"] h1,
+  .theme-doc-page-layout h1 {
+    font-size: 1.8rem;
+  }
 }
 
-/* Sidebar link hover */
-[class*="sidebarItemLink"]:hover {
-  color: #ffffff !important;
-  background-color: rgba(255, 255, 255, 0.05) !important;
-}
+/* ============================================
+   12. ACCESSIBILITY
+   ============================================ */
 
-/* Litepaper pages backdrop filter */
-[class*="docPage"] .container,
-.theme-doc-page-layout .container,
-[class*="docMainContainer"] {
-  background-color: rgba(2, 0, 11, 0.5) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-  border-radius: 12px !important;
-  padding: 2rem !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
-  margin-top:95px
-}
-
-/* Sidebar backdrop filter */
-[class*="docSidebar"],
-.theme-doc-sidebar-container {
-  background-color: rgba(2, 0, 11, 0.4) !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
-  border-radius: 12px !important;
-  padding: 1rem !important;
-  margin-right: 1rem !important;
-}
-
-/* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
-  .scroll-section,
-  .animated-text,
-  .parallax-section {
-    transition: none !important;
-    transform: none !important;
-    animation: none !important;
-  }
-
-  .animated-text--split-words .split-word {
-    transition: none !important;
-    opacity: 1 !important;
-    transform: none !important;
+  * {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
   }
 }
 
-/* Override CSS variable for sidebar links */
-aside nav,
-aside [class*="menu"],
-aside [class*="sidebar"] {
-  --ifm-color-primary: #ffffff;
-  --ifm-link-color: #ffffff;
+/* Focus rings */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--sofia-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
-/* Force white color and bold for active sidebar links - highest priority */
-html body aside [class*="sidebarItemLinkActive"],
-html body aside [class*="sidebarItemLinkActive"] *,
-aside [class*="sidebarItemLinkActive"] {
-  color: #ffffff !important;
-  font-weight: 700 !important;
+/* ============================================
+   13. HERO OVERRIDES
+   ============================================ */
+
+.hero__title,
+.hero__subtitle {
+  color: var(--sofia-text);
+}
+
+/* ============================================
+   14. DOC CARD & STAT BOX — Shiny reflection on hover
+   ============================================ */
+
+.doc-card::before,
+.stat-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.03) 45%,
+    rgba(255, 255, 255, 0.04) 50%,
+    rgba(255, 255, 255, 0.03) 55%,
+    transparent 80%
+  );
+  transition: none;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.doc-card:hover::before,
+.stat-box:hover::before {
+  left: 150%;
+  transition: left 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* Navbar Blog link positioning */
+.navbar__items--right .navbar__item {
+  align-self: flex-end;
+  margin-bottom: 0.5rem;
 }
