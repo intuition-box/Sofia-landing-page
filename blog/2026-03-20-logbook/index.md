@@ -1,11 +1,8 @@
 ---
-  Blog Post — Logbook 20/03
-
-  ---
-  slug: logbook-20-03
-  title: Logbook 20/03
-  authors: [Samuel, Maxime]
-  ---
+slug: logbook-20-03
+title: Logbook 20/03
+authors: [Samuel, Maxime]
+---
 
     In one week, we went from zero to a fully functional behavioral
   reputation dashboard — a place where alpha testers can visualize their on-chain activity,
