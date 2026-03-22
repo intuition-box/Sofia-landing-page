@@ -1,10 +1,14 @@
 import React from 'react';
 import {useColorMode} from '@docusaurus/theme-common';
-import CardNav from './index';
+import CardNav from '@site/src/components/CardNav';
 
 export default function ThemedCardNav(): JSX.Element {
-  const {colorMode} = useColorMode();
+  const {colorMode, setColorMode} = useColorMode();
   const isDark = colorMode === 'dark';
+
+  const toggleDarkMode = () => {
+    setColorMode(isDark ? 'light' : 'dark');
+  };
 
   const menuItems = [
     {
@@ -51,6 +55,8 @@ export default function ThemedCardNav(): JSX.Element {
       buttonBgColor={isDark ? "#e8e6e3" : "#2d2d2d"}
       buttonTextColor={isDark ? "#0a0a0a" : "#ffffff"}
       ease="circ.out"
+      isDark={isDark}
+      onToggleDarkMode={toggleDarkMode}
     />
   );
 }
