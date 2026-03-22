@@ -20,6 +20,11 @@ const sidebars: SidebarsConfig = {
       label: 'What is Sofia?',
     },
     {
+      type: 'doc',
+      id: 'features/getting-started',
+      label: 'Getting Started',
+    },
+    {
       type: 'category',
       label: 'User Guide',
       items: [
@@ -36,7 +41,6 @@ const sidebars: SidebarsConfig = {
           type: 'category',
           label: 'Features',
           items: [
-            'features/getting-started',
             'features/echoes',
             'features/intentions',
             'features/certifications',

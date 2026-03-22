@@ -28,17 +28,16 @@ export default function FlowDiagram({ steps, direction = 'horizontal' }: FlowDia
     >
       {steps.map((step, i) => (
         <React.Fragment key={i}>
-          {/* Step box */}
           <div
             style={{
-              background: 'rgba(255, 205, 0, 0.06)',
-              border: '1px solid rgba(255, 205, 0, 0.2)',
+              background: 'rgba(143, 184, 122, 0.08)',
+              border: '1px solid rgba(143, 184, 122, 0.25)',
               borderRadius: '10px',
               padding: '0.8rem 1.2rem',
               textAlign: 'center',
               minWidth: isHorizontal ? '120px' : 'auto',
               flex: isHorizontal ? '0 0 auto' : undefined,
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--font-body)",
             }}
           >
             {step.icon && (
@@ -50,7 +49,7 @@ export default function FlowDiagram({ steps, direction = 'horizontal' }: FlowDia
               style={{
                 fontWeight: 600,
                 fontSize: '0.85rem',
-                color: '#f0eff4',
+                color: 'var(--sofia-text)',
               }}
             >
               {step.label}
@@ -59,7 +58,7 @@ export default function FlowDiagram({ steps, direction = 'horizontal' }: FlowDia
               <div
                 style={{
                   fontSize: '0.75rem',
-                  color: 'rgba(240, 239, 244, 0.5)',
+                  color: 'var(--sofia-text-muted)',
                   marginTop: '0.25rem',
                 }}
               >
@@ -68,18 +67,17 @@ export default function FlowDiagram({ steps, direction = 'horizontal' }: FlowDia
             )}
           </div>
 
-          {/* Arrow connector */}
           {i < steps.length - 1 && (
             <div
               style={{
-                color: 'rgba(255, 205, 0, 0.4)',
+                color: 'var(--sofia-green-vif)',
                 fontSize: '1.2rem',
                 padding: isHorizontal ? '0 0.5rem' : '0.3rem 0',
                 flexShrink: 0,
                 fontFamily: 'monospace',
               }}
             >
-              {isHorizontal ? '→' : '↓'}
+              {isHorizontal ? '\u2192' : '\u2193'}
             </div>
           )}
         </React.Fragment>

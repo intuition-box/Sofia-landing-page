@@ -8,11 +8,11 @@ export default function Privacy(): React.ReactElement {
       title="Privacy Policy"
       description="Sofia Extension Privacy Policy">
 
-      <main style={{ padding: '5', color: '#FFFFFF', lineHeight: '2' }}>
+      <main style={{ padding: '5', color: 'var(--sofia-text)', lineHeight: '2' }}>
         <ContentWrapperWide>
           <style>{`
             .privacy-page h1, .privacy-page h2, .privacy-page h3 {
-              color: #ffcd00;
+              color: var(--sofia-green-vif);
             }
           `}</style>
           <article className="privacy-page">

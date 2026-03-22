@@ -9,11 +9,11 @@ export default function Manifesto(): React.ReactElement {
       title="Sofia"
       description="Empowering people and organizations to capture, verify, share and amplify knowledge across the web">
 
-      <main style={{ padding: '5', color: '#FFFFFF', lineHeight: '2' }}>
+      <main style={{ padding: '5', color: 'var(--sofia-text)', lineHeight: '2' }}>
         <ContentWrapperWide>
           <style>{`
             .manifesto-page h1, .manifesto-page h2, .manifesto-page h3 {
-              color: #ffcd00;
+              color: var(--sofia-green-vif);
             }
           `}</style>
           <article className="manifesto-page">

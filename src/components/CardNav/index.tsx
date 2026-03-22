@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { GoArrowUpRight } from 'react-icons/go';
+import {useColorMode} from '@docusaurus/theme-common';
 import './CardNav.css';
 
 type CardNavLink = {
@@ -44,6 +45,11 @@ const CardNav: React.FC<CardNavProps> = ({
   const navRef = useRef<HTMLDivElement | null>(null);
   const cardsRef = useRef<HTMLDivElement[]>([]);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
+  const {colorMode, setColorMode} = useColorMode();
+
+  const toggleDarkMode = () => {
+    setColorMode(colorMode === 'dark' ? 'light' : 'dark');
+  };
 
   const calculateHeight = () => {
     const navEl = navRef.current;
@@ -155,9 +161,15 @@ const CardNav: React.FC<CardNavProps> = ({
     if (el) cardsRef.current[i] = el;
   };
 
+  const isDark = colorMode === 'dark';
+
   return (
     <div className={`card-nav-container ${className}`}>
-      <nav ref={navRef} className={`card-nav ${isExpanded ? 'open' : ''}`} style={{ backgroundColor: '#1a1a1a00' }}>
+      <nav
+        ref={navRef}
+        className={`card-nav ${isExpanded ? 'open' : ''}`}
+        style={{ backgroundColor: isDark ? 'rgba(10, 10, 10, 0.8)' : 'rgba(255, 255, 255, 0.75)' }}
+      >
         <div className="card-nav-top">
           <div
             className={`hamburger-menu ${isHamburgerOpen ? 'open' : ''}`}
@@ -174,6 +186,31 @@ const CardNav: React.FC<CardNavProps> = ({
           <a href="/" className="logo-container" aria-label="Go to homepage">
             <img src={logo} alt={logoAlt} className="logo" />
           </a>
+
+          <button
+            className="dark-mode-toggle"
+            onClick={toggleDarkMode}
+            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            style={{ color: menuColor || '#000' }}
+          >
+            {isDark ? (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="5"/>
+                <line x1="12" y1="1" x2="12" y2="3"/>
+                <line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/>
+                <line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+              </svg>
+            ) : (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+              </svg>
+            )}
+          </button>
         </div>
 
         <div className="card-nav-content" aria-hidden={!isExpanded}>

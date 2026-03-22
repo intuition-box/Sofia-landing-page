@@ -194,7 +194,7 @@ const AuthContent = () => {
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-        <img src="/img/logoWhite.svg" alt="Sofia" className={styles.logo} />
+        <img src="/img/logoDark.svg" alt="Sofia" className={styles.logo} />
         <p className={styles.subtitle}>Secure Wallet Connection</p>
 
         {/* Loading State */}
@@ -293,7 +293,7 @@ const AuthContent = () => {
 const LoadingPlaceholder = () => (
   <div className={styles.container}>
     <div className={styles.card}>
-      <img src="/img/logoWhite.svg" alt="Sofia" className={styles.logo} />
+      <img src="/img/logoDark.svg" alt="Sofia" className={styles.logo} />
       <p className={styles.subtitle}>Secure Wallet Connection</p>
       <div className={styles.spinner} />
       <p className={styles.text}>Loading...</p>
