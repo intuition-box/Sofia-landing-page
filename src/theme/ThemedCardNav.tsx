@@ -39,7 +39,7 @@ export default function ThemedCardNav(): JSX.Element {
       links: [
         { label: "Github", href: "https://github.com/intuition-box", ariaLabel: "View on GitHub" },
         { label: "X", href: "https://x.com/0xsofia3", ariaLabel: "Follow us on X" },
-        { label: "Discord", href: "https://discord.gg/bDXWsV7Bb", ariaLabel: "Join our Discord" },
+        { label: "Discord", href: "https://discord.gg/sofia3", ariaLabel: "Join our Discord" },
         { label: "Proxy Dashboard", href: "https://sofia-proxy.intuition.box/", ariaLabel: "Sofia Fee Proxy Dashboard" }
       ]
     }
