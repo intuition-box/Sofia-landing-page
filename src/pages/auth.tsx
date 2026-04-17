@@ -15,6 +15,7 @@ import Layout from '@theme/Layout';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import { useWalletConnection } from '@site/src/lib/web3/PrivyContext';
 import styles from './auth.module.css';
+import { logger } from '@site/src/lib/logger';
 
 // Chrome extension API type declaration
 declare const chrome: {
@@ -37,7 +38,7 @@ const sendFirstClaim = (extensionId: string): Promise<boolean> => {
   return new Promise((resolve) => {
     if (extensionId === DEFAULT_EXTENSION_ID ||
         typeof chrome === 'undefined' || !chrome?.runtime?.sendMessage) {
-      console.log('[Sofia Auth] Cannot send FIRST_CLAIM: no valid extension ID or chrome API');
+      logger.log('[Sofia Auth] Cannot send FIRST_CLAIM: no valid extension ID or chrome API');
       resolve(false);
       return;
     }
@@ -49,11 +50,11 @@ const sendFirstClaim = (extensionId: string): Promise<boolean> => {
           url: 'https://sofia.intuition.box'
         }
       }, (response) => {
-        console.log('[Sofia Auth] FIRST_CLAIM response:', response);
+        logger.log('[Sofia Auth] FIRST_CLAIM response:', response);
         resolve(response?.success === true);
       });
     } catch (e) {
-      console.log('[Sofia Auth] Failed to send FIRST_CLAIM:', e);
+      logger.log('[Sofia Auth] Failed to send FIRST_CLAIM:', e);
       resolve(false);
     }
   });
@@ -61,7 +62,7 @@ const sendFirstClaim = (extensionId: string): Promise<boolean> => {
 
 // Send wallet address and type to extension via multiple methods (does NOT auto-close)
 const sendToExtension = (address: string, walletType: string | null, extensionId?: string) => {
-  console.log('[Sofia Auth] Sending to extension:', { address, walletType });
+  logger.log('[Sofia Auth] Sending to extension:', { address, walletType });
 
   // Method 1: chrome.runtime.sendMessage (if extension ID is known)
   if (extensionId && extensionId !== DEFAULT_EXTENSION_ID &&
@@ -72,11 +73,11 @@ const sendToExtension = (address: string, walletType: string | null, extensionId
         walletAddress: address,
         walletType: walletType || 'unknown'
       }, (response) => {
-        console.log('[Sofia Auth] Extension response:', response);
+        logger.log('[Sofia Auth] Extension response:', response);
         // Don't auto-close - let user see the success state
       });
     } catch (e) {
-      console.log('[Sofia Auth] Failed to send to extension:', e);
+      logger.log('[Sofia Auth] Failed to send to extension:', e);
     }
   }
 
@@ -87,7 +88,7 @@ const sendToExtension = (address: string, walletType: string | null, extensionId
       address: address,
       walletType: walletType || 'unknown'
     }, '*');
-    console.log('[Sofia Auth] Sent postMessage to opener');
+    logger.log('[Sofia Auth] Sent postMessage to opener');
   }
 
   // Method 3: Store in localStorage for polling
@@ -95,9 +96,9 @@ const sendToExtension = (address: string, walletType: string | null, extensionId
     localStorage.setItem('sofia_wallet_address', address);
     localStorage.setItem('sofia_wallet_type', walletType || 'unknown');
     localStorage.setItem('sofia_wallet_timestamp', Date.now().toString());
-    console.log('[Sofia Auth] Stored in localStorage');
+    logger.log('[Sofia Auth] Stored in localStorage');
   } catch (e) {
-    console.log('[Sofia Auth] LocalStorage not available');
+    logger.log('[Sofia Auth] LocalStorage not available');
   }
 
   // Method 4: URL callback redirect (only if explicitly requested)
@@ -108,12 +109,12 @@ const sendToExtension = (address: string, walletType: string | null, extensionId
       const redirectUrl = new URL(callbackUrl);
       redirectUrl.searchParams.set('address', address);
       redirectUrl.searchParams.set('walletType', walletType || 'unknown');
-      console.log('[Sofia Auth] Redirecting to callback:', redirectUrl.toString());
+      logger.log('[Sofia Auth] Redirecting to callback:', redirectUrl.toString());
       setTimeout(() => {
         window.location.href = redirectUrl.toString();
       }, 1500);
     } catch (e) {
-      console.log('[Sofia Auth] Invalid callback URL');
+      logger.log('[Sofia Auth] Invalid callback URL');
     }
   }
 };
@@ -134,7 +135,7 @@ const AuthContent = () => {
   // Send wallet info to extension when connected (FIRST_CLAIM waits for user click)
   useEffect(() => {
     if (isConnected && address && !hasSentToExtension) {
-      console.log('[Sofia Auth] Wallet connected, sending to extension:', { address, walletType });
+      logger.log('[Sofia Auth] Wallet connected, sending to extension:', { address, walletType });
       sendToExtension(address, walletType, extensionId);
       setHasSentToExtension(true);
     }

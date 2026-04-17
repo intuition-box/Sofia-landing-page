@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { GoArrowUpRight } from 'react-icons/go';
+import { useReducedMotion } from '@site/src/hooks/useReducedMotion';
 import './CardNav.css';
 
 type CardNavLink = {
@@ -48,6 +49,7 @@ const CardNav: React.FC<CardNavProps> = ({
   const navRef = useRef<HTMLDivElement | null>(null);
   const cardsRef = useRef<HTMLDivElement[]>([]);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
+  const prefersReducedMotion = useReducedMotion();
 
   const calculateHeight = () => {
     const navEl = navRef.current;
@@ -91,15 +93,18 @@ const CardNav: React.FC<CardNavProps> = ({
     gsap.set(navEl, { height: 60, overflow: 'hidden' });
     gsap.set(cardsRef.current, { y: 50, opacity: 0 });
 
+    const duration = prefersReducedMotion ? 0 : 0.4;
+    const stagger = prefersReducedMotion ? 0 : 0.08;
+
     const tl = gsap.timeline({ paused: true });
 
     tl.to(navEl, {
       height: calculateHeight,
-      duration: 0.4,
-      ease
+      duration,
+      ease,
     });
 
-    tl.to(cardsRef.current, { y: 0, opacity: 1, duration: 0.4, ease, stagger: 0.08 }, '-=0.1');
+    tl.to(cardsRef.current, { y: 0, opacity: 1, duration, ease, stagger }, '-=0.1');
 
     return tl;
   };
@@ -112,7 +117,7 @@ const CardNav: React.FC<CardNavProps> = ({
       tl?.kill();
       tlRef.current = null;
     };
-  }, [ease, items]);
+  }, [ease, items, prefersReducedMotion]);
 
   useLayoutEffect(() => {
     const handleResize = () => {

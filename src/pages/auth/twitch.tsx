@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import Layout from '@theme/Layout';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import styles from '../auth.module.css';
+import { logger } from '@site/src/lib/logger';
 
 // ============= CONFIGURATION =============
 const TWITCH_CLIENT_ID = 'pyz5o7ahuj5kt4gttextfafkzmn9cs';
@@ -68,7 +69,7 @@ const TwitchAuthContent = () => {
         }, 500);
 
       } catch (error) {
-        console.error('[Sofia Twitch Auth] Error initiating OAuth:', error);
+        logger.error('[Sofia Twitch Auth] Error initiating OAuth:', error);
         setStatus('error');
         setErrorMessage(error instanceof Error ? error.message : 'Failed to initiate Twitch authentication');
       }

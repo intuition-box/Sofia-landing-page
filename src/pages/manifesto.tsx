@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '@theme/Layout';
-import ContentWrapperWide from '@site/src/components/ContentWrapperWide';
+import ContentWrapper from '@site/src/components/ContentWrapper';
 
 
 export default function Manifesto(): React.ReactElement {
@@ -10,7 +10,7 @@ export default function Manifesto(): React.ReactElement {
       description="Empowering people and organizations to capture, verify, share and amplify knowledge across the web">
 
       <main style={{ padding: '5', color: 'var(--sofia-text)', lineHeight: '2' }}>
-        <ContentWrapperWide>
+        <ContentWrapper wide>
           <style>{`
             .manifesto-page h1, .manifesto-page h2, .manifesto-page h3 {
               color: var(--sofia-green-vif);
@@ -75,7 +75,7 @@ export default function Manifesto(): React.ReactElement {
             SOFIA transforms arid dunes into fertile soil, a web serving humanity, not the looming shadows of Silicon Valley. The desert may be vast and unforgiving, but its power, once tamed, can build a future where the web belongs to us all again.
           </p>
         </article>
-        </ContentWrapperWide>
+        </ContentWrapper>
       </main>
     </Layout>
   );

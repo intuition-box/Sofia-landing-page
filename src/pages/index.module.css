@@ -21,7 +21,7 @@
   left: 0;
   right: 0;
   height: 80px;
-  background: linear-gradient(to bottom, transparent, var(--sofia-bg));
+  background: linear-gradient(to bottom, transparent, var(--sofia-bg-alt));
   pointer-events: none;
 }
 

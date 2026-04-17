@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import Layout from '@theme/Layout';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import styles from '../auth.module.css';
+import { logger } from '@site/src/lib/logger';
 
 // ============= CONFIGURATION =============
 const TWITTER_CLIENT_ID = 'by1mQy1ocE1kTVFvYXJPSWlSMlg6MTpjaQ';
@@ -93,7 +94,7 @@ const TwitterAuthContent = () => {
         }, 500);
 
       } catch (error) {
-        console.error('[Sofia Twitter Auth] Error initiating OAuth:', error);
+        logger.error('[Sofia Twitter Auth] Error initiating OAuth:', error);
         setStatus('error');
         setErrorMessage(error instanceof Error ? error.message : 'Failed to initiate Twitter authentication');
       }

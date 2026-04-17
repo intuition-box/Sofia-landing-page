@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import Layout from '@theme/Layout';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import styles from '../auth.module.css';
+import { logger } from '@site/src/lib/logger';
 
 // ============= CONFIGURATION =============
 const DISCORD_CLIENT_ID = '1450535332360753317';
@@ -68,7 +69,7 @@ const DiscordAuthContent = () => {
         }, 500);
 
       } catch (error) {
-        console.error('[Sofia Discord Auth] Error initiating OAuth:', error);
+        logger.error('[Sofia Discord Auth] Error initiating OAuth:', error);
         setStatus('error');
         setErrorMessage(error instanceof Error ? error.message : 'Failed to initiate Discord authentication');
       }
